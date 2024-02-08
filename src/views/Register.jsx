@@ -4,9 +4,9 @@ import AppContext from "../providers/AppContext";
 const Register = () => {
   const { setConext } = useContext(AppContext);
 
-  const register = () => {
+  // const register = () => {
     
-  }
+  // }
 };
 
 export default Register;
