@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
-import { AppContext } from "../../providers/AppContext";
-import "./SignUp.css";
 import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../providers/AppContext";
 import {
   createUserHandle,
   getUserByHandle,
 } from "../../services/users.service";
 import { registerUser } from "../../services/auth.service";
+import "./SignUp.css";
 
 const SignUp = () => {
   const { setContext } = useContext(AppContext);

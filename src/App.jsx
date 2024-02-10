@@ -17,9 +17,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
 import HotelsByCity from "./TRAVEL-ART-FORUM/pages/HotelsByCity";
 import NavBar from "./TRAVEL-ART-FORUM/components/NavBar/NavBar";
-import SignIn from "./TRAVEL-ART-FORUM/components/SignIn/SignIn";
-import SignUp from "./TRAVEL-ART-FORUM/components/SignUp/SignUp";
-import ForgotPassword from "./TRAVEL-ART-FORUM/components/ForgotPassword/ForgotPassword";
+import SignIn from "./TRAVEL-ART-FORUM/pages/SignIn/SignIn";
+import SignUp from "./TRAVEL-ART-FORUM/pages/SignUp/SignUp";
+import ForgotPassword from "./TRAVEL-ART-FORUM/pages/ForgotPassword/ForgotPassword";
 
 const App = (props) => {
   /*  Life-cycles Methods */
