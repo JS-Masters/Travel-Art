@@ -19,6 +19,7 @@ import HotelsByCity from "./TRAVEL-ART-FORUM/pages/HotelsByCity";
 import NavBar from "./TRAVEL-ART-FORUM/components/NavBar/NavBar";
 import SignIn from "./TRAVEL-ART-FORUM/components/SignIn/SignIn";
 import SignUp from "./TRAVEL-ART-FORUM/components/SignUp/SignUp";
+import ForgotPassword from "./TRAVEL-ART-FORUM/components/ForgotPassword/ForgotPassword";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -120,6 +121,7 @@ const App = (props) => {
               <Route path="/hotels-by-city" element={<HotelsByCity />} />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/reset-password" element={<ForgotPassword />} />
             </Routes>
           </div>
         </BrowserRouter>
