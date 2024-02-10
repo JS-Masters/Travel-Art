@@ -15,7 +15,6 @@ import AppManager from "./comp/utils/AppManager";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./providers/AppContext";
-import Home from "./views/Home/Home"
 import Header from "./comp/Header/Header";
 import HotelsByCity from "./comp/pages/HotelsByCity";
 
@@ -118,15 +117,13 @@ const App = (props) => {
 			<AppContext.Provider value={{ ...context, setContext }}>
 				<BrowserRouter>
 					<div className="App">
-						<Header/>
+						<Header />
 						<Routes>
 
 							<Route path="/" element={<><MasterContainer />{isMasterAppLoading && !lodash.isNil(colorMode) && renderLoader()}</>} />
 
 
-
-
-							<Route path="/hotels-by-city" element={<HotelsByCity/>} />
+							<Route path="/hotels-by-city" element={<HotelsByCity />} />
 						</Routes>
 					</div>
 				</BrowserRouter>
