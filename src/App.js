@@ -14,9 +14,9 @@ import lodash from "lodash";
 import AppManager from "./comp/utils/AppManager";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AppContext } from "./providers/AppContext";
-import Header from "./comp/Header/Header";
-import HotelsByCity from "./comp/pages/HotelsByCity";
+import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
+import Header from "./TRAVEL-ART-FORUM/components/Header/Header";
+import HotelsByCity from "./TRAVEL-ART-FORUM/pages/HotelsByCity";
 
 
 
