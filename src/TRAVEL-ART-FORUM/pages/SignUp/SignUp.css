@@ -40,8 +40,7 @@
   text-shadow: none;
 }
 
-.form > input,
-.form > button {
+.form > input {
   background: transparent;
   width: 200px;
   padding: 1em;
@@ -61,8 +60,7 @@
   border-radius: 5000px;
 }
 
-.form > input:hover,
-.form > button:hover {
+.form > input:hover {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
 }
@@ -71,16 +69,6 @@
 .form input[type="password"]:focus {
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 4px 4px 60px 8px rgba(0, 0, 0, 0.2);
-}
-
-.form > button {
-  margin: 10px 0 0 0;
-  width: 150px;
-  font-size: 1rem;
-}
-
-.form > button:hover {
-  cursor: pointer;
 }
 
 .form:hover {
@@ -100,8 +88,7 @@
 }
 
 a,
-input:focus,
-button:focus {
+input:focus {
   outline: none;
 }
 

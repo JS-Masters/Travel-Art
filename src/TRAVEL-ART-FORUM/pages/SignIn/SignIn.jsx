@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { loginUser } from "../../services/auth.service";
+import Button from "../../components/Button/Button";
 import "./SignIn.css";
 
 const SignIn = () => {
@@ -54,7 +55,7 @@ const SignIn = () => {
         />
         <p>{message}</p>
         <br />
-        <button onClick={login}>Sign in</button>
+        <Button handleClick={login}>Sign in</Button>
         <br />
         <a href="/reset-password">Forgot Password?</a>
       </div>

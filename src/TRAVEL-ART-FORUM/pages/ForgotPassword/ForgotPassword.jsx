@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -40,9 +41,9 @@ const ForgotPassword = () => {
           onChange={updateEmail}
         />
         <br />
-        <button onClick={handleResetPassword}>Reset Password</button>
+        <Button handleClick={handleResetPassword}>Reset Password</Button>
         <br />
-        <button onClick={handleCancel}>Cancel</button>
+        <Button handleClick={handleCancel}>Cancel</Button>
         <p>{message}</p>
       </div>
 

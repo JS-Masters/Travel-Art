@@ -6,6 +6,7 @@ import {
   getUserByHandle,
 } from "../../services/users.service";
 import { registerUser } from "../../services/auth.service";
+import Button from "../../components/Button/Button";
 import "./SignUp.css";
 
 const SignUp = () => {
@@ -101,7 +102,7 @@ const SignUp = () => {
         />
         <p>{message}</p>
         <br />
-        <button onClick={register}>Sign up</button>
+        <Button handleClick={register}>Sign up</Button>
       </div>
 
       <div className="drops">
