@@ -1,12 +1,21 @@
 import { NavLink } from "react-router-dom";
 import { AppContext } from "../../providers/AppContext";
 import { useContext } from "react";
+import { logoutUser } from "../../services/auth.service";
 
 const NavBar = () => {
-  const { user } = useContext(AppContext);
+  const { user, userData, setContext } = useContext(AppContext);
+
+  const signOut = async () => {
+    await logoutUser();
+    setContext({ user: null, userData: null });
+  };
 
   return user ? (
-    <h1>Welcome, {user.firstName}</h1>
+    <>
+      <span>Welcome, {userData?.handle}</span>
+      <button onClick={signOut}>Sign Out</button>
+    </>
   ) : (
     <nav>
       <NavLink to="/sign-in">Sign in</NavLink>

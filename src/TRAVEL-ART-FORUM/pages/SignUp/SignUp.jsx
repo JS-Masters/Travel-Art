@@ -18,6 +18,7 @@ const SignUp = () => {
     password: "",
   });
 
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
   const updateForm = (prop) => (event) => {
@@ -26,12 +27,12 @@ const SignUp = () => {
 
   const register = async () => {
     if (form.firstName.length < 4 || form.firstName.length > 32) {
-      alert("First name must be between 4 and 32 symbols!");
+      setMessage("First name must be between 4 and 32 symbols!");
       return;
     }
 
     if (form.lastName.length < 4 || form.lastName.length > 32) {
-      alert("Last name must be between 4 and 32 symbols!");
+      setMessage("Last name must be between 4 and 32 symbols!");
       return;
     }
 
@@ -40,7 +41,8 @@ const SignUp = () => {
     try {
       const user = await getUserByHandle(form.handle);
       if (user.exists()) {
-        return console.log(`Handle @${form.handle} already exists`);
+        setMessage(`Handle @${form.handle} already exists`);
+        return;
       }
 
       const credentials = await registerUser(form.email, form.password);
@@ -55,7 +57,7 @@ const SignUp = () => {
       setContext({ user, userData: null });
       navigate("/");
     } catch (error) {
-      console.log(error.message);
+      setMessage(error.message);
     }
   };
 
@@ -97,6 +99,7 @@ const SignUp = () => {
           value={form.password}
           onChange={updateForm("password")}
         />
+        <p>{message}</p>
         <br />
         <button onClick={register}>Sign up</button>
       </div>

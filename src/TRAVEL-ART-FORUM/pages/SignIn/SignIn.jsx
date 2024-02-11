@@ -11,6 +11,8 @@ const SignIn = () => {
     password: "",
   });
 
+  const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -29,7 +31,7 @@ const SignIn = () => {
       const credentials = await loginUser(form.email, form.password);
       setContext({ user: credentials.user, userData: null });
     } catch (error) {
-      console.log(error);
+      setMessage(error.message);
     }
   };
 
@@ -50,6 +52,7 @@ const SignIn = () => {
           value={form.password}
           onChange={updateForm("password")}
         />
+        <p>{message}</p>
         <br />
         <button onClick={login}>Sign in</button>
         <br />

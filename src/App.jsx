@@ -1,25 +1,24 @@
 import "./App.css";
 
-import React, { useEffect, useState, createRef } from "react";
-
+import { useEffect, useState, createRef } from "react";
 import { Text, Flex, CircularProgress, useColorMode } from "@chakra-ui/react";
-
 import MasterContainer from "./comp/screen/mastercontainer";
 import Constants from "./comp/utils";
 import Actions from "./comp/redux/action";
-
 import { connect } from "react-redux";
-
 import lodash from "lodash";
 import AppManager from "./comp/utils/AppManager";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
+import { useAuthState } from "react-firebase-hooks/auth";
 import HotelsByCity from "./TRAVEL-ART-FORUM/pages/HotelsByCity";
 import NavBar from "./TRAVEL-ART-FORUM/components/NavBar/NavBar";
 import SignIn from "./TRAVEL-ART-FORUM/pages/SignIn/SignIn";
 import SignUp from "./TRAVEL-ART-FORUM/pages/SignUp/SignUp";
 import ForgotPassword from "./TRAVEL-ART-FORUM/pages/ForgotPassword/ForgotPassword";
+import { auth } from "./TRAVEL-ART-FORUM/config/firebase-config";
+import { getUserData } from "./TRAVEL-ART-FORUM/services/users.service";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -27,16 +26,25 @@ const App = (props) => {
   const { isMasterAppLoading } = props;
   const { colorMode } = useColorMode();
 
-  const [state, setState] = useState({});
-
   const [context, setContext] = useState({
     user: null,
     userData: null,
     city: null,
   });
 
-  const updateState = (data) =>
-    setState((preState) => ({ ...preState, ...data }));
+  const [user, loading, error] = useAuthState(auth);
+  useEffect(() => {
+    if (user) {
+      getUserData(user.uid).then((snapshot) => {
+        if (snapshot.exists()) {
+          setContext({
+            user,
+            userData: snapshot.val()[Object.keys(snapshot.val())[0]],
+          });
+        }
+      });
+    }
+  }, [user]);
 
   useEffect(() => {
     props.setIsMasterAppLoading(true);
