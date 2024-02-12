@@ -46,6 +46,7 @@ import { useNavigate } from "react-router-dom";
 const { MasterDrawerMenuType, PlaceType, AppNotifKey } = Constants;
 
 const SearchPlaceView = (props) => {
+	
 	const {
 		userConfig,
 		userPref,
@@ -61,7 +62,8 @@ const SearchPlaceView = (props) => {
 		favPlaceArray: userPref?.favPlaceArray ?? [],
 		isAppLoaded: false,
 	});
-
+	// console.log(state.placeItem.name);
+	// if(state.placeItem.name)
 	const [searchKeyword, setSearchKeyword] = useState("");
 
 	const updateState = (data) =>
@@ -70,27 +72,33 @@ const SearchPlaceView = (props) => {
 	let searchTimer = useRef();
 
 	// const navigate = useNavigate();
-	const { user, userData, city, setContext } = useContext(AppContext);
+	const { setContext } = useContext(AppContext);
 
-	const updateCityContext = (newCity, newLatitude, newLongitude) => {
-		setContext({
-			user,
-			userData,
-			city: newCity,
-			latitude: newLatitude,
-			longitude: newLongitude
-		});
+	const updateCityContext =  (newCity) => {
+		setContext((prevContext) => ({
+			...prevContext,
+			city: newCity
+		}));
 	}
+//----------------------------------------------------------------------
+
+// if(state.placeItem.name) {
+// 	updateCityContext(state.placeItem.name);
+// }
+//----------------------------------------------------------------------
 
 
-	// if (context && context.city !== undefined) {
-	// 	navigate('/home-test')
+
+	// const { setContext } = useContext(AppContext);
+	// const updateCityContext = (newCity) => {
+	// 	setContext((preContext) => ({
+	// 		...preContext,
+	// 		city: newCity,
+	// 	}));
 	// }
 
 
-	// useEffect(() => {
-	// 	navigate('/home-test');
-	// }, [context])
+
 
 
 	/*  Life-cycles Methods */
@@ -235,7 +243,6 @@ const SearchPlaceView = (props) => {
 					);
 				});
 
-				// console.log(nearByPlaceItem[0]);
 				if (nearByPlaceItem.length > 0) {
 					nearByPlaceItem = nearByPlaceItem[0];
 
@@ -250,7 +257,7 @@ const SearchPlaceView = (props) => {
 						address: `${nearByPlaceItem.name}, ${nearByStateItem.name}, ${countryItem.name}`,
 					};
 				}
-
+	
 				updateState({
 					placeItem: finalNearByPlaceItem,
 				});
@@ -706,6 +713,7 @@ const SearchPlaceView = (props) => {
 	};
 
 	const renderMasterContainer = () => {
+
 		return (
 			<Flex
 				flex={1}

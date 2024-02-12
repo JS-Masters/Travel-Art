@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { logoutUser } from "../../services/auth.service";
 
 const NavBar = () => {
-  const { user, userData, setContext } = useContext(AppContext);
+  const { user, userData, city, setContext } = useContext(AppContext);
 
   const signOut = async () => {
     await logoutUser();
@@ -14,7 +14,8 @@ const NavBar = () => {
   return user ? (
     <>
       <span>Welcome, {userData?.handle}</span>
-      <button onClick={signOut}>Sign Out</button>
+      <button onClick={signOut}>Sign Out</button><br />
+      {city && <NavLink to="/hotels-by-city">See Hotels in {city}</NavLink>}
     </>
   ) : (
     <nav>

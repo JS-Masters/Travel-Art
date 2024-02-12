@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState, useEffect, useRef, useContext } from "react";
 
 import {
 	useColorMode,
@@ -54,6 +54,7 @@ import AppManager from "../../utils/AppManager";
 
 import PhoneNumArray from "../../data/info/phone-num.json";
 import PostalCodeArray from "../../data/info/postal-codes.json";
+import { AppContext } from "../../../TRAVEL-ART-FORUM/providers/AppContext";
 
 const { PlaceType, CoordinateFormat, SearchPlaceSectionType } = Constants;
 
