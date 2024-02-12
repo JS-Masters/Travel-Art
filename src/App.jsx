@@ -19,6 +19,10 @@ import SignUp from "./TRAVEL-ART-FORUM/pages/SignUp/SignUp";
 import ForgotPassword from "./TRAVEL-ART-FORUM/pages/ForgotPassword/ForgotPassword";
 import { auth } from "./TRAVEL-ART-FORUM/config/firebase-config";
 import { getUserData } from "./TRAVEL-ART-FORUM/services/users.service";
+import CreatePost from "./TRAVEL-ART-FORUM/components/CreatePost/CreatePost";
+import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts"
+import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost"
+
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -130,6 +134,9 @@ const App = (props) => {
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
+              <Route path="/create-post" element={<CreatePost />} />
+              <Route path="/all-posts" element={<AllPosts />} />
+              <Route path="/single-post/:id" element={<SinglePost />} />
             </Routes>
           </div>
         </BrowserRouter>
