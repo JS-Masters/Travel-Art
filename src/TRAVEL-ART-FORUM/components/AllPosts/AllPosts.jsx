@@ -32,6 +32,7 @@ export default function AllPosts() {
     <Link to={`/single-post/${post.id}`}>{post.title || "No Title"}</Link>
     </h3>
     <p>{new Date(post.createdOn).toLocaleString()}</p>
+    
   </div>
 ))}
     </div>

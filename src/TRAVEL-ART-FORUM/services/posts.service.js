@@ -1,10 +1,10 @@
 import { ref, push, get, query, equalTo, orderByChild, update } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
-const fromPostsDocument = snapshot => {
+const fromPostsDocument = (snapshot, searchTerm) => {
   const postsDocument = snapshot.val();
 
-  return Object.keys(postsDocument).map(key => {
+  const posts = Object.keys(postsDocument).map(key => {
     const post = postsDocument[key];
 
     return {
@@ -13,7 +13,9 @@ const fromPostsDocument = snapshot => {
       createdOn: new Date(post.createdOn),
       likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
     };
-  });
+  })
+    .filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()))
+  return posts;
 }
 
 export const addPost = async (author, title, content) => {
@@ -76,14 +78,14 @@ export const getPostsByAuthor = (handle) => {
     });
 };
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (searchTerm) => {
   const snapshot = await get(ref(db, 'posts'));
 
   if (!snapshot.exists()) {
     throw new Error('No posts found.');
   }
 
-  return fromPostsDocument(snapshot);
+  return fromPostsDocument(snapshot, searchTerm);
 };
 
 export const likePost = (handle, postId) => {
