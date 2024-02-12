@@ -9,6 +9,9 @@ import { registerUser } from "../../services/auth.service";
 import Button from "../../components/Button/Button";
 import "./SignUp.css";
 
+// import { db } from "../../config/firebase-config";
+// import { getStorage, ref, deleteObject } from "firebase/storage";
+
 const SignUp = () => {
   const { setContext } = useContext(AppContext);
   const [form, setForm] = useState({
@@ -17,7 +20,13 @@ const SignUp = () => {
     lastName: "",
     email: "",
     password: "",
+    isAdmin: false
   });
+
+  // const storage = getStorage();
+  // const userDelete = ref(storage, 'users/test');
+  // deleteObject(userDelete)
+  //   .then(console.log('SUCCESS'))
 
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
@@ -52,7 +61,8 @@ const SignUp = () => {
         form.handle,
         form.firstName,
         form.lastName,
-        form.email
+        form.email,
+        form.isAdmin
       );
 
       setContext({ user, userData: null });
