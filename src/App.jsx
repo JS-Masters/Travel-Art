@@ -23,6 +23,8 @@ import UploadForm from "./TRAVEL-ART-FORUM/pages/UploadForm/UploadForm";
 import CreatePost from "./TRAVEL-ART-FORUM/components/CreatePost/CreatePost";
 import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts"
 import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost"
+import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
+import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 
 
 const App = (props) => {
@@ -123,6 +125,7 @@ const App = (props) => {
                 element={
                   <>
                     <NavBar />
+
                     <MasterContainer />
                     {isMasterAppLoading &&
                       !lodash.isNil(colorMode) &&
@@ -130,7 +133,7 @@ const App = (props) => {
                   </>
                 }
               />
-
+              <Route path="/manage-users" element={<Authenticated><ManageUsers /></Authenticated>} />
               <Route path="/hotels-by-city" element={<HotelsByCity />} />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />

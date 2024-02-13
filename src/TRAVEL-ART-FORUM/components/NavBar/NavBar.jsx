@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { AppContext } from "../../providers/AppContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { logoutUser } from "../../services/auth.service";
+import Authenticated from "../hoc/Authenticated";
+import { get, orderByChild, query, ref } from 'firebase/database';
+import { db } from "../../config/firebase-config";
+
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 
 const NavBar = () => {
@@ -18,7 +22,8 @@ const NavBar = () => {
       {city && <NavLink to="/hotels-by-city">See Hotels in {city}</NavLink>}
       <NavLink to="/create-post">Create post</NavLink>
       <NavLink to="/all-posts">All posts</NavLink>
-    </nav>
+      {<Authenticated><NavLink to="/manage-users">Manage Users</NavLink></Authenticated>}   
+     </nav>
   ) : (
     <nav>
       <NavLink to="/sign-in">Sign in</NavLink>
