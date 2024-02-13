@@ -1,7 +1,7 @@
 import { get, ref, update } from "firebase/database"
 import { db } from "../config/firebase-config"
 
-export const getUsers = async () => {
+export const getAllUsers = async () => {
 
   try {
     const snapshot = await get(ref(db, 'users'));
@@ -24,10 +24,10 @@ const usersDocument = (snapshot) => {
       ...user
     };
   })
-    .filter(u => u.isAdmin !== true)
+    // .filter(u => u.isAdmin !== true)
   return users;
 }
-
+// За сега не се използва, ама май работи !
 export const findUserByUID = async (handle) => {
   try {
     const snapshot = await get(ref(db, `users/${handle}`));
@@ -49,10 +49,22 @@ export const findUserByUID = async (handle) => {
 
 export const updateUserProperty = async (dbPath, value) => {
   try {
-   await update(ref(db), { [dbPath] : value});
+    await update(ref(db), { [dbPath]: value });
 
   } catch (error) {
     console.log(error.message);
   }
 
+}
+
+export const renderUsersBySearch = (searchTerm, users) => {
+  if (!searchTerm) {
+    return users; // No search term, return all users
+  }
+  return users.filter((u) => 
+    u.handle.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    u.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    u.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 }

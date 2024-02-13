@@ -18,8 +18,20 @@ const Authenticated = ({ children }) => {
     return <h1>LOADING...</h1>
   }
 
+  // if (!isAdmin) {
+  //   const handleClick = () => {
+  //     return <Navigate replace to="/" />
+  //   }
+  //   return (
+  //     <div className="no-acces-div">
+  //       <h1>ACCESSABLE ONLY BY ADMINS</h1>
+  //       <button onClick={handleClick}>GO TO HOME-PAGE</button>
+  //     </div>
+
+  //   )
+  // }
   if (!isAdmin) {
-    return <Navigate replace to="/" />
+    return;
   }
 
   return <>{children}</>;
