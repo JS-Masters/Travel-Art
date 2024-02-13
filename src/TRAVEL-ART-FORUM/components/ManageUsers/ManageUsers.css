@@ -1,0 +1,8 @@
+.single-user {
+  display: flex;
+  align-items: center; /* To vertically align items */
+}
+
+.user-avatar {
+  margin-right: 10px; /* Add some space between the avatar and text */
+}

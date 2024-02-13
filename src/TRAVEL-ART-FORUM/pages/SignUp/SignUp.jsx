@@ -20,7 +20,8 @@ const SignUp = () => {
     lastName: "",
     email: "",
     password: "",
-    isAdmin: false
+    isAdmin: false,
+    isBanned: false
   });
 
   // const storage = getStorage();
@@ -62,7 +63,8 @@ const SignUp = () => {
         form.firstName,
         form.lastName,
         form.email,
-        form.isAdmin
+        form.isAdmin,
+        form.isBanned
       );
 
       setContext({ user, userData: null });
