@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import { AppContext } from "../../providers/AppContext";
 import { useContext } from "react";
 import { logoutUser } from "../../services/auth.service";
-
+import DropdownMenu from "../DropdownMenu/DropdownMenu";
 
 const NavBar = () => {
   const { user, userData, city, setContext } = useContext(AppContext);
@@ -13,14 +13,12 @@ const NavBar = () => {
   };
 
   return user ? (
-    <>
-      <span>Welcome, {userData?.handle}</span>
-      <button onClick={signOut}>Sign Out</button><br />
+    <nav>
+      <DropdownMenu username={userData?.handle} userData={userData} signOut={signOut} />
       {city && <NavLink to="/hotels-by-city">See Hotels in {city}</NavLink>}
       <NavLink to="/create-post">Create post</NavLink>
       <NavLink to="/all-posts">All posts</NavLink>
-
-    </>
+    </nav>
   ) : (
     <nav>
       <NavLink to="/sign-in">Sign in</NavLink>
