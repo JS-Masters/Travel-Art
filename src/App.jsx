@@ -142,6 +142,7 @@ const App = (props) => {
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/all-posts" element={<AllPosts />} />
               <Route path="/single-post/:id" element={<SinglePost />} />
+            
             </Routes>
           </div>
         </BrowserRouter>

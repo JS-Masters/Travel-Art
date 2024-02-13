@@ -11,6 +11,7 @@ export default function AllPosts() {
   const navigate = useNavigate();
 
   const search = searchParams.get('search') || '';
+ 
 
   const setSearch = (value) => {
     setSearchParams({ search: value });
@@ -26,15 +27,17 @@ export default function AllPosts() {
       <label htmlFor="search">Search </label>
       <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br />
 
-      {posts.map((post) => (
-  <div key={post.id}>
-    <h3>
-    <Link to={`/single-post/${post.id}`}>{post.title || "No Title"}</Link>
-    </h3>
-    <p>{new Date(post.createdOn).toLocaleString()}</p>
-    
-  </div>
-))}
+      {posts.map((post) => {
+ // console.log(post)
+  return (
+    <div key={post.id}>
+      <h3>
+        <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+      </h3>
+      <p>{new Date(post.createdOn).toLocaleString()}</p>
     </div>
+  );
+})}
+</div>
   );
 }
