@@ -1,5 +1,25 @@
 .image-by-result {
-  width: 200px;
-  height:200px;
+  width: 400px;
+  height:300px;
   border-radius: 7px;
 }
+
+.image-by-result-div {
+  display: inline-block;
+}
+
+.website-link, .google-maps-link{
+  border: 2px solid white;
+  display: inline-block;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.signle-result-place {
+  display: inline-block;
+  margin-left: 20px;
+}
+
+/* .all-results {
+  display: grid;
+} */

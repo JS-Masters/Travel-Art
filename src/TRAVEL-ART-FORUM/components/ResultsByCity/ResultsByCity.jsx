@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { API_GOOGLE } from "../../data/constants";
 import { AppContext } from "../../providers/AppContext";
 import "./ResultsByCity.css"
+import { Link } from "react-router-dom";
 
 
 const ResultsByCity = ({ criteria }) => {
@@ -29,7 +30,9 @@ const ResultsByCity = ({ criteria }) => {
     })
       .then((response) => response.json())
       .then((data) => {
+
         console.log(data);
+
         setSearchResults(data.places);
         setLoading(false);
       })
@@ -52,15 +55,27 @@ const ResultsByCity = ({ criteria }) => {
   return (
     <div>
       <h2>{criteria.toUpperCase()} IN {city.toUpperCase()}:</h2>
+      <div className="all-results">
       {searchResults.length &&
         searchResults.map((result) => (
-          <div key={result.id}>
+          <div key={result.id} className="signle-result-place">
             <h1>{result.displayName.text}</h1>
-            <img className="image-by-result" src={renderPhoto(result.photos[0].name)} alt="Image" />
-
+            <div className="image-by-result-div">
+              <img className="image-by-result" src={renderPhoto(result.photos[0].name)} alt="Image" />
+            </div><br/>
+            <div className="website-link">
+            <Link to={result.websiteUri} target="_blank" rel="noopener noreferrer">Official Website</Link>
+            </div>
+            <div className="google-maps-link">
+            <Link to={result.googleMapsUri} target="_blank" rel="noopener noreferrer">See in Google Maps</Link>
+            </div>
+            
             <br />
           </div>
         ))}
+
+      </div>
+     
     </div>
   );
 };
