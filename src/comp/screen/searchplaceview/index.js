@@ -75,10 +75,14 @@ const SearchPlaceView = (props) => {
 	const { setContext } = useContext(AppContext);
 
 	const updateCityContext =  (newCity) => {
-		setContext((prevContext) => ({
-			...prevContext,
-			city: newCity
-		}));
+
+			setContext((prevContext) => ({
+				...prevContext,
+				citySearch: newCity,
+				cityClick: null
+			}));
+	
+		
 	}
 //----------------------------------------------------------------------
 

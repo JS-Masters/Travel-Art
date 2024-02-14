@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useRef } from "react";
+import React, { Fragment, useState, useEffect, useRef, useContext } from "react";
 
 import { Flex } from "@chakra-ui/react";
 
@@ -23,6 +23,7 @@ import {
 	fillCity,
 	stroke,
 } from "./globeutils";
+import { AppContext } from "../../../TRAVEL-ART-FORUM/providers/AppContext";
 
 const { MasterDrawerMenuType } = Constants;
 
@@ -65,28 +66,28 @@ const MasterGlobeView = (props) => {
 	});
 
 	const updateGlobeData = (data) =>
-		(globeDataObj.current = {
-			...globeDataObj.current,
-			...data,
-		});
+	(globeDataObj.current = {
+		...globeDataObj.current,
+		...data,
+	});
 
 	const updateElementRef = (data) =>
-		(elementRefObj.current = {
-			...elementRefObj.current,
-			...data,
-		});
+	(elementRefObj.current = {
+		...elementRefObj.current,
+		...data,
+	});
 
 	const updatePathRef = (data) =>
-		(pathRefObj.current = {
-			...pathRefObj.current,
-			...data,
-		});
+	(pathRefObj.current = {
+		...pathRefObj.current,
+		...data,
+	});
 
 	/*  Life-cycles Methods */
 
 	useEffect(() => {
 		initData();
-		return () => {};
+		return () => { };
 	}, []);
 
 	useEffect(() => {
@@ -773,9 +774,8 @@ const MasterGlobeView = (props) => {
 				let { projection } = elementRefObj.current;
 
 				let p = projection([d.long, d.lat]);
-				return `translate(${p[0] - markerSize / 2}, ${
-					p[1] - markerSize
-				}) `;
+				return `translate(${p[0] - markerSize / 2}, ${p[1] - markerSize
+					}) `;
 			})
 			.call(
 				d3
@@ -1110,9 +1110,8 @@ const MasterGlobeView = (props) => {
 				let { projection } = elementRefObj.current;
 
 				let p = projection([d.long, d.lat]);
-				return `translate(${p[0] - markerSize / 2}, ${
-					p[1] - markerSize
-				})`;
+				return `translate(${p[0] - markerSize / 2}, ${p[1] - markerSize
+					})`;
 			});
 	};
 
@@ -1402,7 +1401,7 @@ const MasterGlobeView = (props) => {
 					window.requestAnimationFrame(render);
 				};
 			})
-			.on("end", () => {});
+			.on("end", () => { });
 	};
 
 	const addClickedMarkerToFindCountry = async (event) => {
@@ -1477,7 +1476,7 @@ const MasterGlobeView = (props) => {
 					window.requestAnimationFrame(render);
 				};
 			})
-			.on("end", () => {});
+			.on("end", () => { });
 	};
 
 	const showPlaceItem = (placeItem) => {
@@ -1529,7 +1528,7 @@ const MasterGlobeView = (props) => {
 					window.requestAnimationFrame(render);
 				};
 			})
-			.on("end", () => {});
+			.on("end", () => { });
 	};
 
 	const reloadMarkerLineArray = () => {
@@ -1667,7 +1666,7 @@ const MasterGlobeView = (props) => {
 					flex={1}
 					bg={"#000"}
 					// zIndex={10}
-					className="globeContainer"
+					className="globeContainer"	
 				>
 					<canvas
 						ref={canvasRef}
@@ -1706,6 +1705,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(Actions.setUserConfig(userConfig)),
 		setUserPref: (userPref) => dispatch(Actions.setUserPref(userPref)),
 	};
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MasterGlobeView);

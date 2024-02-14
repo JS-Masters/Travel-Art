@@ -135,6 +135,8 @@ const PlaceInfoView = (props) => {
 		selectedPlaceCoordinate,
 	} = props;
 
+
+
 	const { colorMode } = useColorMode();
 
 	const [state, setState] = useState({
@@ -145,6 +147,7 @@ const PlaceInfoView = (props) => {
 		favPlaceArray: userPref?.favPlaceArray ?? [],
 		favPlaceDisplayArray: [],
 	});
+
 
 	const updateState = (data) =>
 		setState((preState) => ({ ...preState, ...data }));
@@ -180,6 +183,17 @@ const PlaceInfoView = (props) => {
 			});
 		}
 	}, [selectedPlaceCoordinate]);
+
+	const {  cityClick, setContext } = useContext(AppContext);
+	if ((!cityClick && props?.placeItem?.name) || (cityClick && props?.placeItem?.name !== cityClick)) {
+		setContext((prevContext) => ({
+			...prevContext,
+			cityClick: placeItem?.name,
+			citySearch: null
+		}));
+
+	
+	} 
 
 	/*  Public Interface Methods */
 
