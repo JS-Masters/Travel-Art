@@ -14,7 +14,13 @@ const fromPostsDocument = (snapshot, searchTerm) => {
       likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
     };
   })
-    .filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(p => {
+      return p.title.toLowerCase().includes(searchTerm.toLowerCase()) 
+      ||
+      p.author.toLowerCase().includes(searchTerm.toLowerCase()) 
+      ||
+      p.content.toLowerCase().includes(searchTerm.toLowerCase())
+    })
   return posts;
 }
 
