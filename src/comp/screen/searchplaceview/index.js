@@ -487,7 +487,11 @@ const SearchPlaceView = (props) => {
 		);
 
 		// console.log(searchResultArray);
-		updateCityContext(searchResultArray[0].name);
+		setTimeout(() => {
+			updateCityContext(searchResultArray[0].name);
+
+		},2000)
+		
 
 		updateState({
 			isSearching: false,

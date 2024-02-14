@@ -12,7 +12,7 @@ import AppManager from "./comp/utils/AppManager";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
 import { useAuthState } from "react-firebase-hooks/auth";
-import HotelsByCity from "./TRAVEL-ART-FORUM/pages/HotelsByCity";
+import ResultsByCity from "./TRAVEL-ART-FORUM/components/ResultsByCity/ResultsByCity";
 import NavBar from "./TRAVEL-ART-FORUM/components/NavBar/NavBar";
 import SignIn from "./TRAVEL-ART-FORUM/pages/SignIn/SignIn";
 import SignUp from "./TRAVEL-ART-FORUM/pages/SignUp/SignUp";
@@ -25,6 +25,8 @@ import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts"
 import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost"
 import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
+import DropdownMenu from "./TRAVEL-ART-FORUM/components/DropdownMenu/DropdownMenu";
+import { logoutUser } from "./TRAVEL-ART-FORUM/services/auth.service";
 
 
 const App = (props) => {
@@ -57,6 +59,10 @@ const App = (props) => {
     props.setIsMasterAppLoading(true);
   }, []);
 
+  const signOut = async () => {
+    await logoutUser();
+    setContext({ user: null, userData: null });
+  };
   /*  Public Interface Methods */
 
   /*  Validation Methods  */
@@ -117,7 +123,9 @@ const App = (props) => {
   return (
     <>
       <AppContext.Provider value={{ ...context, setContext }}>
+
         <BrowserRouter>
+          {context.user && <DropdownMenu username={context.userData?.handle} userData={context.userData} signOut={signOut} />}
           <div className="App">
             <Routes>
               <Route
@@ -125,7 +133,6 @@ const App = (props) => {
                 element={
                   <>
                     <NavBar />
-
                     <MasterContainer />
                     {isMasterAppLoading &&
                       !lodash.isNil(colorMode) &&
@@ -134,7 +141,8 @@ const App = (props) => {
                 }
               />
               <Route path="/manage-users" element={<Authenticated><ManageUsers /></Authenticated>} />
-              <Route path="/hotels-by-city" element={<HotelsByCity />} />
+              <Route path="/hotels-by-city" element={<ResultsByCity criteria={'Hotels'} />} />
+              <Route path="/restaurants-by-city" element={<ResultsByCity criteria={'Restaurants'} />} />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
@@ -142,7 +150,7 @@ const App = (props) => {
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/all-posts" element={<AllPosts />} />
               <Route path="/single-post/:id" element={<SinglePost />} />
-            
+
             </Routes>
           </div>
         </BrowserRouter>
