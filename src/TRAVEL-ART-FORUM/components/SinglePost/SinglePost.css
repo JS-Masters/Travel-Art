@@ -1,0 +1,30 @@
+.comments {
+  list-style: none;
+  padding: 0;
+}
+
+.comment {
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.comment-content {
+  margin-bottom: 10px;
+}
+
+.comment-actions button {
+  margin-right: 5px;
+}
+
+.replies {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.reply {
+  border: 1px solid #eee;
+  padding: 8px;
+  margin-bottom: 5px;
+}
