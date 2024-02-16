@@ -11,7 +11,6 @@ const DropdownMenu = ({
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
-  console.log(avatarUrl);
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
