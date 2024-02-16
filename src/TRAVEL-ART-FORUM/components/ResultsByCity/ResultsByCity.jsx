@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useContext } from "react";
-import { API_GOOGLE } from "../../data/constants";
+import { API_GOOGLE } from "../../../data/constants";  
 import { AppContext } from "../../providers/AppContext";
 import "./ResultsByCity.css"
 import { Link } from "react-router-dom";
@@ -30,8 +30,6 @@ const ResultsByCity = ({ criteria }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-
-        console.log(data);
 
         setSearchResults(data.places);
         setLoading(false);
@@ -69,7 +67,6 @@ const ResultsByCity = ({ criteria }) => {
               <div className="google-maps-link">
                 <Link to={result.googleMapsUri} target="_blank" rel="noopener noreferrer">See in Google Maps</Link>
               </div>
-
               <br />
             </div>
           ))}
