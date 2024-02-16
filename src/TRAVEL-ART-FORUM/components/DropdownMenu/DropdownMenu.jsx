@@ -1,17 +1,17 @@
 import { useState } from "react";
-import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const DropdownMenu = ({
   username = null,
-  userData = null,
+  avatarUrl = null,
   signOut = () => {},
 }) => {
-  const [isMenuOpen, setMenuOpen] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
-    setMenuOpen(!isMenuOpen);
+    setShowMenu(!showMenu);
   };
 
   return (
@@ -28,22 +28,27 @@ const DropdownMenu = ({
           style={{
             fontFamily: "monospace",
             fontSize: "20px",
-            margin: "10px 5px 0 0",
+            marginTop: "19px",
           }}
         >
           {username}
         </span>
-        {userData?.avatarUrl && (
+        {avatarUrl && (
           <img
-            style={{ height: "50px", width: "50px", borderRadius: "50%" }}
-            src={userData.avatarUrl}
+            style={{
+              height: "50px",
+              width: "50px",
+              borderRadius: "50%",
+              margin: "10px",
+            }}
+            src={avatarUrl}
           />
         )}
       </button>
-      {isMenuOpen && (
+      {showMenu && (
         <ul style={{ listStyle: "none" }} className="menu">
           <li onClick={() => navigate("/upload-form")}>Change Avatar</li>
-          <li>Edit profile</li>
+          <li onClick={() => navigate("/edit-profile")}>Edit profile</li>
           <li onClick={signOut}>Sign out</li>
         </ul>
       )}
@@ -53,7 +58,7 @@ const DropdownMenu = ({
 
 DropdownMenu.propTypes = {
   username: PropTypes.string,
-  userData: PropTypes.object,
+  avatarUrl: PropTypes.string,
   signOut: PropTypes.func.isRequired,
 };
 

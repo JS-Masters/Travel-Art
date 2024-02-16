@@ -21,13 +21,15 @@ import { auth } from "./TRAVEL-ART-FORUM/config/firebase-config";
 import { getUserData } from "./TRAVEL-ART-FORUM/services/users.service";
 import UploadForm from "./TRAVEL-ART-FORUM/pages/UploadForm/UploadForm";
 import CreatePost from "./TRAVEL-ART-FORUM/components/CreatePost/CreatePost";
-import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts"
-import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost"
+import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts";
+import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost";
 import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
+import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import DropdownMenu from "./TRAVEL-ART-FORUM/components/DropdownMenu/DropdownMenu";
 import { logoutUser } from "./TRAVEL-ART-FORUM/services/auth.service";
-
+import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
+import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -123,9 +125,14 @@ const App = (props) => {
   return (
     <>
       <AppContext.Provider value={{ ...context, setContext }}>
-
         <BrowserRouter>
-          {context.user && <DropdownMenu username={context.userData?.handle} userData={context.userData} signOut={signOut} />}
+          {context.user && (
+            <DropdownMenu
+              username={context.userData?.handle}
+              userData={context.userData}
+              signOut={signOut}
+            />
+          )}
           <div className="App">
             <Routes>
               <Route
@@ -140,10 +147,26 @@ const App = (props) => {
                   </>
                 }
               />
-              <Route path="/manage-users" element={<Authenticated><ManageUsers /></Authenticated>} />
-              <Route path="/hotels-by-city" element={<ResultsByCity criteria={'Hotels'} />} />
-              <Route path="/restaurants-by-city" element={<ResultsByCity criteria={'Restaurants'} />} />
-              <Route path="/things-to-do-by-city" element={<ResultsByCity criteria={'Things to do'} />} />
+              <Route
+                path="/manage-users"
+                element={
+                  <Authenticated>
+                    <ManageUsers />
+                  </Authenticated>
+                }
+              />
+              <Route
+                path="/hotels-by-city"
+                element={<ResultsByCity criteria={"Hotels"} />}
+              />
+              <Route
+                path="/restaurants-by-city"
+                element={<ResultsByCity criteria={"Restaurants"} />}
+              />
+              <Route
+                path="/things-to-do-by-city"
+                element={<ResultsByCity criteria={"Things to do"} />}
+              />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
@@ -151,7 +174,15 @@ const App = (props) => {
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/all-posts" element={<AllPosts />} />
               <Route path="/single-post/:id" element={<SinglePost />} />
-
+              <Route
+                path="/edit-profile"
+                element={
+                  <Loaded>
+                    <UpdateProfile />
+                  </Loaded>
+                }
+              />
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </div>
         </BrowserRouter>
