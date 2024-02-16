@@ -7,17 +7,20 @@ export const getAllTags = () => {
 };
 
 export const updateAllTags = () => {
+    set(ref(db, 'tags'), null);
+
     get(ref(db, `posts/`))
         .then((snapshot) => {
-            snapshot.forEach((childSnapshot) => {
-                const post = childSnapshot.val();
+            const allPosts = snapshot.val();
+            Object.keys(allPosts).forEach((postID) => {
+                const post = allPosts[postID];
                 const tags = post.tags;
 
-                if (tags === undefined || tags === null) {
+                if (!tags) {
                     return;
                 }
 
-                tags.forEach((tag) => {
+                tags.split(' ').forEach((tag) => {
                     get(ref(db, `tags/${tag}`))
                         .then((tagSnapshot) => {
                             if (tagSnapshot.exists()) {

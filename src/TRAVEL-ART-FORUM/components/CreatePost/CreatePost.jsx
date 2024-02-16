@@ -8,8 +8,7 @@ import {
 } from "../../services/posts.service";
 import { AppContext } from "../../providers/AppContext";
 import PostTags from "../PostTags/PostTags";
-import { getAllTags } from "../../services/tag.service";
-import { set } from "lodash";
+import { getAllTags, updateAllTags } from "../../services/tag.service";
 
 const CreatePost = () => {
   const { userData } = useContext(AppContext);
@@ -43,6 +42,8 @@ const CreatePost = () => {
       ...post,
       tags: [...post.tags, tag],
     });
+
+    updateAllTags();
   };
 
   const removeTag = (event) => {
@@ -61,6 +62,8 @@ const CreatePost = () => {
       ...post,
       tags: post.tags.filter((t) => t !== tag),
     });
+
+    updateAllTags();
   };
 
   // Implemented by Memo

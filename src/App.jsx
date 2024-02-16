@@ -29,7 +29,7 @@ import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import DropdownMenu from "./TRAVEL-ART-FORUM/components/DropdownMenu/DropdownMenu";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
-import { updateAllTags } from "./TRAVEL-ART-FORUM/services/tag.service";
+
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -59,7 +59,6 @@ const App = (props) => {
 
   useEffect(() => {
     props.setIsMasterAppLoading(true);
-    updateAllTags();
   }, []);
 
   /*  Public Interface Methods */
