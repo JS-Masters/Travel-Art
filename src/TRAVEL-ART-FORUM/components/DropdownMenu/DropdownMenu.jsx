@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PropTypes from "prop-types";
+import { logoutUser } from "../../services/auth.service";
 
 const DropdownMenu = ({
   username = null,
   avatarUrl = null,
-  signOut = () => {},
+  setContext = () => {},
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
     setShowMenu(!showMenu);
+  };
+
+  const signOut = async () => {
+    await logoutUser();
+    setContext({ user: null, userData: null });
   };
 
   return (
@@ -59,7 +65,7 @@ const DropdownMenu = ({
 DropdownMenu.propTypes = {
   username: PropTypes.string,
   avatarUrl: PropTypes.string,
-  signOut: PropTypes.func.isRequired,
+  setContext: PropTypes.func.isRequired,
 };
 
 export default DropdownMenu;

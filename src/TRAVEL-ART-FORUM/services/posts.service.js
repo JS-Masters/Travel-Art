@@ -20,9 +20,10 @@ const fromPostsDocument = (snapshot, searchTerm) => {
 
  
 
-export const addPost = async (authorId, title, content) => {
+export const addPost = async (authorId, title, tags, content) => {
   const newPostRef = push(ref(db, 'posts'), {
     title,
+    tags,
     content,
     createdOn: Date.now(),
     authorId,

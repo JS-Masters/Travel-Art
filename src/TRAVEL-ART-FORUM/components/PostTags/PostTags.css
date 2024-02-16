@@ -1,0 +1,40 @@
+.select-kit-header {
+  border-color: blue;
+  outline: 1px solid blue;
+  outline-offset: 0;
+  display: inline-block;
+  align-items: stretch;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.select-kit-header-wrapper {
+  border: "1px solid white";
+  display: "inline-block";
+  padding: "5px";
+}
+
+.tags-menu {
+  text-align: center;
+  width: 210px;
+  padding: "5px";
+  color: black;
+  background-color: white;
+  ul {
+    list-style: none;
+  }
+  input {
+    width: 90%;
+    padding: 5px;
+    margin: 5px 0;
+    color: white;
+  }
+}
+
+.formatted-selection {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: 160px;
+}

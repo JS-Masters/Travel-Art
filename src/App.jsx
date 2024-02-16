@@ -27,9 +27,9 @@ import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import DropdownMenu from "./TRAVEL-ART-FORUM/components/DropdownMenu/DropdownMenu";
-import { logoutUser } from "./TRAVEL-ART-FORUM/services/auth.service";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
+import { updateAllTags } from "./TRAVEL-ART-FORUM/services/tag.service";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -59,12 +59,9 @@ const App = (props) => {
 
   useEffect(() => {
     props.setIsMasterAppLoading(true);
+    updateAllTags();
   }, []);
 
-  const signOut = async () => {
-    await logoutUser();
-    setContext({ user: null, userData: null });
-  };
   /*  Public Interface Methods */
 
   /*  Validation Methods  */
@@ -130,7 +127,7 @@ const App = (props) => {
             <DropdownMenu
               username={context.userData?.handle}
               userData={context.userData}
-              signOut={signOut}
+              setContext={setContext}
             />
           )}
           <div className="App">
