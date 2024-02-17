@@ -7,7 +7,7 @@ import { db } from "../../config/firebase-config";
 import "./SinglePost.css"
 
 
-const SinglePost = ({reload, setReload}) => {
+const SinglePost = ({ reload, setReload }) => {
 
   const { userData } = useContext(AppContext);
 
@@ -38,7 +38,7 @@ const SinglePost = ({reload, setReload}) => {
   });
   const [replyMade, setReplyMade] = useState(false);
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(false);
-
+  const [commentContentEdit, setCommentContentEdit] = useState('');
   const inputRef = useRef();
   const { id } = useParams();
 
@@ -196,6 +196,27 @@ const SinglePost = ({reload, setReload}) => {
             }}>Like</button>}
             {'likedBy' in comment && Object.keys(comment.likedBy).includes(userData.handle) && <button onClick={() => toggleCommentDisike(comment.id)}>Disike</button>}
             <br />
+            {userData.handle === comment.authorHandle && (
+              <div>
+                <input
+                  value={commentContentEdit}
+                  onChange={(e) => setCommentContentEdit(e.target.value)}
+                  type="text"
+                  name="edit-comment"
+                  id="edit-comment"
+                />
+                <button onClick={() => {
+                  editComment(comment.id).then(() => setReload(prev => !prev));
+                }}>Edit</button>
+                
+                <button onClick={() => {
+                  deleteComment(comment.id).then(() => setReload(prev => !prev));
+                }}>Delete</button>
+               
+
+              </div>
+            )}
+             <br />
             <input
               ref={inputRef}
               onChange={(e) => setCurrentReply({
@@ -238,17 +259,8 @@ const SinglePost = ({reload, setReload}) => {
                 ))}
               </div>
             )}
-            {userData.handle === comment.authorHandle && (
-              <div>
-                {/* <button onClick={() => editComment(comment.id)}>Edit</button> */}
-                <br />
-                <button onClick={() => {
-                  deleteComment(comment.id).then(() => setReload(prev => !prev));
-                }}>Delete</button>
-                <br />
-
-              </div>
-            )}
+            <br />
+           
             {/* <button onClick={() => replyToComment(comment.id)}>Reply</button> */}
           </div >
         ))}
@@ -282,12 +294,23 @@ const SinglePost = ({reload, setReload}) => {
     } catch (error) {
       console.error('Error while deleting comment:', error);
     }
-  }
+  };
+
+  const editComment = async (commentID) => {
+    const commentRef = await get(ref(db, `posts/${id}/comments/${commentID}`))
+
+    if (!commentRef.exists()) {
+      throw new Error('WRONG PROCCESS !!!')
+    }
+    const commentVal = commentRef.val();
+
+    await update(ref(db), { [`posts/${id}/comments/${commentID}`]: { ...commentVal, content: commentContentEdit} });
+  };
 
   return (
-    
+
     <div>
-      {post &&  (
+      {post && (
         <div>
           <h1>{post.title}</h1>
           <p>{post.content}</p>
