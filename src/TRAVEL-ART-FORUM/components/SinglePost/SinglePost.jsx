@@ -178,6 +178,7 @@ const SinglePost = ({ reload, setReload }) => {
   };
 
   const renderComments = (comments) => {
+
     return (
       <>
         {comments.map((comment) => (
@@ -196,7 +197,7 @@ const SinglePost = ({ reload, setReload }) => {
             }}>Like</button>}
             {'likedBy' in comment && Object.keys(comment.likedBy).includes(userData.handle) && <button onClick={() => toggleCommentDisike(comment.id)}>Disike</button>}
             <br />
-            {userData.handle === comment.authorHandle && (
+            {(userData.handle === comment.authorHandle || userData.isAdmin === true ) && (
               <div>
                 <input
                   value={commentContentEdit}
@@ -216,6 +217,7 @@ const SinglePost = ({ reload, setReload }) => {
 
               </div>
             )}
+            
              <br />
             <input
               ref={inputRef}
@@ -307,6 +309,17 @@ const SinglePost = ({ reload, setReload }) => {
     await update(ref(db), { [`posts/${id}/comments/${commentID}`]: { ...commentVal, content: commentContentEdit} });
   };
 
+
+  const deletePost = async (postID) => {
+    try {
+      const docRef = ref(db, `posts/${postID}`);
+      console.log(docRef);
+      await remove(docRef);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+// console.log(post.id); 
   return (
 
     <div>
@@ -322,6 +335,9 @@ const SinglePost = ({ reload, setReload }) => {
 
             {likedByCurrentUser ? 'Dislike' : 'Like'}
           </button>
+          {(userData.handle === post.authorHandle || userData.isAdmin === true ) && <button onClick={() => {
+                  deletePost(post.id).then(() => setReload(prev => !prev));
+                }}>Delete Post</button>}
           <br />
           <br />
           <h2>Comments:</h2>

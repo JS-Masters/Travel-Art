@@ -43,7 +43,7 @@ export const getPostById = async (id) => {
     if (!post.exists()) {
       throw new Error(`Post with id ${id} does not exist!`);
     }
-
+console.log(post.val());
     return post.val();
 
   } catch (error) {

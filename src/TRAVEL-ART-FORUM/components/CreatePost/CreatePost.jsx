@@ -9,6 +9,8 @@ import {
 import { AppContext } from "../../providers/AppContext";
 import PostTags from "../PostTags/PostTags";
 import { getAllTags, updateAllTags } from "../../services/tag.service";
+import { get, ref, update } from "firebase/database";
+import { db } from "../../config/firebase-config";
 
 const CreatePost = () => {
   
@@ -85,7 +87,7 @@ const CreatePost = () => {
       return alert("Content must be between 32 and 8192 characters long");
     }
 
-    await addPost(
+    const postID = await addPost(
       userData.handle,
       post.title,
       post.tags.join(" "),
@@ -93,6 +95,13 @@ const CreatePost = () => {
       {},
       {}
     );
+
+
+const newPost = await get(ref(db, `posts/${postID}`));
+const postVal = newPost.val();
+const result = {...postVal, id: postID};
+await update(ref(db), { [`posts/${postID}`]: result });
+
 
     setPost({
       title: "",
