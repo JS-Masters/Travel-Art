@@ -18,6 +18,7 @@ const DropdownMenu = ({
   const signOut = async () => {
     await logoutUser();
     setContext({ user: null, userData: null });
+    navigate("/");
   };
 
   return (
