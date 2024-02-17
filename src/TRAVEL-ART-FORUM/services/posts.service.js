@@ -12,42 +12,41 @@ const fromPostsDocument = (snapshot, searchTerm) => {
       id: key,
       createdOn: new Date(post.createdOn),
       likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
+      // author: 
     };
   })
     .filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()))
   return posts;
 }
 
- 
 
-export const addPost = async (authorId, title, tags, content) => {
+
+export const addPost = async (authorHandle, title, tags, content) => {
   const newPostRef = push(ref(db, 'posts'), {
     title,
     tags,
     content,
-    createdOn: Date.now(),
-    authorId,
+    createdOn: new Date().toLocaleDateString(),
+    authorHandle,
     likes: 0,
-    likedBy: [],
-    comments: [] 
+    likedBy: [1]
   });
 
   return newPostRef.key; // Връщаме ключа на новия пост
 };
-export const getPostById = (id) => {
-  return get(ref(db, `posts/${id}`))
-    .then(result => {
-      if (!result.exists()) {
-        throw new Error(`Post with id ${id} does not exist!`);
-      }
+export const getPostById = async (id) => {
+  try {
+    const post = await get(ref(db, `posts/${id}`));
 
-      const post = result.val();
-      post.id = id;
-      post.createdOn = new Date(post.createdOn);
-      post.likedBy = post.likedBy !== undefined ? post.likedBy : [];
+    if (!post.exists()) {
+      throw new Error(`Post with id ${id} does not exist!`);
+    }
 
-      return post;
-    });
+    return post.val();
+
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const getPostsByAuthor = (handle) => {
@@ -77,36 +76,30 @@ export const likePost = async (handle, postId) => {
 
   if (postSnapshot.exists()) {
     const post = postSnapshot.val();
+    const updatedLikedBy = [...post.likedBy, handle];
 
-    // Проверка дали post.likedBy е дефинирано
-    if (!post.likedBy || !post.likedBy.includes(handle)) {
-      const updatedLikedBy = [...(post.likedBy || []), handle];
-
-      // Обнови брояча на харесванията във Firebase
-      await update(ref(db, `posts/${postId}`), {
-        likes: updatedLikedBy.length,
-        likedBy: updatedLikedBy,
-      });
-    }
+    await update(ref(db, `posts/${postId}`), {
+      likes: post.likes + 1,
+      likedBy: updatedLikedBy
+    });
   }
 };
 
 export const dislikePost = async (handle, postId) => {
-  // При дислайк също трябва да обновим брояча
   const postRef = ref(db, `posts/${postId}`);
   const postSnapshot = await get(postRef);
 
   if (postSnapshot.exists()) {
     const post = postSnapshot.val();
-    const updatedLikedBy = post.likedBy.slice(0, -1);
+    const updatedLikedBy = post.likedBy.filter((u) => u !== handle);
 
-    // Обнови брояча на харесванията и likedBy във Firebase
     await update(ref(db, `posts/${postId}`), {
-      likes: updatedLikedBy.length,
-      likedBy: updatedLikedBy,
+      likes: post.likes - 1,
+      likedBy: updatedLikedBy
     });
   }
 };
+
 
 export const getLikedPosts = (handle) => {
   return get(ref(db, `users/${handle}`))
@@ -159,9 +152,11 @@ export const getPostLikesWithUsernames = async (postId) => {
 export const getPostLikes = async (postId) => {
   return get(ref(db, `posts/${postId}/likedBy`))
     .then(snapshot => {
-      if (!snapshot.exists()) return [];
+      if (!snapshot.exists()) {
+        return ([]);
+      }
 
-      return Object.keys(snapshot.val());
+      return Object.values(snapshot.val());
     });
 }
 
@@ -192,20 +187,20 @@ export const getUserByHandle = async (handle) => {
 export const addComment = async (postId, authorId, content) => {
 
   if (content === undefined) {
-      throw new Error("Content is undefined");
+    throw new Error("Content is undefined");
   }
 
   const newCommentRef = push(ref(db, `posts/${postId}/comments`), {
-      content: content,
-      authorId: authorId,
-      createdOn: Date.now(),
-      replays:[]
+    content: content,
+    authorId: authorId,
+    createdOn: Date.now(),
+    replays: []
   });
 
   return newCommentRef.key; // Връщаме ключа на новия коментар
 };
 
-export const readComments = async (postId) => {
+export const readComments = async (postId, userHandle, userEmail) => {
   return get(ref(db, `posts/${postId}/comments`))
     .then(async snapshot => {
       if (!snapshot.exists()) return [];
@@ -216,16 +211,16 @@ export const readComments = async (postId) => {
 
       const commentPromises = commentKeys.map(async key => {
         const comment = comments[key];
-      
+
         // Проверка дали потребителят съществува
         try {
-          const user = await getUserById(comment.authorId);
-      
+          // const user = await getUserById(comment.authorId);
+
           return {
             ...comment,
             id: key,
             createdOn: new Date(comment.createdOn),
-            authorName: user.displayName || user.email || 'Unknown',
+            authorName: userHandle || userEmail || 'Unknown',
           };
         } catch (error) {
           console.error(`Error fetching user with id ${comment.authorId}:`, error);
@@ -238,10 +233,10 @@ export const readComments = async (postId) => {
           };
         }
       });
-      
+
       //  всички коментари да бъдат заредени
       const loadedComments = await Promise.all(commentPromises);
-      
+
       return loadedComments;
     });
 };

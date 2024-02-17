@@ -9,6 +9,7 @@ import { AppContext } from "../../providers/AppContext";
 
 
 export default function AllPosts() {
+
   const [posts, setPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [clickTrigger, setClickTrigger] = useState(false);
@@ -111,9 +112,10 @@ export default function AllPosts() {
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.author}</p>
+          <p>Posted by: {post.authorHandle}</p>
+          {post.tags && <p>Tags: {post.tags}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.author && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : isCheckedSortByLikes ? sortPostsByLikes(posts).map((post) => (
         <div key={post.id}>
@@ -121,9 +123,10 @@ export default function AllPosts() {
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.author}</p>
+          <p>Posted by: {post.authorHandle}</p>
+          {post.tags && <p>Tags: {post.tags}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.author && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : isCheckedSortByDate ? sortPostsByDate(posts).map((post) => (
         <div key={post.id}>
@@ -131,9 +134,10 @@ export default function AllPosts() {
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.author}</p>
+          <p>Posted by: {post.authorHandle}</p>
+          {post.tags && <p>Tags: {post.tags}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.author && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : posts.map((post) => (
         <div key={post.id}>
@@ -141,9 +145,10 @@ export default function AllPosts() {
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.author}</p>
+          <p>Posted by: {post.authorHandle}</p>
+          {post.tags && <p>Tags: {post.tags}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.author && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       ))}
     </div>

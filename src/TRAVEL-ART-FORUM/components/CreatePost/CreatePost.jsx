@@ -11,6 +11,7 @@ import PostTags from "../PostTags/PostTags";
 import { getAllTags, updateAllTags } from "../../services/tag.service";
 
 const CreatePost = () => {
+  
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState({
     title: "",
@@ -69,12 +70,12 @@ const CreatePost = () => {
   // Implemented by Memo
   // -------------------------------------- //
 
-  const updatePost = (value, key) => {
-    setPost({
-      ...post,
-      [key]: value,
-    });
-  };
+  // const updatePost = (value, key) => {
+  //   setPost({
+  //     ...post,
+  //     [key]: value,
+  //   });
+  // };
 
   const createPost = async () => {
     if (post.title.length < 16 || post.title.length > 64) {
