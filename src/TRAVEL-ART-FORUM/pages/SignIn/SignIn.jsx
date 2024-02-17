@@ -32,7 +32,7 @@ const SignIn = () => {
       const credentials = await loginUser(form.email, form.password);
       setContext({ user: credentials.user, userData: null });
     } catch (error) {
-      setMessage(error.message);
+      setMessage('Invalid email or password');
     }
   };
 

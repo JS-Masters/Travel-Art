@@ -47,15 +47,13 @@ const SignUp = () => {
       return;
     }
 
-    // TODO: Validate if email exist in the system and is valid!
+    const user = await getUserByHandle(form.handle);
+    if (user.exists()) {
+      setMessage(`Handle @${form.handle} already exists`);
+      return;
+    }
 
     try {
-      const user = await getUserByHandle(form.handle);
-      if (user.exists()) {
-        setMessage(`Handle @${form.handle} already exists`);
-        return;
-      }
-
       const credentials = await registerUser(form.email, form.password);
       await createUserHandle(
         credentials.user.uid,
@@ -70,7 +68,7 @@ const SignUp = () => {
       setContext({ user, userData: null });
       navigate("/");
     } catch (error) {
-      setMessage(error.message);
+      setMessage('Invalid email or password');
     }
   };
 

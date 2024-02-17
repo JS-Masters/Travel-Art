@@ -46,7 +46,6 @@ const CreatePost = () => {
       tags: [...post.tags, tag],
     });
 
-    updateAllTags();
   };
 
   const removeTag = (event) => {
@@ -66,7 +65,6 @@ const CreatePost = () => {
       tags: post.tags.filter((t) => t !== tag),
     });
 
-    updateAllTags();
   };
 
   // Implemented by Memo
@@ -108,6 +106,8 @@ await update(ref(db), { [`posts/${postID}`]: result });
       tags: [],
       content: "",
     });
+
+    updateAllTags();
   };
 
   return (

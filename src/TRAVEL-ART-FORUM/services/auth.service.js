@@ -16,13 +16,13 @@ export const logoutUser = () => {
 export const changeEmail = () => {
 
   const auth = getAuth();
-const user = auth.currentUser;
+  const user = auth.currentUser;
 
-user.updateEmail("newemail@example.com")
-  .then(() => {
-    // Email updated!
-  })
-  .catch((error) => {
-    // An error occurred
-  });
+  user.updateEmail("newemail@example.com")
+    .then(() => {
+      // Email updated!
+    })
+    .catch((error) => {
+      // An error occurred
+    });
 }
