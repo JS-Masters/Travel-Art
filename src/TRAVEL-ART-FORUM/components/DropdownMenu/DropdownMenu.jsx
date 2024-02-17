@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import PropTypes from "prop-types";
 import { logoutUser } from "../../services/auth.service";
 
 const DropdownMenu = ({
@@ -34,6 +34,7 @@ const DropdownMenu = ({
         <span
           style={{
             fontFamily: "monospace",
+            fontStyle: "italic",
             fontSize: "20px",
             marginTop: "19px",
           }}
@@ -54,9 +55,24 @@ const DropdownMenu = ({
       </button>
       {showMenu && (
         <ul style={{ listStyle: "none" }} className="menu">
-          <li onClick={() => navigate("/upload-form")}>Change Avatar</li>
-          <li onClick={() => navigate("/edit-profile")}>Edit profile</li>
-          <li onClick={signOut}>Sign out</li>
+          <li
+            style={{ cursor: "pointer", fontStyle: "italic" }}
+            onClick={() => navigate("/upload-form")}
+          >
+            Change Avatar
+          </li>
+          <li
+            style={{ cursor: "pointer", fontStyle: "italic" }}
+            onClick={() => navigate("/edit-profile")}
+          >
+            Edit profile
+          </li>
+          <li
+            style={{ cursor: "pointer", fontStyle: "italic" }}
+            onClick={signOut}
+          >
+            Sign out
+          </li>
         </ul>
       )}
     </div>

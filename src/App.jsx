@@ -26,7 +26,6 @@ import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost";
 import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
-import DropdownMenu from "./TRAVEL-ART-FORUM/components/DropdownMenu/DropdownMenu";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
 
@@ -122,13 +121,6 @@ const App = (props) => {
     <>
       <AppContext.Provider value={{ ...context, setContext }}>
         <BrowserRouter>
-          {context.userData && (
-            <DropdownMenu
-              username={context.userData.handle}
-              avatarUrl={context.userData.avatarUrl}
-              setContext={setContext}
-            />
-          )}
           <div className="App">
             <Routes>
               <Route
