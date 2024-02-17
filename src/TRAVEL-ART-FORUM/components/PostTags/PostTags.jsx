@@ -88,7 +88,7 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
 };
 
 PostTags.propTypes = {
-  allTags: PropTypes.object.isRequired,
+  // allTags: PropTypes.object.isRequired,
   selectedTags: PropTypes.array.isRequired,
   addTag: PropTypes.func.isRequired,
   removeTag: PropTypes.func.isRequired,

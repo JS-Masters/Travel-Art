@@ -89,7 +89,9 @@ const CreatePost = () => {
       userData.handle,
       post.title,
       post.tags.join(" "),
-      post.content
+      post.content,
+      {},
+      {}
     );
 
     setPost({

@@ -28,3 +28,7 @@
   padding: 8px;
   margin-bottom: 5px;
 }
+
+.comment-info {
+  border: 2px solid blue;
+}

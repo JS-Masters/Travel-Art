@@ -20,8 +20,8 @@ const fromPostsDocument = (snapshot, searchTerm) => {
 }
 
 
-
-export const addPost = async (authorHandle, title, tags, content) => {
+// likedBy and comments has 1 in them in order to keep the property in Firebase(it is not created when set to []).
+export const addPost = async (authorHandle, title, tags, content, comments, replies) => {
   const newPostRef = push(ref(db, 'posts'), {
     title,
     tags,
@@ -29,7 +29,9 @@ export const addPost = async (authorHandle, title, tags, content) => {
     createdOn: new Date().toLocaleDateString(),
     authorHandle,
     likes: 0,
-    likedBy: [1]
+    likedBy: [1],
+    comments,
+    replies
   });
 
   return newPostRef.key; // Връщаме ключа на новия пост

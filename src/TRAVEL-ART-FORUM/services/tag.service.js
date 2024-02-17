@@ -7,7 +7,7 @@ export const getAllTags = () => {
 };
 
 export const updateAllTags = () => {
-    set(ref(db, 'tags'), null);
+    set(ref(db, 'tags'), {'proba' : 1});
 
     get(ref(db, `posts/`))
         .then((snapshot) => {
