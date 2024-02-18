@@ -6,34 +6,16 @@ export const getAllTags = () => {
     return get(ref(db, `tags/`));
 };
 
-export const updateAllTags = () => {
-    set(ref(db, 'tags'), {'proba' : 1});
-
-    get(ref(db, `posts/`))
-        .then((snapshot) => {
-            const allPosts = snapshot.val();
-            Object.keys(allPosts).forEach((postID) => {
-                const post = allPosts[postID];
-                const tags = post.tags;
-
-                if (!tags) {
-                    return;
+export const updateAllTags = (tags = []) => {
+    tags.forEach((tag) => {
+        get(ref(db, `tags/${tag}`))
+            .then((tagSnapshot) => {
+                if (tagSnapshot.exists()) {
+                    const count = tagSnapshot.val() + 1;
+                    set(ref(db, `tags/${tag}`), count);
+                } else {
+                    set(ref(db, `tags/${tag}`), 1);
                 }
-
-                tags.split(' ').forEach((tag) => {
-                    get(ref(db, `tags/${tag}`))
-                        .then((tagSnapshot) => {
-                            if (tagSnapshot.exists()) {
-                                const count = tagSnapshot.val() + 1;
-                                set(ref(db, `tags/${tag}`), count);
-                            } else {
-                                set(ref(db, `tags/${tag}`), 1);
-                            }
-                        })
-                })
             })
-        });
-
-
+    });
 };
-

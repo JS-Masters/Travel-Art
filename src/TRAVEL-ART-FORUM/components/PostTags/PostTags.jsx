@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { CloseIcon, PlusSquareIcon } from "@chakra-ui/icons";
-import { IconButton } from "@chakra-ui/react";
+import { IconButton, Tag } from "@chakra-ui/react";
 import { useState } from "react";
 import { v4 } from "uuid";
 import "./PostTags.css";
@@ -33,17 +33,21 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
         />
         <div className="selected-content">
           {selectedTags.map((tag) => (
-            <button
-              key={v4()}
-              onClick={removeTag}
-              style={{
-                margin: "1px 2px",
-                padding: "0 3px",
-                border: "1px solid white",
-              }}
-            >
-              {tag} <CloseIcon style={{ width: "10px" }} />
-            </button>
+            <Tag key={v4()} onClick={removeTag} style={{cursor: 'pointer', backgroundColor: 'darkgray', color: 'red'}}>
+              {tag} <CloseIcon style={{ width: "9px", marginLeft: '3px' }} />
+            </Tag>
+
+            // <button
+            //   key={v4()}
+            //   onClick={removeTag}
+            //   style={{
+            //     margin: "1px 2px",
+            //     padding: "0 3px",
+            //     border: "1px solid white",
+            //   }}
+            // >
+            //   {tag} <CloseIcon style={{ width: "10px" }} />
+            // </button>
           ))}
         </div>
         <ul>

@@ -26,7 +26,7 @@ export const addPost = async (authorHandle, title, tags, content, comments, repl
     title,
     tags,
     content,
-    createdOn: new Date().toLocaleDateString(),
+    createdOn: Date.now(),
     authorHandle,
     likes: 0,
     likedBy: [1],
@@ -43,7 +43,7 @@ export const getPostById = async (id) => {
     if (!post.exists()) {
       throw new Error(`Post with id ${id} does not exist!`);
     }
-console.log(post.val());
+    console.log(post.val());
     return post.val();
 
   } catch (error) {

@@ -13,7 +13,6 @@ import { get, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 
 const CreatePost = () => {
-  
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState({
     title: "",
@@ -45,7 +44,6 @@ const CreatePost = () => {
       ...post,
       tags: [...post.tags, tag],
     });
-
   };
 
   const removeTag = (event) => {
@@ -64,7 +62,6 @@ const CreatePost = () => {
       ...post,
       tags: post.tags.filter((t) => t !== tag),
     });
-
   };
 
   // Implemented by Memo
@@ -94,12 +91,12 @@ const CreatePost = () => {
       {}
     );
 
+    const newPost = await get(ref(db, `posts/${postID}`));
+    const postVal = newPost.val();
+    const result = { ...postVal, id: postID };
+    await update(ref(db), { [`posts/${postID}`]: result });
 
-const newPost = await get(ref(db, `posts/${postID}`));
-const postVal = newPost.val();
-const result = {...postVal, id: postID};
-await update(ref(db), { [`posts/${postID}`]: result });
-
+    updateAllTags(post.tags);
 
     setPost({
       title: "",
@@ -107,10 +104,8 @@ await update(ref(db), { [`posts/${postID}`]: result });
       content: "",
     });
 
-    updateAllTags();
-
     // От Цвети - ползвам началния линк //
-  window.location.href = "http://localhost:3001/";
+    window.location.href = "http://localhost:3001/";
   };
 
   return (
@@ -151,7 +146,6 @@ await update(ref(db), { [`posts/${postID}`]: result });
       )}
     </>
   );
-
 };
 
 export default CreatePost;
