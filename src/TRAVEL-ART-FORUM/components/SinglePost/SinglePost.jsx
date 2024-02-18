@@ -42,6 +42,10 @@ const SinglePost = ({ reload, setReload }) => {
   const inputRef = useRef();
   const { id } = useParams();
 
+  // от Цвети нови състояния: 
+  const [editingPost, setEditingPost] = useState(false);
+  const [editedPostContent, setEditedPostContent] = useState('');
+
 
   useEffect(() => {
     updatePost();
@@ -197,7 +201,7 @@ const SinglePost = ({ reload, setReload }) => {
             }}>Like</button>}
             {'likedBy' in comment && Object.keys(comment.likedBy).includes(userData.handle) && <button onClick={() => toggleCommentDisike(comment.id)}>Disike</button>}
             <br />
-            {(userData.handle === comment.authorHandle || userData.isAdmin === true ) && (
+            {(userData.handle === comment.authorHandle || userData.isAdmin === true) && (
               <div>
                 <input
                   value={commentContentEdit}
@@ -209,16 +213,16 @@ const SinglePost = ({ reload, setReload }) => {
                 <button onClick={() => {
                   editComment(comment.id).then(() => setReload(prev => !prev));
                 }}>Edit</button>
-                
+
                 <button onClick={() => {
                   deleteComment(comment.id).then(() => setReload(prev => !prev));
                 }}>Delete</button>
-               
+
 
               </div>
             )}
-            
-             <br />
+
+            <br />
             <input
               ref={inputRef}
               onChange={(e) => setCurrentReply({
@@ -262,7 +266,7 @@ const SinglePost = ({ reload, setReload }) => {
               </div>
             )}
             <br />
-           
+
             {/* <button onClick={() => replyToComment(comment.id)}>Reply</button> */}
           </div >
         ))}
@@ -306,7 +310,7 @@ const SinglePost = ({ reload, setReload }) => {
     }
     const commentVal = commentRef.val();
 
-    await update(ref(db), { [`posts/${id}/comments/${commentID}`]: { ...commentVal, content: commentContentEdit} });
+    await update(ref(db), { [`posts/${id}/comments/${commentID}`]: { ...commentVal, content: commentContentEdit } });
   };
 
 
@@ -319,13 +323,59 @@ const SinglePost = ({ reload, setReload }) => {
       console.log(error.message);
     }
   };
-// console.log(post.id); 
+  // console.log(post.id); 
+
+  // Цвети - нова функция за рендериране на поста
+  const renderPost = () => {
+    return (
+      <>
+        <div>
+          
+          {(userData.handle === post.authorHandle || userData.isAdmin === true) && (
+            <div>
+              {editingPost ? (
+                <>
+                  <input
+                    value={editedPostContent}
+                    onChange={(e) => setEditedPostContent(e.target.value)}
+                    type="text"
+                    name="edit-post"
+                    id="edit-post"
+                  />
+                  <button onClick={() => {
+                    editPost().then(() => {
+                      setEditingPost(false);
+                      setReload(prev => !prev);
+                    });
+                  }}>Save</button>
+                  <button onClick={() => setEditingPost(false)}>Cancel</button>
+                </>
+              ) : (
+                <button onClick={() => {
+                  setEditedPostContent(post.content);
+                  setEditingPost(true);
+                }}>Edit Post</button>
+              )}
+            </div>
+          )}
+        </div>
+      </>
+    );
+  };
+
+  // Цвети - метод за редакция на пост
+  const editPost = async () => {
+    await update(ref(db, `posts/${id}`), { content: editedPostContent });
+    // Обновете постовете след редакция
+    updatePost();
+  };
+
   return (
 
     <div>
       {post && (
         <div>
-          <h1>{post.title}</h1>
+           <h1>{post.title}</h1>
           <p>{post.content}</p>
           <p>Author: {post.authorHandle}</p>
           <p>Created on: {post.createdOn.toLocaleString()}</p>
@@ -335,13 +385,13 @@ const SinglePost = ({ reload, setReload }) => {
 
             {likedByCurrentUser ? 'Dislike' : 'Like'}
           </button>
-          {(userData.handle === post.authorHandle || userData.isAdmin === true ) && <button onClick={() => {
-                  deletePost(post.id).then(() => setReload(prev => !prev));
-                }}>Delete Post</button>}
+          {(userData.handle === post.authorHandle || userData.isAdmin === true) && <button onClick={() => {
+            deletePost(post.id).then(() => setReload(prev => !prev));
+          }}>Delete Post</button>}
+          {renderPost()}
           <br />
           <br />
           <h2>Comments:</h2>
-
           {renderComments(commentsArr)}
           <>
             {userData && !userData.isBanned ? (
