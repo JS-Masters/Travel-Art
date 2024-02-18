@@ -334,7 +334,7 @@ const SinglePost = ({ reload, setReload }) => {
       <>
         <div>
           
-          {(userData.handle === post.authorHandle || userData.isAdmin === true) && (
+          {(userData.handle === post.authorHandle) && (
             <div>
               {editingPost ? (
                 <>
