@@ -322,6 +322,9 @@ const SinglePost = ({ reload, setReload }) => {
     } catch (error) {
       console.log(error.message);
     }
+
+    // От Цвети
+    window.location.href = "http://localhost:3001/all-posts/";
   };
   // console.log(post.id); 
 

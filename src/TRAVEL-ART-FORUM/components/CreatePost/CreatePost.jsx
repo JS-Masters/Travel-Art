@@ -108,6 +108,9 @@ await update(ref(db), { [`posts/${postID}`]: result });
     });
 
     updateAllTags();
+
+    // От Цвети - ползвам началния линк //
+  window.location.href = "http://localhost:3001/";
   };
 
   return (
@@ -148,6 +151,7 @@ await update(ref(db), { [`posts/${postID}`]: result });
       )}
     </>
   );
+
 };
 
 export default CreatePost;
