@@ -2,13 +2,9 @@ import { useContext } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { deleteReply } from "../../services/posts.service";
 
-
-
-
 const Replies = ({repliesToShow, commentID, setRepliesToShow, postID, setReload}) => {
 
   const {userData} = useContext(AppContext);
-
 
   return (
     <div className="replies-to-comment">
@@ -31,8 +27,7 @@ const Replies = ({repliesToShow, commentID, setRepliesToShow, postID, setReload}
         </div>
       ))}
     </div>
-  )
-
+  );
 };
 
 export default Replies;

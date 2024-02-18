@@ -1,16 +1,13 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useParams } from "react-router-dom";
 import { addComment, deletePost, dislikePost, getPostById, likePost } from "../../services/posts.service";
-import { get, push, ref, remove, set, update } from "firebase/database";
+import { ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import "./SinglePost.css"
-
 import SingleComment from "../SingleComment/SingleComment";
-import Loaded from "../hoc/Loaded";
 
-
-const SinglePost = ({setReload}) => {
+const SinglePost = ({ setReload }) => {
 
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState(null);
@@ -23,28 +20,21 @@ const SinglePost = ({setReload}) => {
     likedBy: {}
   });
 
-
-
   const [replyMade, setReplyMade] = useState(false);
-  const [likedByCurrentUser, setLikedByCurrentUser] = useState(false); // post!
+  const [likedByCurrentUser, setLikedByCurrentUser] = useState(false);
   const [isCommentLiked, setIsCommentLiked] = useState(false);
   const { id } = useParams();
 
-  // от Цвети нови състояния: 
   const [editingPost, setEditingPost] = useState(false);
   const [editedPostContent, setEditedPostContent] = useState('');
 
-  // const [reload, setReload] = useState(false);   
-
-
   useEffect(() => {
     updatePost(id);
-  }, [replyMade])
+  }, [replyMade]);
 
   useEffect(() => {
     getCurrentPostComments(id);
-  }, [])
-
+  }, []);
 
   const getCurrentPostComments = async (id) => {
     const currentPost = await getPostById(id);
@@ -88,8 +78,6 @@ const SinglePost = ({setReload}) => {
     }
   };
 
-
-  // Цвети - нова функция за рендериране на поста
   const renderPost = () => {
     return (
       <>
@@ -127,15 +115,12 @@ const SinglePost = ({setReload}) => {
     );
   };
 
-  // Цвети - метод за редакция на пост
   const editPost = async () => {
     await update(ref(db, `posts/${id}`), { content: editedPostContent });
-    // Обновете постовете след редакция
     updatePost();
   };
 
   return (
-
     <div>
       {post && (
         <div>
@@ -156,10 +141,8 @@ const SinglePost = ({setReload}) => {
           <br />
           <h2>Comments:</h2>
           {commentsArr.map((comment) => (
-            <SingleComment  key={comment.id} comment={comment} commentsArr={commentsArr} setCommentsArr={setCommentsArr} setIsCommentLiked={setIsCommentLiked} setReload={setReload}/>
+            <SingleComment key={comment.id} comment={comment} commentsArr={commentsArr} setCommentsArr={setCommentsArr} setIsCommentLiked={setIsCommentLiked} setReload={setReload} />
           ))}
-          {/* {<Comments id={id} commentsArr={commentsArr} setCommentsArr={setCommentsArr} />} */}
-          
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
               <br />
@@ -188,7 +171,5 @@ const SinglePost = ({setReload}) => {
       )}
     </div>
   );
-
-
-}
+};
 export default SinglePost;

@@ -2,10 +2,9 @@ import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useParams } from "react-router-dom";
 import { deleteComment, editComment, getCommentByID, getRepliesByCommentID, getReplyByID, toggleCommentDisike, toggleCommentLike } from "../../services/posts.service";
-import { DataSnapshot, push, ref, update } from "firebase/database";
+import {push, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import Replies from "../Replies/Replies";
-
 
 const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked, setReload }) => {
 
@@ -33,14 +32,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
   useEffect(() => {
     setCurrentComment(comment);
 
-  }, []) // [isCommentLiked]????
-
-  // console.log(comment);
-
-  const getCurrentComment = async (commentID) => {
-    const comment = await getCommentByID(id, commentID);
-    setCurrentComment(comment);
-  };
+  }, []);
 
   const replyToComment = async (commentID) => {
     try {
@@ -131,15 +123,15 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
               name="edit-comment"
               id="edit-comment"
             />
-            <button onClick={() => {
+            <button onClick={() => {commentContentEdit &&
               editComment(comment.id, id, commentContentEdit).then((result) => {
                 const updatedCommentsArr = [...commentsArr];
                 const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
                 updatedCommentsArr.splice(index, 1, result);
           
                 setCommentsArr(updatedCommentsArr);
-              })
-              setCommentContentEdit('');
+              }).then(() =>  setCommentContentEdit(''))
+             
             }}>Edit</button>
           </div>}
         <br />
@@ -195,9 +187,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
         <br />
       </div>}
     </>
-
-  )
-
-}
+  );
+};
 
 export default SingleComment;
