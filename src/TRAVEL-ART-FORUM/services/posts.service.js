@@ -1,5 +1,6 @@
-import { ref, push, get, query, equalTo, orderByChild, update } from 'firebase/database';
+import { ref, push, get, query, equalTo, orderByChild, update, set, remove } from 'firebase/database';
 import { db } from '../config/firebase-config';
+
 
 const fromPostsDocument = (snapshot, searchTerm) => {
   const postsDocument = snapshot.val();
@@ -117,6 +118,143 @@ export const getUserByHandle = async (handle) => {
       const user = snapshot.val();
       return user;
     });
+};
+
+
+export const addComment = async (comment, postID) => {
+
+  if (comment.content) {
+    const newCommentRef = await push(ref(db, `posts/${postID}/comments/`), {
+      ...comment
+    });
+    const newCommentId = newCommentRef.key;
+    const newComment = {
+      ...comment,
+      id: newCommentId
+    };
+    await set(ref(db, `posts/${postID}/comments/${newCommentId}`), newComment);
+    return newComment;
+   
+  } else {
+    alert('You must write a content to add a comment!')
+  }
+};
+
+
+export const deleteComment = async (commentID, postID) => {
+  try {
+    await remove(ref(db, `posts/${postID}/comments/${commentID}`));
+
+  } catch (error) {
+    console.error('Error while deleting comment:', error);
+  }
+};
+
+export const editComment = async (commentID, postID, commentContentEdit) => {
+  const commentRef = await get(ref(db, `posts/${postID}/comments/${commentID}`))
+
+  if (!commentRef.exists()) {
+    throw new Error('WRONG PROCCESS !!!')
+  }
+  const commentVal = commentRef.val();
+
+  await update(ref(db), { [`posts/${postID}/comments/${commentID}`]: { ...commentVal, content: commentContentEdit } });
+  const updatedComment = await get(ref(db, `posts/${postID}/comments/${commentID}`));
+  const updatedCommentValue = updatedComment.val();
+  return updatedCommentValue;
+};
+
+export const toggleCommentLike = async (commentID, id, userData) => {
+  let updatedComment = {};
+  try {
+    const commentRef = await get(ref(db, `posts/${id}/comments/${commentID}`))
+    const commentVal = commentRef.val();
+    if (!commentRef.exists()) {
+      throw new Error('WRONG PROCCESS !!!')
+    }
+
+    if (!(Object.keys(commentVal).includes('likedBy'))) {
+
+      const result = { ...commentVal, likedBy: { [userData.handle]: true }, likes: commentVal.likes + 1 };
+      await update(ref(db), { [`posts/${id}/comments/${commentID}`]: result });
+
+    } else {
+
+      const likedByVal = commentVal.likedBy;
+      await update(ref(db), { [`posts/${id}/comments/${commentID}`]: { ...commentVal, likedBy: { ...likedByVal, [userData.handle]: true }, likes: commentVal.likes + 1 } });
+    }
+    updatedComment = await get(ref(db, `posts/${id}/comments/${commentID}`));
+    return updatedComment.val();
+
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const toggleCommentDisike = async (commentID, postID, userData) => {
+  let updatedComment = {};
+  try {
+    const commentRef = await get(ref(db, `posts/${postID}/comments/${commentID}`))
+    const commentVal = commentRef.val();
+    if (!commentRef.exists()) {
+      throw new Error('WRONG PROCCESS !!!')
+    }
+    const likedByVal = commentVal.likedBy;
+    delete likedByVal[userData.handle];
+    await update(ref(db), { [`posts/${postID}/comments/${commentID}`]: { ...commentVal, likedBy: { ...likedByVal }, likes: commentVal.likes - 1 } });
+    updatedComment = await get(ref(db, `posts/${postID}/comments/${commentID}`));
+    return updatedComment.val();
+
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getCommentByID = async (postID, commentID) => {
+  try {
+    const comment = await get(ref(db, `posts/${postID}/comments/${commentID}`))
+    if (!comment.exists()) {
+      throw new Error('WRONG PROCCESS !!!')
+    }
+    const commentVal = comment.val();
+    return commentVal;
+
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getReplyByID = async (postID, commentID, replyID) => {
+  try {
+    const reply = await get(ref(db, `posts/${postID}/comments/${commentID}/replies/${replyID}`));
+    if (!reply.exists()) {
+      throw new Error('WRONG PROCCESS !!!')
+    }
+    const replyVal = reply.val();
+    return replyVal;
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+export const getRepliesByCommentID = async (commentID, postID) => {
+
+  const repliesRef = await get(ref(db, `posts/${postID}/comments/${commentID}/replies`));
+  const repliesVal = repliesRef.val();
+  const repliesArr = Object.values(repliesVal);
+  return repliesArr;
+};
+
+export const deleteReply = async (commentID, replyID, postID) => {
+  try {
+    await remove(ref(db, `posts/${postID}/comments/${commentID}/replies/${replyID}`));
+   const updatedComment =  await get(ref(db, `posts/${postID}/comments/${commentID}/replies`));
+   const commentVal = updatedComment.val();
+   return commentVal;
+  } catch (error) {
+    console.error('Error while deleting comment:', error);
+  }
+
 };
 
 

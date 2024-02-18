@@ -42,6 +42,7 @@ const App = (props) => {
     userData: null,
     city: null,
   });
+
   const [reload, setReload] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   useEffect(() => {
@@ -163,7 +164,7 @@ const App = (props) => {
               <Route path="/upload-form" element={<UploadForm />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/all-posts" element={<AllPosts />} />
-              <Route path="/single-post/:id" element={<SinglePost key={reload} reload={reload} setReload={setReload}/>} />
+              <Route path="/single-post/:id" element={<SinglePost key={reload} setReload={setReload}/>} />
               <Route
                 path="/edit-profile"
                 element={
