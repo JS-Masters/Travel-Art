@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useParams } from "react-router-dom";
-import { dislikePost, getPostById, likePost } from "../../services/posts.service";
+import { deletePost, dislikePost, getPostById, likePost } from "../../services/posts.service";
 import { get, push, ref, remove, set, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import "./SinglePost.css"
@@ -24,7 +24,7 @@ const SinglePost = ({ reload, setReload }) => {
     content: "",
     author: userData.handle,
     createdOn: "",
-    likes: 0
+    // likes: 0
   });
 
   const [repliesToShow, setRepliesToShow] = useState({
@@ -49,7 +49,8 @@ const SinglePost = ({ reload, setReload }) => {
 
   useEffect(() => {
     updatePost();
-    getCurrentPostComments()
+  
+    getCurrentPostComments()  //КОМЕНТАРИ
   }, [replyMade, reload])
 
 
@@ -63,6 +64,7 @@ const SinglePost = ({ reload, setReload }) => {
     setPost(currentPost);
   };
 
+  //КОМЕНТАРИ
   const getCurrentPostComments = async () => {
     const currentPost = await getPostById(id);
     if ('comments' in currentPost) {
@@ -98,6 +100,7 @@ const SinglePost = ({ reload, setReload }) => {
     }
   };
 
+  // ОТГОВОРИ
   const replyToComment = async (commentID) => {
     try {
       if (currentReply.content) {
@@ -111,10 +114,27 @@ const SinglePost = ({ reload, setReload }) => {
           const commentVal = comment.val();
           const result = { ...commentVal, replies: null };
           await update(ref(db), { [`posts/${id}/comments/${commentID}`]: result });
-          await push(ref(db, `posts/${id}/comments/${commentID}/replies`), currentReply);
+
+          const newReplyRef = await push(ref(db, `posts/${id}/comments/${commentID}/replies`), currentReply);
+          const newReplyID = newReplyRef.key;
+          const reply = await get(ref(db, `posts/${id}/comments/${commentID}/replies/${newReplyID}`));
+          if (!reply.exists()) {
+            throw new Error('WRONG PROCCESS !!!')
+          }
+          const replyVal = reply.val();
+          const resultReply = { ...replyVal, id: newReplyID };
+          await update(ref(db), { [`posts/${id}/comments/${commentID}/replies/${newReplyID}`]: resultReply });
 
         } else {
-          await push(ref(db, `posts/${id}/comments/${commentID}/replies`), currentReply);
+          const newReplyRef = await push(ref(db, `posts/${id}/comments/${commentID}/replies`), currentReply);
+          const newReplyID = newReplyRef.key;
+          const reply = await get(ref(db, `posts/${id}/comments/${commentID}/replies/${newReplyID}`));
+          if (!reply.exists()) {
+            throw new Error('WRONG PROCCESS !!!')
+          }
+          const replyVal = reply.val();
+          const resultReply = { ...replyVal, id: newReplyID };
+          await update(ref(db), { [`posts/${id}/comments/${commentID}/replies/${newReplyID}`]: resultReply });
         }
 
       } else {
@@ -127,7 +147,7 @@ const SinglePost = ({ reload, setReload }) => {
       console.log(error.message);
     }
   };
-
+// ОТГОВОРИ
   const renderReplies = async (commentID) => {
 
     const repliesRef = await get(ref(db, `posts/${id}/comments/${commentID}/replies`));
@@ -138,6 +158,16 @@ const SinglePost = ({ reload, setReload }) => {
       replies: repliesArr
     });
   };
+
+  const deleteReply = async (commentID, replyID) => {
+    try {
+      await remove(ref(db, `posts/${id}/comments/${commentID}/replies/${replyID}`));
+
+    } catch (error) {
+      console.error('Error while deleting comment:', error);
+    }
+
+  }
 
   const toggleCommentLike = async (commentID) => {
 
@@ -182,7 +212,6 @@ const SinglePost = ({ reload, setReload }) => {
   };
 
   const renderComments = (comments) => {
-
     return (
       <>
         {comments.map((comment) => (
@@ -203,6 +232,13 @@ const SinglePost = ({ reload, setReload }) => {
             <br />
             {(userData.handle === comment.authorHandle || userData.isAdmin === true) && (
               <div>
+                <button onClick={() => {
+                  deleteComment(comment.id).then(() => setReload(prev => !prev));
+                }}>Delete</button>
+              </div>
+            )}
+            {userData.handle === comment.authorHandle &&
+              <div>
                 <input
                   value={commentContentEdit}
                   onChange={(e) => setCommentContentEdit(e.target.value)}
@@ -213,35 +249,32 @@ const SinglePost = ({ reload, setReload }) => {
                 <button onClick={() => {
                   editComment(comment.id).then(() => setReload(prev => !prev));
                 }}>Edit</button>
-
-                <button onClick={() => {
-                  deleteComment(comment.id).then(() => setReload(prev => !prev));
-                }}>Delete</button>
-
-
-              </div>
-            )}
+              </div>}
 
             <br />
-            <input
-              ref={inputRef}
-              onChange={(e) => setCurrentReply({
-                ...currentReply,
-                content: e.target.value,
-                createdOn: new Date().toLocaleDateString(),
-              })}
-              type="text"
-              name="input-reply"
-              id="input-reply"
-            />
+            {!userData.isBanned &&
+              <div className="edit-reply">
+                <input
+                  ref={inputRef}
+                  onChange={(e) => setCurrentReply({
+                    ...currentReply,
+                    content: e.target.value,
+                    createdOn: new Date().toLocaleDateString(),
+                  })}
+                  type="text"
+                  name="input-reply"
+                  id="input-reply"
+                />
 
-            <button onClick={() => {
-              replyToComment(comment.id).then(() => inputRef.current.value = '').then(setReload(prev => !prev));
-              setCurrentReply({
-                ...currentReply,
-              });
+                <button onClick={() => {
+                  replyToComment(comment.id).then(() => inputRef.current.value = '').then(setReload(prev => !prev));
+                  setCurrentReply({
+                    ...currentReply,
+                  });
 
-            }}>REPLY</button>
+                }}>REPLY</button>
+              </div>}
+
             <br />
             {'replies' in comment && !showRepliesClicked.clicked && <button onClick={() => {
               renderReplies(comment.id);
@@ -260,14 +293,22 @@ const SinglePost = ({ reload, setReload }) => {
                     <p>Author: {reply.author}</p>
                     <p>Content: {reply.content}</p>
                     <p>Created On: {reply.createdOn}</p>
-                    <p>Likes: {reply.likes}</p>
+                    {/* <p>Likes: {reply.likes}</p> */}
+                    {userData.handle === reply.author && <button onClick={() => {
+                      deleteReply(comment.id, reply.id).then(() => {
+                       const repliesFiltered = repliesToShow.replies.filter((r) => r.id !== reply.id);
+                       setRepliesToShow({
+                        commentID: comment.id,
+                        replies: repliesFiltered
+                       })
+                      });
+                    }}>Delete Reply</button>}
                   </>
                 ))}
               </div>
             )}
             <br />
 
-            {/* <button onClick={() => replyToComment(comment.id)}>Reply</button> */}
           </div >
         ))}
       </>
@@ -314,26 +355,15 @@ const SinglePost = ({ reload, setReload }) => {
   };
 
 
-  const deletePost = async (postID) => {
-    try {
-      const docRef = ref(db, `posts/${postID}`);
-      console.log(docRef);
-      await remove(docRef);
-    } catch (error) {
-      console.log(error.message);
-    }
 
-    // От Цвети
-    window.location.href = "http://localhost:3001/all-posts/";
-  };
-  // console.log(post.id); 
+
 
   // Цвети - нова функция за рендериране на поста
   const renderPost = () => {
     return (
       <>
         <div>
-          
+
           {(userData.handle === post.authorHandle) && (
             <div>
               {editingPost ? (
@@ -378,7 +408,7 @@ const SinglePost = ({ reload, setReload }) => {
     <div>
       {post && (
         <div>
-           <h1>{post.title}</h1>
+          <h1>{post.title}</h1>
           <p>{post.content}</p>
           <p>Author: {post.authorHandle}</p>
           <p>Created on: {post.createdOn.toLocaleString()}</p>
