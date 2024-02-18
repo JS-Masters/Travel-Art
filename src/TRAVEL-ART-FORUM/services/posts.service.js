@@ -275,3 +275,18 @@ export const readReplies = async (postId, parentCommentId) => {
       });
     });
 }
+
+/**
+ * Retrieves the count of all posts.
+ * @returns {Promise<number>} all posts.
+ * @throws {Error} If no posts are found.
+ */
+export const getAllPostsValues = async () => {
+  const snapshot = await get(ref(db, 'posts'));
+
+  if (!snapshot.exists()) {
+    throw new Error('No posts found.');
+  }
+
+  return snapshot.val();
+};

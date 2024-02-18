@@ -28,3 +28,8 @@ export const updateUserByHandle = (handle, prop, value) => {
 
   return set(ref(db, `users/${handle}/${prop}`), value);
 };
+
+export const getAllUsers = () => {
+
+  return get(ref(db, 'users'));
+};

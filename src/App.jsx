@@ -28,6 +28,7 @@ import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
+import Home from "./TRAVEL-ART-FORUM/pages/Home/Home";
 
 
 const App = (props) => {
@@ -128,6 +129,7 @@ const App = (props) => {
                 element={
                   <>
                     <NavBar />
+                    <Home />
                     <MasterContainer />
                     {isMasterAppLoading &&
                       !lodash.isNil(colorMode) &&
