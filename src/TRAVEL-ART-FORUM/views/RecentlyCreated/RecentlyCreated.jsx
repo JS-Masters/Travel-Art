@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const RecentlyCreated = ({ totalPosts = [] }) => {
   const [recentlyCreated, setRecentlyCreated] = useState([]);
@@ -15,7 +16,9 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
       <ul>
         {recentlyCreated.map((post) => (
           <li key={post.id} className="single-post">
-            <h3>{post.title}</h3>
+            <NavLink to={`/single-post/${post.id}`}>
+              <h2>{post.title}</h2>
+            </NavLink>
             <p>{post?.tags}</p>
           </li>
         ))}
@@ -25,7 +28,7 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
 };
 
 RecentlyCreated.propTypes = {
-    totalPosts: PropTypes.array.isRequired,
+  totalPosts: PropTypes.array.isRequired,
 };
 
 export default RecentlyCreated;
