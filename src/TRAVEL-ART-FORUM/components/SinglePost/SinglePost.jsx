@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { addComment, deletePost, dislikePost, getPostById, likePost } from "../../services/posts.service";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
@@ -24,7 +24,7 @@ const SinglePost = ({ setReload }) => {
   const [likedByCurrentUser, setLikedByCurrentUser] = useState(false);
   const [isCommentLiked, setIsCommentLiked] = useState(false);
   const { id } = useParams();
-
+  const navigate = useNavigate();
   const [editingPost, setEditingPost] = useState(false);
   const [editedPostContent, setEditedPostContent] = useState('');
 
@@ -134,7 +134,7 @@ const SinglePost = ({ setReload }) => {
             {likedByCurrentUser ? 'Dislike' : 'Like'}
           </button>
           {(userData.handle === post.authorHandle || userData.isAdmin === true) && <button onClick={() => {
-            deletePost(post.id).then(() => setReload(prev => !prev));
+            deletePost(post.id).then(() => navigate('/all-posts'));
           }}>Delete Post</button>}
           {renderPost()}
           <br />

@@ -11,6 +11,7 @@ import PostTags from "../PostTags/PostTags";
 import { getAllTags, updateAllTags } from "../../services/tag.service";
 import { get, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const { userData } = useContext(AppContext);
@@ -22,7 +23,7 @@ const CreatePost = () => {
 
   // -------------------------------------- //
   const [allTags, setAllTags] = useState({});
-
+  const navigate = useNavigate();
   useEffect(() => {
     getAllTags().then((snapshot) => {
       setAllTags(snapshot.val());
@@ -103,9 +104,9 @@ const CreatePost = () => {
       tags: [],
       content: "",
     });
-
+    navigate('/');
     // От Цвети - ползвам началния линк //
-    window.location.href = "http://localhost:3001/";
+    // window.location.href = "http://localhost:3001/";
   };
 
   return (

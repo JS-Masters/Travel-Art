@@ -57,7 +57,8 @@ const SignIn = () => {
         <br />
         <Button handleClick={login}>Sign in</Button>
         <br />
-        <a href="/reset-password">Forgot Password?</a>
+        <a href="/reset-password">Forgot Password?</a><br />
+        <a href='/sign-up'>Register</a>
       </div>
 
       <div className="drops">

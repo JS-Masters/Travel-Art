@@ -43,7 +43,6 @@ export const deletePost = async (postID) => {
   } catch (error) {
     console.log(error.message);
   }
-  window.location.href = "http://localhost:3001/all-posts/";
 };
 
 export const getPostById = async (id) => {
