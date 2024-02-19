@@ -7,6 +7,8 @@ import DeletePostButton from "../Buttons/DeletePostButton/DeletePostButton";
 import { AppContext } from "../../providers/AppContext";
 import SearchMenu from "../SearchMenu/SearchMenu";
 import "./AllPosts.css"
+import { NavLink } from "react-router-dom";
+import CreatePost from "../CreatePost/CreatePost";
 
 
 export default function AllPosts() {
@@ -89,82 +91,88 @@ export default function AllPosts() {
   };
 
   return (
-    <div>
-      <h1>All posts</h1>
-      <label htmlFor="search">Search </label>
-      <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br />
-      <span>Sort by Most Commented</span>
-      <input
-        type="checkbox"
-        checked={isCheckedSortByComments}
-        onChange={handleCommentsCheckboxChange}
-      /><br />
-      <span>Sort by Most Liked</span>
-      <input
-        type="checkbox"
-        checked={isCheckedSortByLikes}
-        onChange={handleLikesCheckboxChange}
-      /><br />
-      <span>Sort by Most Recent</span>
-      <input
-        type="checkbox"
-        checked={isCheckedSortByDate}
-        onChange={handleDateCheckboxChange}
-      />
-      {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
-      {isCheckedSortByComments ? sortPostsByComments(posts).map((post) => (
-        <div key={post.id} className="post-box">
-          <h3>
-            <Link to={`/single-post/${post.id}`}>{post.title}</Link>
-          </h3>
-          <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.authorHandle}</p>
-          {post.tags && <p>Tags: {post.tags}</p>}
-          {<p>Likes: {post.likes}</p>}
-          {}
-          <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
-        </div>
-      )) : isCheckedSortByLikes ? sortPostsByLikes(posts).map((post) => (
-        <div key={post.id} className="post-box">
-          <h3>
-            <Link to={`/single-post/${post.id}`}>{post.title}</Link>
-          </h3>
-          <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.authorHandle}</p>
-          {post.tags && <p>Tags: {post.tags}</p>}
-          {<p>Likes: {post.likes}</p>}
-          {/* {(Object.keys(post.comments).length) ? (<p>Comments: {Object.keys(post.comments).length}</p>) : (<p>Comments: 0</p>)} */}
-          {/* {Object.keys(post.comments).length && <p>Comments: {Object.keys(post.comments).length}</p>} */}
-          <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
-        </div>
-      )) : isCheckedSortByDate ? sortPostsByDate(posts).map((post) => (
-        <div key={post.id} className="post-box">
-          <h3>
-            <Link to={`/single-post/${post.id}`}>{post.title}</Link>
-          </h3>
-          <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.authorHandle}</p>
-          {post.tags && <p>Tags: {post.tags}</p>}
-          {<p>Likes: {post.likes}</p>}
-          <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
-        </div>
-      )) : posts.map((post) => (
-        <div key={post.id} className="post-box">
-          <h3>
-            <Link to={`/single-post/${post.id}`}>{post.title}</Link>
-          </h3>
-          <p>{new Date(post.createdOn).toLocaleString()}</p>
-          <p>Posted by: {post.authorHandle}</p>
-          {post.tags && <p>Tags: {post.tags}</p>}
-          {<p>Likes: {post.likes}</p>}
-          <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
-          {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="all-posts-form">
+
+        {/* <NavLink to="/create-post">Create post</NavLink> */}
+        {/* <h1>All posts</h1> */}
+        <br />
+        <label htmlFor="search">Search </label>
+        <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br />
+        <span>Sort by Most Commented</span>
+        <input
+          type="checkbox"
+          checked={isCheckedSortByComments}
+          onChange={handleCommentsCheckboxChange}
+        /><br />
+        <span>Sort by Most Liked</span>
+        <input
+          type="checkbox"
+          checked={isCheckedSortByLikes}
+          onChange={handleLikesCheckboxChange}
+        /><br />
+        <span>Sort by Most Recent</span>
+        <input
+          type="checkbox"
+          checked={isCheckedSortByDate}
+          onChange={handleDateCheckboxChange}
+        />
+        {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
+        {isCheckedSortByComments ? sortPostsByComments(posts).map((post) => (
+          <div key={post.id} className="post-box">
+            <h3>
+              <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+            </h3>
+            <p>{new Date(post.createdOn).toLocaleString()}</p>
+            <p>Posted by: {post.authorHandle}</p>
+            {post.tags && <p>Tags: {post.tags}</p>}
+            {<p>Likes: {post.likes}</p>}
+            { }
+            <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
+            {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          </div>
+        )) : isCheckedSortByLikes ? sortPostsByLikes(posts).map((post) => (
+          <div key={post.id} className="post-box">
+            <h3>
+              <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+            </h3>
+            <p>{new Date(post.createdOn).toLocaleString()}</p>
+            <p>Posted by: {post.authorHandle}</p>
+            {post.tags && <p>Tags: {post.tags}</p>}
+            {<p>Likes: {post.likes}</p>}
+            {/* {(Object.keys(post.comments).length) ? (<p>Comments: {Object.keys(post.comments).length}</p>) : (<p>Comments: 0</p>)} */}
+            {/* {Object.keys(post.comments).length && <p>Comments: {Object.keys(post.comments).length}</p>} */}
+            <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
+            {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          </div>
+        )) : isCheckedSortByDate ? sortPostsByDate(posts).map((post) => (
+          <div key={post.id} className="post-box">
+            <h3>
+              <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+            </h3>
+            <p>{new Date(post.createdOn).toLocaleString()}</p>
+            <p>Posted by: {post.authorHandle}</p>
+            {post.tags && <p>Tags: {post.tags}</p>}
+            {<p>Likes: {post.likes}</p>}
+            <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
+            {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          </div>
+        )) : posts.map((post) => (
+          <div key={post.id} className="post-box">
+            <h3>
+              <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+            </h3>
+            <p>{new Date(post.createdOn).toLocaleString()}</p>
+            <p>Posted by: {post.authorHandle}</p>
+            {post.tags && <p>Tags: {post.tags}</p>}
+            {<p>Likes: {post.likes}</p>}
+            <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
+            {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
+          </div>
+        ))}
+      </div>
+      <CreatePost />
+    </>
   );
 
 };

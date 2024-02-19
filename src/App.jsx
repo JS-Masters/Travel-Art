@@ -1,14 +1,9 @@
-import "./App.css";
-
-import { useEffect, useState, createRef } from "react";
+import { useEffect, useState} from "react";
 import { Text, Flex, CircularProgress, useColorMode } from "@chakra-ui/react";
 import MasterContainer from "./comp/screen/mastercontainer";
-import Constants from "./comp/utils";
 import Actions from "./comp/redux/action";
 import { connect } from "react-redux";
 import lodash from "lodash";
-import AppManager from "./comp/utils/AppManager";
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -29,7 +24,8 @@ import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
 import Home from "./TRAVEL-ART-FORUM/pages/Home/Home";
-
+import "./App.css";
+import AboutView from "./TRAVEL-ART-FORUM/views/AboutView/AboutView";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -138,6 +134,7 @@ const App = (props) => {
                   </>
                 }
               />
+              <Route path="/about" element={<AboutView/>}/>
               <Route
                 path="/manage-users"
                 element={
@@ -146,7 +143,7 @@ const App = (props) => {
                   </Authenticated>
                 }
               />
-              {/* <Route
+              <Route
                 path="/hotels-by-city"
                 element={<ResultsByCity criteria={"Hotels"} />}
               />
@@ -157,14 +154,14 @@ const App = (props) => {
               <Route
                 path="/things-to-do-by-city"
                 element={<ResultsByCity criteria={"Things to do"} />}
-              /> */}
+              />
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
               <Route path="/upload-form" element={<UploadForm />} />
-              <Route path="/create-post" element={<CreatePost />} />
+              {/* <Route path="/create-post" element={<CreatePost />} /> */}
               <Route path="/all-posts" element={<AllPosts />} />
-              <Route path="/single-post/:id" element={<SinglePost key={reload} setReload={setReload} />} />
+              <Route path="/single-post/:id" element={<Loaded><SinglePost key={reload} setReload={setReload} /></Loaded>} />
               <Route
                 path="/edit-profile"
                 element={

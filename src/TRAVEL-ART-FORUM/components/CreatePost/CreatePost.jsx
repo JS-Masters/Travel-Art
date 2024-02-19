@@ -1,10 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import {
-  addPost,
-  getAllPosts,
-  getPostById,
-  likePost,
-  dislikePost,
+  addPost
 } from "../../services/posts.service";
 import { AppContext } from "../../providers/AppContext";
 import PostTags from "../PostTags/PostTags";
@@ -12,8 +8,11 @@ import { getAllTags, updateAllTags } from "../../services/tag.service";
 import { get, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import { useNavigate } from "react-router-dom";
+import "./CreatePost.css"
+
 
 const CreatePost = () => {
+
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState({
     title: "",
@@ -21,9 +20,9 @@ const CreatePost = () => {
     content: "",
   });
 
-  // -------------------------------------- //
   const [allTags, setAllTags] = useState({});
   const navigate = useNavigate();
+
   useEffect(() => {
     getAllTags().then((snapshot) => {
       setAllTags(snapshot.val());
@@ -35,11 +34,10 @@ const CreatePost = () => {
 
     if (tag === "Create") {
       tag = event.target.innerText.split(" ")[1];
-    }
-
+    };
     if (post.tags.includes(tag)) {
       return;
-    }
+    };
 
     setPost({
       ...post,
@@ -65,15 +63,6 @@ const CreatePost = () => {
     });
   };
 
-  // Implemented by Memo
-  // -------------------------------------- //
-
-  // const updatePost = (value, key) => {
-  //   setPost({
-  //     ...post,
-  //     [key]: value,
-  //   });
-  // };
 
   const createPost = async () => {
     if (post.title.length < 16 || post.title.length > 64) {
@@ -105,14 +94,12 @@ const CreatePost = () => {
       content: "",
     });
     navigate('/');
-    // От Цвети - ползвам началния линк //
-    // window.location.href = "http://localhost:3001/";
   };
 
   return (
-    <>
+    <div className="create-post-form">
       {userData && !userData.isBanned ? (
-        <div className="create-post-form">
+        <div >
           <h1>Create Posts</h1>
           <label htmlFor="input-title">Title:</label>
           <input
@@ -145,7 +132,7 @@ const CreatePost = () => {
       ) : (
         <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
       )}
-    </>
+    </div>
   );
 };
 

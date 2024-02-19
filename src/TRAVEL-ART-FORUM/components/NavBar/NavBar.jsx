@@ -25,8 +25,9 @@ const NavBar = () => {
           Things to do in {citySearch || cityClick}
         </NavLink>
       )}
-      <NavLink to="/create-post">Create post</NavLink>
-      <NavLink to="/all-posts">All posts</NavLink>
+      
+      <NavLink to="/all-posts">FORUM</NavLink>
+      <NavLink to="/about">Our Community</NavLink>
       {
         <Authenticated>
           <NavLink to="/manage-users">Manage Users</NavLink>
