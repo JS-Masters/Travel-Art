@@ -40,13 +40,15 @@ const SinglePost = ({ setReload }) => {
   const [currentTags, setCurrentTags] = useState("");
   const [allTags, setAllTags] = useState([]);
 
+  const [searchTerm, setSearchTerm] = useState('');
+
   useEffect(() => {
     updatePost(id);
   }, [replyMade]);
 
   useEffect(() => {
-    getCurrentPostComments(id);
-  }, []);
+    getCurrentPostComments(id, searchTerm);
+  }, [searchTerm]);
 
   useEffect(() => {
     getAllTags()
@@ -56,10 +58,16 @@ const SinglePost = ({ setReload }) => {
       .catch((err) => {});
   }, []);
 
-  const getCurrentPostComments = async (id) => {
+  const getCurrentPostComments = async (id, searchTerm) => {
     const currentPost = await getPostById(id);
     if ("comments" in currentPost) {
-      setCommentsArr(Object.values(currentPost.comments));
+      if(searchTerm) {
+        const commentsSortedBySearchTerm = Object.values(currentPost.comments)
+        .filter(c => (c.content.toLowerCase().startsWith(searchTerm.toLowerCase())) || (c.authorHandle.toLowerCase().startsWith(searchTerm.toLowerCase())))
+          setCommentsArr(commentsSortedBySearchTerm);
+      } else {
+        setCommentsArr(Object.values(currentPost.comments));
+      }  
     }
   };
 
@@ -255,18 +263,20 @@ const SinglePost = ({ setReload }) => {
 
           {(userData.handle === post.authorHandle ||
             userData.isAdmin === true) && (
-            <button
-              onClick={() => {
-                deletePost(post.id).then(() => navigate("/all-posts"));
-              }}
-            >
-              Delete Post
-            </button>
-          )}
+              <button
+                onClick={() => {
+                  deletePost(post.id).then(() => navigate("/all-posts"));
+                }}
+              >
+                Delete Post
+              </button>
+            )}
           {renderPost()}
           <br />
           <br />
           <h2>Comments:</h2>
+          <label htmlFor="search-comments">Search in comments: </label>
+          <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search-comments" id="search-comments" /><br />
           {commentsArr.map((comment) => (
             <SingleComment
               key={comment.id}
