@@ -122,7 +122,7 @@ const NavBarView = (props) => {
 							</Heading>
 						</Flex>
 					</Flex>
-					<Flex>
+					{/* <Flex>
 						<Tooltip label="Change Theme">
 							<IconButton
 								variant="link"
@@ -153,7 +153,7 @@ const NavBarView = (props) => {
 								onClick={onPressSettings}
 							/>
 						</Tooltip>
-					</Flex>
+					</Flex> */}
 				</Flex>
 				<SettingsView ref={settingsRef} />
 				<AboutApp ref={aboutAppRef} />

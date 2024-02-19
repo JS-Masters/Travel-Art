@@ -14,17 +14,17 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
 
   return (
     <>
-      <h2>RecentlyCreated</h2>
-      <ul>
+      <h1>Recently Created Posts</h1>
+      <div>
         {recentlyCreated.map((post) => (
-          <li key={post.id} className="single-post">
+          <div key={post.id} className="single-post">
             <NavLink to={userData ? `/single-post/${post.id}` : "/sign-in"}>
               <h2>{post.title}</h2>
             </NavLink>
-            <p>{post?.tags}</p>
-          </li>
+            {/* <p>{post?.tags}</p> */}
+          </div>
         ))}
-      </ul>
+      </div>
     </>
   );
 };

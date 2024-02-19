@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getAllPostsValues } from "../../services/posts.service";
 import MostCommented from "../../views/MostCommented/MostCommented";
 import RecentlyCreated from "../../views/RecentlyCreated/RecentlyCreated";
+import "./Home.css"
 
 const Home = (props) => {
   const [users, setUsers] = useState(0);
@@ -28,10 +29,11 @@ const Home = (props) => {
 
   return (
     <div className="home-page">
-      <div className="about-forum">
-        <h3>Total posts created: {totalPosts.length}</h3>
-        <h3>Users: {users}</h3>
+      <div className="general-info">
+        <h1>Total posts created: {totalPosts.length}</h1>
+        <h1>Our Travelers: {users}</h1>
       </div>
+
       <div className="most-commented-posts">
         <MostCommented totalPosts={totalPosts} />
       </div>
