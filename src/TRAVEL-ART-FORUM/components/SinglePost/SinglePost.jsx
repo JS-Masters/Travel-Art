@@ -1,13 +1,20 @@
 import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useNavigate, useParams } from "react-router-dom";
-import { addComment, deletePost, dislikePost, getPostById, likePost } from "../../services/posts.service";
+import {
+  addComment,
+  deletePost,
+  dislikePost,
+  getPostById,
+  likePost,
+} from "../../services/posts.service";
 import { ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
-import "./SinglePost.css"
+import "./SinglePost.css";
 import SingleComment from "../SingleComment/SingleComment";
 import PostTags from "../PostTags/PostTags";
 import { getAllTags, updateAllTags } from "../../services/tag.service";
+import { EditIcon } from "@chakra-ui/icons";
 
 const SinglePost = ({ setReload }) => {
   const { userData } = useContext(AppContext);
@@ -18,7 +25,7 @@ const SinglePost = ({ setReload }) => {
     authorHandle: userData.handle,
     createdOn: "",
     likes: 0,
-    likedBy: {}
+    likedBy: {},
   });
 
   const [replyMade, setReplyMade] = useState(false);
@@ -27,10 +34,10 @@ const SinglePost = ({ setReload }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [editingPost, setEditingPost] = useState(false);
-  const [editedPostContent, setEditedPostContent] = useState('');
+  const [editedPostContent, setEditedPostContent] = useState("");
 
   const [editingTags, setEditingTags] = useState(false);
-  const [currentTags, setCurrentTags] = useState('');
+  const [currentTags, setCurrentTags] = useState("");
   const [allTags, setAllTags] = useState([]);
 
   useEffect(() => {
@@ -47,11 +54,9 @@ const SinglePost = ({ setReload }) => {
     });
   }, []);
 
-
-
   const getCurrentPostComments = async (id) => {
     const currentPost = await getPostById(id);
-    if ('comments' in currentPost) {
+    if ("comments" in currentPost) {
       setCommentsArr(Object.values(currentPost.comments));
     }
   };
@@ -94,7 +99,7 @@ const SinglePost = ({ setReload }) => {
     }
     setPost({
       ...post,
-      tags: [...post.tags, tag],
+      tags: [...post.tags.split(" "), tag].join(" "),
     });
   };
 
@@ -112,44 +117,43 @@ const SinglePost = ({ setReload }) => {
 
     setPost({
       ...post,
-      tags: post.tags.filter((t) => t !== tag),
+      tags: post.tags
+        .split(" ")
+        .filter((t) => t !== tag)
+        .join(" "),
     });
   };
 
   const editTags = async () => {
     try {
-      await updateTagsInDatabase(post.id, post.tags);
-      console.log('Tags updated successfully!');
-      await updatePostWithNewTags();  
+      await updateTagsInDatabase(post.tags);
+      await updatePostWithNewTags();
     } catch (error) {
-      console.error('Error updating tags:', error);
-      throw error;
+      throw new Error("Error updating tags:", error.message);
     }
   };
-  
-  const updateTagsInDatabase = async (postId, updatedTags) => {
+
+  const updateTagsInDatabase = async (updatedTags) => {
     try {
-      await updateAllTags(updatedTags);
+      await updateAllTags(updatedTags.split(" "));
       return updatedTags;
     } catch (error) {
-      console.error('Error updating tags:', error);
-      throw error;
+      console.error("Error updating tags:", error);
     }
   };
 
   const updatePostWithNewTags = async () => {
     try {
-      await update(ref(db, `posts/${id}`), { tags: post.tags.join(' ') });
+      await update(ref(db, `posts/${id}`), { tags: post.tags });
     } catch (error) {
-      console.error('Error updating post:', error);
-      throw error;
+      console.error("Error updating post:", error);
     }
   };
 
   const renderPost = () => {
     return (
       <div>
-        {(userData.handle === post.authorHandle) && (
+        {userData.handle === post.authorHandle && (
           <div>
             {editingPost ? (
               <>
@@ -160,42 +164,52 @@ const SinglePost = ({ setReload }) => {
                   name="edit-post"
                   id="edit-post"
                 />
-                <button onClick={() => {
-                  editPost().then(() => {
-                    setEditingPost(false);
-                    setReload(prev => !prev);
-                  });
-                }}>Save</button>
+                <button
+                  onClick={() => {
+                    editPost().then(() => {
+                      setEditingPost(false);
+                      setReload((prev) => !prev);
+                    });
+                  }}
+                >
+                  Save
+                </button>
                 <button onClick={() => setEditingPost(false)}>Cancel</button>
               </>
             ) : (
-              <button onClick={() => {
-                setEditedPostContent(post.content);
-                setEditingPost(true);
-              }}>Edit Post</button>
+              <button
+                onClick={() => {
+                  setEditedPostContent(post.content);
+                  setEditingPost(true);
+                }}
+              >
+                Edit Post
+              </button>
             )}
-  
-            {(userData.handle === post.authorHandle || userData.isAdmin === true) && (
+          </div>
+        )}
+
+        {(userData.handle === post.authorHandle ||
+          userData.isAdmin === true) && (
+          <div>
+            {editingTags && (
               <div>
-                {console.log("Editing Tags:", editingTags)}
-                {editingTags && (
-                  <div>
-                    {console.log("selectedTags:", post.tags)}
-                    <PostTags
-                      allTags={allTags}
-                      selectedTags={Array.isArray(post.tags) ? post.tags : []}
-                      addTag={addTag}
-                      removeTag={removeTag}
-                    />
-                    <button onClick={() => {
-                      editTags().then(() => setEditingTags(false));
-                    }}>Save Tags</button>
-                    <button onClick={() => setEditingTags(false)}>Close</button>
-                  </div>
-                )}
-                {!editingTags && (
-                  <button onClick={() => setEditingTags(true)}>Edit Tags</button>
-                )}
+                <PostTags
+                  allTags={allTags}
+                  selectedTags={post.tags.split(" ")}
+                  addTag={addTag}
+                  removeTag={removeTag}
+                />
+                <button
+                  onClick={() => {
+                    editTags()
+                      .then(() => setEditingTags(false))
+                      .catch(console.error);
+                  }}
+                >
+                  Save Tags
+                </button>
+                <button onClick={() => setEditingTags(false)}>Close</button>
               </div>
             )}
           </div>
@@ -203,7 +217,7 @@ const SinglePost = ({ setReload }) => {
       </div>
     );
   };
-  
+
   const editPost = async () => {
     await update(ref(db, `posts/${id}`), { content: editedPostContent });
     updatePost();
@@ -218,21 +232,46 @@ const SinglePost = ({ setReload }) => {
           <p>Author: {post.authorHandle}</p>
           <p>Created on: {post.createdOn.toLocaleString()}</p>
           <p>Likes: {post.likes}</p>
-          <p>Liked by: {isPostLikedBy() ? post.likedBy.filter((u) => u !== 1).join(", ") : "No likes yet"}</p>
+          <p>
+            Liked by:{" "}
+            {isPostLikedBy()
+              ? post.likedBy.filter((u) => u !== 1).join(", ")
+              : "No likes yet"}
+          </p>
           <button onClick={togglePostLike}>
-            {likedByCurrentUser ? 'Dislike' : 'Like'}
+            {likedByCurrentUser ? "Dislike" : "Like"}
           </button>
-          <p>Tags: {post.tags.length > 0 ? post.tags : "No tags yet"}</p>
+          <p>
+            Tags: {post.tags.length > 0 ? post.tags : "No tags yet"}{" "}
+            <EditIcon
+              style={{ cursor: "pointer" }}
+              onClick={() => setEditingTags(true)}
+            />
+          </p>
 
-          {(userData.handle === post.authorHandle || userData.isAdmin === true) && <button onClick={() => {
-            deletePost(post.id).then(() => navigate('/all-posts'));
-          }}>Delete Post</button>}
+          {(userData.handle === post.authorHandle ||
+            userData.isAdmin === true) && (
+            <button
+              onClick={() => {
+                deletePost(post.id).then(() => navigate("/all-posts"));
+              }}
+            >
+              Delete Post
+            </button>
+          )}
           {renderPost()}
           <br />
           <br />
           <h2>Comments:</h2>
           {commentsArr.map((comment) => (
-            <SingleComment key={comment.id} comment={comment} commentsArr={commentsArr} setCommentsArr={setCommentsArr} setIsCommentLiked={setIsCommentLiked} setReload={setReload} />
+            <SingleComment
+              key={comment.id}
+              comment={comment}
+              commentsArr={commentsArr}
+              setCommentsArr={setCommentsArr}
+              setIsCommentLiked={setIsCommentLiked}
+              setReload={setReload}
+            />
           ))}
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
@@ -240,20 +279,32 @@ const SinglePost = ({ setReload }) => {
               <label htmlFor="input-title">Write Comment:</label>
               <input
                 value={currentComment.content}
-                onChange={(e) => setCurrentComment({ ...currentComment, content: e.target.value, createdOn: new Date().toLocaleDateString() })}
+                onChange={(e) =>
+                  setCurrentComment({
+                    ...currentComment,
+                    content: e.target.value,
+                    createdOn: new Date().toLocaleDateString(),
+                  })
+                }
                 type="text"
                 name="input-title"
                 id="input-title"
               />
               <br />
-              <button onClick={() => {
-                addComment(currentComment, id).then((newComment) => setCommentsArr([...commentsArr, newComment]))
-                setCurrentComment({
-                  content: "",
-                  authorHandle: "",
-                  createdOn: ""
-                });
-              }}>Add Comment</button>
+              <button
+                onClick={() => {
+                  addComment(currentComment, id).then((newComment) =>
+                    setCommentsArr([...commentsArr, newComment])
+                  );
+                  setCurrentComment({
+                    content: "",
+                    authorHandle: "",
+                    createdOn: "",
+                  });
+                }}
+              >
+                Add Comment
+              </button>
             </div>
           ) : (
             <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
