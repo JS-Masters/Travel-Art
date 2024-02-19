@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useEffect, useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AppContext } from "../../providers/AppContext";
+import "./RecentlyCreated.css";
 
 const RecentlyCreated = ({ totalPosts = [] }) => {
   const [recentlyCreated, setRecentlyCreated] = useState([]);
@@ -13,8 +14,11 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
   }, [totalPosts]);
 
   return (
-    <>
+    <div className="recently-created-box">
+      <div className="recently-created-title">
       <h1>Recently Created Posts</h1>
+      </div>
+      
       <div>
         {recentlyCreated.map((post) => (
           <div key={post.id} className="single-post">
@@ -25,7 +29,7 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
           </div>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

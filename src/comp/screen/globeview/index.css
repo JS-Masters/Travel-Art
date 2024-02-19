@@ -36,6 +36,7 @@ svg #land {
 	animation: dash 4s linear 0s infinite alternate;
 }
 
+
 @keyframes dash {
 	from {
 		stroke-dashoffset: 19;

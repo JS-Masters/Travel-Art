@@ -1,0 +1,15 @@
+
+
+.recently-created-title {
+    /* border: 2px solid gray;
+    margin-left: 30px; */
+    color: #199419;
+    font-weight: bold;
+    font-family: "Aguafina Script", cursive;
+}
+
+.recently-created-box {
+    border: 2px solid gray;
+    border-radius: 25px;
+    margin-left: 30px;
+}
