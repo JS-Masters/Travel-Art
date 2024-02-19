@@ -16,7 +16,7 @@ const fromPostsDocument = (snapshot, searchTerm) => {
       // author: 
     };
   })
-    .filter(p => p.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    .filter(p => (p.title.toLowerCase().includes(searchTerm.toLowerCase())) || (p.tags.toLowerCase().includes(searchTerm.toLowerCase())))
   return posts;
 };
 
