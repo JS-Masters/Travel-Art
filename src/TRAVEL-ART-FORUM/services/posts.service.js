@@ -244,8 +244,23 @@ export const deleteReply = async (commentID, replyID, postID) => {
   } catch (error) {
     console.error('Error while deleting comment:', error);
   }
-
 };
+
+export const editReply = async (postID, commentID, replyID, replyContentEdit) => {
+  const replyRef = await get(ref(db, `posts/${postID}/comments/${commentID}/replies/${replyID}`))
+
+  if (!replyRef.exists()) {
+    throw new Error('WRONG PROCCESS !!!')
+  }
+  const replyVal = replyRef.val();
+
+  await update(ref(db), { [`posts/${postID}/comments/${commentID}/replies/${replyID}`]: { ...replyVal, content: replyContentEdit } });
+  const updatedReply = await get(ref(db, `posts/${postID}/comments/${commentID}/replies/${replyID}`));
+  const updatedReplyValue = updatedReply.val();
+  return updatedReplyValue;
+
+
+}
 
 /**
  * Retrieves the count of all posts.

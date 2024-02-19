@@ -183,7 +183,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
         }}>Hide Replies</button>}
 
         {repliesToShow && repliesToShow.commentID === comment.id && showRepliesClicked.clicked && showRepliesClicked.commentID === comment.id &&
-          <Replies repliesToShow={repliesToShow} commentID={comment.id} setRepliesToShow={setRepliesToShow} postID={id} setReload={setReload}/>}
+          <Replies repliesToShow={repliesToShow} commentID={comment.id} setRepliesToShow={setRepliesToShow} postID={id} setReload={setReload} commentsArr={commentsArr} setCommentsArr={setCommentsArr}/>}
         <br />
       </div>}
     </>
