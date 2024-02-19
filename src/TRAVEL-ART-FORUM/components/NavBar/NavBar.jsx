@@ -1,16 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { AppContext } from "../../providers/AppContext";
 import { useContext } from "react";
-import Authenticated from "../hoc/Authenticated";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
+import "./NavBar.css";
+import Button from "../Button/Button";
 
 const NavBar = () => {
   const { user, userData, citySearch, cityClick, setContext } =
     useContext(AppContext);
 
-  return user ? (
-    <nav>
-      {(citySearch || cityClick) && (
+  const navigate = useNavigate();
+
+  return (
+    <nav className="navbar">
+      {/* {(citySearch || cityClick) && (
         <NavLink to="/hotels-by-city">
           See Hotels in {citySearch || cityClick}
         </NavLink>
@@ -24,27 +27,24 @@ const NavBar = () => {
         <NavLink to="/things-to-do-by-city">
           Things to do in {citySearch || cityClick}
         </NavLink>
-      )}
-      
-      <NavLink to="/all-posts">FORUM</NavLink>
+      )} */}
+
       <NavLink to="/about">Our Community</NavLink>
-      {
-        <Authenticated>
-          <NavLink to="/manage-users">Manage Users</NavLink>
-        </Authenticated>
-      }
-      {userData && (
+      <NavLink to="/all-posts">FORUM</NavLink>
+      <NavLink className='home-page-logo' to="/">Travel-Art</NavLink>
+
+      {userData ? (
         <DropdownMenu
           username={userData.handle}
           avatarUrl={userData.avatarUrl}
           setContext={setContext}
         />
+      ) : (
+        <span>
+          <Button handleClick={() => navigate("/sign-in")}> Sign in</Button>
+          <Button handleClick={() => navigate("/sign-up")}> Sign up</Button>
+        </span>
       )}
-    </nav>
-  ) : (
-    <nav>
-      <NavLink to="/sign-in">Sign in</NavLink>
-      <NavLink to="/sign-up">Sign up</NavLink>
     </nav>
   );
 };

@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/auth.service";
+import Authenticated from "../hoc/Authenticated";
 
 const DropdownMenu = ({
   username = null,
@@ -67,6 +68,16 @@ const DropdownMenu = ({
           >
             Edit profile
           </li>
+
+          <Authenticated>
+            <li
+              style={{ cursor: "pointer", fontStyle: "italic" }}
+              onClick={() => navigate("/manage-users")}
+            >
+              Manage Users
+            </li>
+          </Authenticated>
+
           <li
             style={{ cursor: "pointer", fontStyle: "italic" }}
             onClick={signOut}

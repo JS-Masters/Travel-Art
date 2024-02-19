@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { Text, Flex, CircularProgress, useColorMode } from "@chakra-ui/react";
 import MasterContainer from "./comp/screen/mastercontainer";
 import Actions from "./comp/redux/action";
@@ -120,12 +120,12 @@ const App = (props) => {
       <AppContext.Provider value={{ ...context, setContext }}>
         <BrowserRouter>
           <div className="App">
+            <NavBar />
             <Routes>
               <Route
                 path="/"
                 element={
                   <>
-                    <NavBar />
                     <Home />
                     <MasterContainer />
                     {isMasterAppLoading &&
@@ -134,7 +134,7 @@ const App = (props) => {
                   </>
                 }
               />
-              <Route path="/about" element={<AboutView/>}/>
+              <Route path="/about" element={<AboutView />} />
               <Route
                 path="/manage-users"
                 element={
@@ -143,7 +143,7 @@ const App = (props) => {
                   </Authenticated>
                 }
               />
-              <Route
+              {/* <Route
                 path="/hotels-by-city"
                 element={<ResultsByCity criteria={"Hotels"} />}
               />
@@ -154,14 +154,21 @@ const App = (props) => {
               <Route
                 path="/things-to-do-by-city"
                 element={<ResultsByCity criteria={"Things to do"} />}
-              />
+              /> */}
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
               <Route path="/upload-form" element={<UploadForm />} />
               {/* <Route path="/create-post" element={<CreatePost />} /> */}
               <Route path="/all-posts" element={<AllPosts />} />
-              <Route path="/single-post/:id" element={<Loaded><SinglePost key={reload} setReload={setReload} /></Loaded>} />
+              <Route
+                path="/single-post/:id"
+                element={
+                  <Loaded>
+                    <SinglePost key={reload} setReload={setReload} />
+                  </Loaded>
+                }
+              />
               <Route
                 path="/edit-profile"
                 element={

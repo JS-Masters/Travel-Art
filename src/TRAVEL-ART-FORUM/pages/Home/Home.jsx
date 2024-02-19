@@ -28,7 +28,6 @@ const Home = (props) => {
 
   return (
     <div className="home-page">
-      <h1>Home</h1>
       <div className="about-forum">
         <h3>Total posts created: {totalPosts.length}</h3>
         <h3>Users: {users}</h3>
