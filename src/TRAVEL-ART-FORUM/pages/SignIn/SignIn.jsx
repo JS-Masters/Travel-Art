@@ -32,7 +32,7 @@ const SignIn = () => {
       const credentials = await loginUser(form.email, form.password);
       setContext({ user: credentials.user, userData: null });
     } catch (error) {
-      setMessage('Invalid email or password');
+      setMessage("Invalid email or password");
     }
   };
 
@@ -57,8 +57,9 @@ const SignIn = () => {
         <br />
         <Button handleClick={login}>Sign in</Button>
         <br />
-        <a href="/reset-password">Forgot Password?</a><br />
-        <a href='/sign-up'>Register</a>
+        <a href="/reset-password">Forgot Password?</a>
+        <br />
+        <a href="/sign-up">Register</a>
       </div>
 
       <div className="drops">

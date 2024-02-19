@@ -1,9 +1,11 @@
 import PropTypes from "prop-types";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+import { AppContext } from "../../providers/AppContext";
 
 const MostCommented = ({ totalPosts = [] }) => {
   const [mostCommented, setMostCommented] = useState([]);
+  const { userData } = useContext(AppContext);
 
   useEffect(() => {
     const sortedPosts = totalPosts.sort(
@@ -18,7 +20,7 @@ const MostCommented = ({ totalPosts = [] }) => {
       <ul>
         {mostCommented.map((post) => (
           <li key={post.id} className="single-post">
-            <NavLink to={`/single-post/${post.id}`}>
+            <NavLink to={userData ? `/single-post/${post.id}` : "/sign-in"}>
               <h2>{post.title}</h2>
             </NavLink>
             <p>{post?.tags}</p>
