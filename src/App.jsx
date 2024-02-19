@@ -143,7 +143,7 @@ const App = (props) => {
                   </Authenticated>
                 }
               />
-              <Route
+              {/* <Route
                 path="/hotels-by-city"
                 element={<ResultsByCity criteria={"Hotels"} />}
               />
@@ -154,7 +154,7 @@ const App = (props) => {
               <Route
                 path="/things-to-do-by-city"
                 element={<ResultsByCity criteria={"Things to do"} />}
-              />
+              /> */}
               <Route path="/sign-in" element={<SignIn />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />

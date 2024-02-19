@@ -55,7 +55,7 @@ const DropdownMenu = ({
         )}
       </button>
       {showMenu && (
-        <ul style={{ listStyle: "none" }} className="menu">
+        <ul style={{ listStyle: "none", position: 'absolute' }} className="menu">
           <li
             style={{ cursor: "pointer", fontStyle: "italic" }}
             onClick={() => navigate("/upload-form")}

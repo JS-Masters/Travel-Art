@@ -65,7 +65,7 @@ const CreatePost = () => {
 
 
   const createPost = async () => {
-    if (post.title.length < 16 || post.title.length > 64) {
+    if (post.title.length < 10 || post.title.length > 32) {
       return alert("Title must be between 16 and 64 characters long");
     }
     if (post.content.length < 32 || post.content.length > 8192) {

@@ -33,16 +33,15 @@ const Home = (props) => {
 
   return (
     <div className="home-page">
-      <div className="general-info">
-        <h2>Total posts created: {totalPosts.length}</h2>
-        <h2>Our Travelers: {users}</h2>
-      </div>
-
       <div className="most-commented-posts">
         <MostCommented totalPosts={totalPosts} />
       </div>
       <div className="recently-created-posts">
         <RecentlyCreated totalPosts={totalPosts} />
+      </div>
+      <div className="general-info" style={{marginBottom: '20px'}}>
+        <h2>Total posts created: {totalPosts.length}</h2>
+        <h2>Our Travelers: {users}</h2>
       </div>
       {user && <div className="globe-results">
         {(citySearch || cityClick) && (
