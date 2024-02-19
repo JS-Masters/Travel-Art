@@ -49,9 +49,11 @@ const SinglePost = ({ setReload }) => {
   }, []);
 
   useEffect(() => {
-    getAllTags().then((snapshot) => {
-      setAllTags(snapshot.val());
-    });
+    getAllTags()
+      .then((snapshot) => {
+        setAllTags(snapshot.val());
+      })
+      .catch((err) => {});
   }, []);
 
   const getCurrentPostComments = async (id) => {
@@ -99,7 +101,7 @@ const SinglePost = ({ setReload }) => {
     }
     setPost({
       ...post,
-      tags: [...post.tags.split(" "), tag].join(" "),
+      tags: post.tags ? post.tags + ` ${tag}` : tag,
     });
   };
 
@@ -115,12 +117,14 @@ const SinglePost = ({ setReload }) => {
       tag = event.target.innerText.split(" ")[0];
     }
 
-    setPost({
-      ...post,
-      tags: post.tags
-        .split(" ")
-        .filter((t) => t !== tag)
-        .join(" "),
+    setPost((prevPost) => {
+      return {
+        ...prevPost,
+        tags: prevPost.tags
+          .split(" ")
+          .filter((t) => t !== tag)
+          .join(" "),
+      };
     });
   };
 
@@ -146,7 +150,7 @@ const SinglePost = ({ setReload }) => {
     try {
       await update(ref(db, `posts/${id}`), { tags: post.tags });
     } catch (error) {
-      console.error("Error updating post:", error);
+      console.error("Error updating post:", error.message);
     }
   };
 
@@ -191,7 +195,7 @@ const SinglePost = ({ setReload }) => {
 
         {(userData.handle === post.authorHandle ||
           userData.isAdmin === true) && (
-          <div>
+          <>
             {editingTags && (
               <div>
                 <PostTags
@@ -204,7 +208,7 @@ const SinglePost = ({ setReload }) => {
                   onClick={() => {
                     editTags()
                       .then(() => setEditingTags(false))
-                      .catch(console.error);
+                      .catch((err) => {});
                   }}
                 >
                   Save Tags
@@ -212,7 +216,7 @@ const SinglePost = ({ setReload }) => {
                 <button onClick={() => setEditingTags(false)}>Close</button>
               </div>
             )}
-          </div>
+          </>
         )}
       </div>
     );

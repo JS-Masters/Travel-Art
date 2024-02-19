@@ -5,7 +5,12 @@ import { useState } from "react";
 import { v4 } from "uuid";
 import "./PostTags.css";
 
-const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
+const PostTags = ({
+  allTags = {},
+  selectedTags = [],
+  addTag = () => {},
+  removeTag = () => {},
+}) => {
   const [showMenu, setShowMenu] = useState(false);
   const [searchField, setSearchField] = useState("");
 
@@ -32,19 +37,22 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
           placeholder="Search or create..."
         />
         <div className="selected-content">
-          {selectedTags.map((tag) => (
-            <Tag
-              key={v4()}
-              onClick={removeTag}
-              style={{
-                cursor: "pointer",
-                backgroundColor: "darkgray",
-                color: "red",
-              }}
-            >
-              {tag} <CloseIcon style={{ width: "9px", marginLeft: "3px" }} />
-            </Tag>
-          ))}
+          {selectedTags.join(" ").length
+            ? selectedTags.map((tag) => (
+                <Tag
+                  key={v4()}
+                  onClick={removeTag}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: "darkgray",
+                    color: "red",
+                  }}
+                >
+                  {tag}{" "}
+                  <CloseIcon style={{ width: "9px", marginLeft: "3px" }} />
+                </Tag>
+              ))
+            : "No tags selected yet!"}
         </div>
         <ul>
           {foundTags.length
