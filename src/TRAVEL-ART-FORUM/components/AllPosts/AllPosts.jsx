@@ -5,12 +5,14 @@ import { useSearchParams, Link, useNavigate } from "react-router-dom";
 import Authenticated from "../hoc/Authenticated";
 import DeletePostButton from "../Buttons/DeletePostButton/DeletePostButton";
 import { AppContext } from "../../providers/AppContext";
+import SearchMenu from "../SearchMenu/SearchMenu";
 
 
 
 export default function AllPosts() {
 
   const [posts, setPosts] = useState([]);
+  const [oldPosts, setOldPosts] = useState([]); // added by Mmeo
   const [searchParams, setSearchParams] = useSearchParams();
   const [clickTrigger, setClickTrigger] = useState(false);
   const { user, userData } = useContext(AppContext);
@@ -27,7 +29,10 @@ export default function AllPosts() {
   };
 
   useEffect(() => {
-    getAllPosts(search).then(setPosts);
+    getAllPosts(search).then((res) => {
+      setPosts(res);
+      setOldPosts(res);
+    });
   }, [search, clickTrigger]);
 
 
@@ -83,6 +88,8 @@ export default function AllPosts() {
     });
   }
 
+  console.log(posts);
+
   return (
     <div>
       <h1>All posts</h1>
@@ -106,6 +113,7 @@ export default function AllPosts() {
         checked={isCheckedSortByDate}
         onChange={handleDateCheckboxChange}
       />
+      {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
       {isCheckedSortByComments ? sortPostsByComments(posts).map((post) => (
         <div key={post.id}>
           <h3>

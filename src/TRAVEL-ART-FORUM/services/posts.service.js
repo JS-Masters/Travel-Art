@@ -250,7 +250,7 @@ export const deleteReply = async (commentID, replyID, postID) => {
 
 /**
  * Retrieves the count of all posts.
- * @returns {Promise<number>} all posts.
+ * @returns {Promise<object>} all posts.
  * @throws {Error} If no posts are found.
  */
 export const getAllPostsValues = async () => {

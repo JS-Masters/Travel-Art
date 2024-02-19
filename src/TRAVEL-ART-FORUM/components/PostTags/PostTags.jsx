@@ -19,9 +19,9 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
       : "select at least 1 tag…";
 
   const menu = () => {
-    const foundTags = Object.keys(allTags).filter(
-      (key) => key.includes(searchField) && !selectedTags.includes(key)
-    );
+    const foundTags = Object.keys(allTags)
+      .filter((key) => key.includes(searchField) && !selectedTags.includes(key))
+      .slice(0, 5);
 
     return (
       <div className="drop-down-menu">
@@ -33,21 +33,17 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
         />
         <div className="selected-content">
           {selectedTags.map((tag) => (
-            <Tag key={v4()} onClick={removeTag} style={{cursor: 'pointer', backgroundColor: 'darkgray', color: 'red'}}>
-              {tag} <CloseIcon style={{ width: "9px", marginLeft: '3px' }} />
+            <Tag
+              key={v4()}
+              onClick={removeTag}
+              style={{
+                cursor: "pointer",
+                backgroundColor: "darkgray",
+                color: "red",
+              }}
+            >
+              {tag} <CloseIcon style={{ width: "9px", marginLeft: "3px" }} />
             </Tag>
-
-            // <button
-            //   key={v4()}
-            //   onClick={removeTag}
-            //   style={{
-            //     margin: "1px 2px",
-            //     padding: "0 3px",
-            //     border: "1px solid white",
-            //   }}
-            // >
-            //   {tag} <CloseIcon style={{ width: "10px" }} />
-            // </button>
           ))}
         </div>
         <ul>
@@ -92,7 +88,7 @@ const PostTags = ({ allTags, selectedTags, addTag, removeTag }) => {
 };
 
 PostTags.propTypes = {
-  // allTags: PropTypes.object.isRequired,
+  allTags: PropTypes.object.isRequired,
   selectedTags: PropTypes.array.isRequired,
   addTag: PropTypes.func.isRequired,
   removeTag: PropTypes.func.isRequired,
