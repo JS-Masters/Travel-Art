@@ -6,9 +6,10 @@ import { ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import "./SinglePost.css"
 import SingleComment from "../SingleComment/SingleComment";
+import PostTags from "../PostTags/PostTags";
+import { getAllTags, updateAllTags } from "../../services/tag.service";
 
 const SinglePost = ({ setReload }) => {
-
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState(null);
   const [commentsArr, setCommentsArr] = useState([]);
@@ -28,6 +29,10 @@ const SinglePost = ({ setReload }) => {
   const [editingPost, setEditingPost] = useState(false);
   const [editedPostContent, setEditedPostContent] = useState('');
 
+  const [editingTags, setEditingTags] = useState(false);
+  const [currentTags, setCurrentTags] = useState('');
+  const [allTags, setAllTags] = useState([]);
+
   useEffect(() => {
     updatePost(id);
   }, [replyMade]);
@@ -35,6 +40,14 @@ const SinglePost = ({ setReload }) => {
   useEffect(() => {
     getCurrentPostComments(id);
   }, []);
+
+  useEffect(() => {
+    getAllTags().then((snapshot) => {
+      setAllTags(snapshot.val());
+    });
+  }, []);
+
+
 
   const getCurrentPostComments = async (id) => {
     const currentPost = await getPostById(id);
@@ -53,68 +66,144 @@ const SinglePost = ({ setReload }) => {
   };
 
   const togglePostLike = async () => {
-
     if (!likedByCurrentUser) {
       await likePost(userData.handle, id);
       const post = await getPostById(id);
       setPost({ ...post });
       setLikedByCurrentUser(true);
-
     } else {
       await dislikePost(userData.handle, id);
       const post = await getPostById(id);
       setPost({ ...post });
       setLikedByCurrentUser(false);
     }
-
   };
 
   const isPostLikedBy = () => {
     const filteredArr = post.likedBy.filter((u) => u !== 1);
-    if (filteredArr.length) {
-      return true;
+    return filteredArr.length > 0;
+  };
+
+  const addTag = (event) => {
+    let tag = event.target.innerText.split(" ")[0];
+    if (tag === "Create") {
+      tag = event.target.innerText.split(" ")[1];
+    }
+    if (post.tags.includes(tag)) {
+      return;
+    }
+    setPost({
+      ...post,
+      tags: [...post.tags, tag],
+    });
+  };
+
+  const removeTag = (event) => {
+    let tag;
+    if (event.target.tagName === "svg") {
+      const parentElement = event.target.parentNode;
+      tag = parentElement.innerText.split(" ")[0];
+    } else if (event.target.tagName === "path") {
+      const parentElement = event.target.parentNode.parentNode;
+      tag = parentElement.innerText.split(" ")[0];
     } else {
-      return false;
+      tag = event.target.innerText.split(" ")[0];
+    }
+
+    setPost({
+      ...post,
+      tags: post.tags.filter((t) => t !== tag),
+    });
+  };
+
+  const editTags = async () => {
+    try {
+      await updateTagsInDatabase(post.id, post.tags);
+      console.log('Tags updated successfully!');
+      await updatePostWithNewTags();  
+    } catch (error) {
+      console.error('Error updating tags:', error);
+      throw error;
+    }
+  };
+  
+  const updateTagsInDatabase = async (postId, updatedTags) => {
+    try {
+      await updateAllTags(updatedTags);
+      return updatedTags;
+    } catch (error) {
+      console.error('Error updating tags:', error);
+      throw error;
+    }
+  };
+
+  const updatePostWithNewTags = async () => {
+    try {
+      await update(ref(db, `posts/${id}`), { tags: post.tags.join(' ') });
+    } catch (error) {
+      console.error('Error updating post:', error);
+      throw error;
     }
   };
 
   const renderPost = () => {
     return (
-      <>
-        <div>
-
-          {(userData.handle === post.authorHandle) && (
-            <div>
-              {editingPost ? (
-                <>
-                  <input
-                    value={editedPostContent}
-                    onChange={(e) => setEditedPostContent(e.target.value)}
-                    type="text"
-                    name="edit-post"
-                    id="edit-post"
-                  />
-                  <button onClick={() => {
-                    editPost().then(() => {
-                      setEditingPost(false);
-                      setReload(prev => !prev);
-                    });
-                  }}>Save</button>
-                  <button onClick={() => setEditingPost(false)}>Cancel</button>
-                </>
-              ) : (
+      <div>
+        {(userData.handle === post.authorHandle) && (
+          <div>
+            {editingPost ? (
+              <>
+                <input
+                  value={editedPostContent}
+                  onChange={(e) => setEditedPostContent(e.target.value)}
+                  type="text"
+                  name="edit-post"
+                  id="edit-post"
+                />
                 <button onClick={() => {
-                  setEditedPostContent(post.content);
-                  setEditingPost(true);
-                }}>Edit Post</button>
-              )}
-            </div>
-          )}
-        </div>
-      </>
+                  editPost().then(() => {
+                    setEditingPost(false);
+                    setReload(prev => !prev);
+                  });
+                }}>Save</button>
+                <button onClick={() => setEditingPost(false)}>Cancel</button>
+              </>
+            ) : (
+              <button onClick={() => {
+                setEditedPostContent(post.content);
+                setEditingPost(true);
+              }}>Edit Post</button>
+            )}
+  
+            {(userData.handle === post.authorHandle || userData.isAdmin === true) && (
+              <div>
+                {console.log("Editing Tags:", editingTags)}
+                {editingTags && (
+                  <div>
+                    {console.log("selectedTags:", post.tags)}
+                    <PostTags
+                      allTags={allTags}
+                      selectedTags={Array.isArray(post.tags) ? post.tags : []}
+                      addTag={addTag}
+                      removeTag={removeTag}
+                    />
+                    <button onClick={() => {
+                      editTags().then(() => setEditingTags(false));
+                    }}>Save Tags</button>
+                    <button onClick={() => setEditingTags(false)}>Close</button>
+                  </div>
+                )}
+                {!editingTags && (
+                  <button onClick={() => setEditingTags(true)}>Edit Tags</button>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     );
   };
-
+  
   const editPost = async () => {
     await update(ref(db, `posts/${id}`), { content: editedPostContent });
     updatePost();
@@ -133,6 +222,8 @@ const SinglePost = ({ setReload }) => {
           <button onClick={togglePostLike}>
             {likedByCurrentUser ? 'Dislike' : 'Like'}
           </button>
+          <p>Tags: {post.tags.length > 0 ? post.tags : "No tags yet"}</p>
+
           {(userData.handle === post.authorHandle || userData.isAdmin === true) && <button onClick={() => {
             deletePost(post.id).then(() => navigate('/all-posts'));
           }}>Delete Post</button>}
@@ -172,4 +263,5 @@ const SinglePost = ({ setReload }) => {
     </div>
   );
 };
+
 export default SinglePost;
