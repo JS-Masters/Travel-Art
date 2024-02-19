@@ -78,7 +78,7 @@ export default function AllPosts() {
       const numCommentsB = Object.keys(b.likedBy || {}).length;
       return numCommentsB - numCommentsA;
     });
-  }
+  };
 
   const sortPostsByDate = (postsToSort) => {
     return postsToSort.slice().sort((a, b) => {
@@ -86,9 +86,7 @@ export default function AllPosts() {
       const dateB = new Date(b.createdOn);
       return dateB - dateA;
     });
-  }
-
-  console.log(posts);
+  };
 
   return (
     <div>
@@ -162,4 +160,4 @@ export default function AllPosts() {
     </div>
   );
 
-}
+};

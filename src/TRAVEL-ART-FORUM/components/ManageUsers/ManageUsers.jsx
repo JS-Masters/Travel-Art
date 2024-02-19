@@ -3,6 +3,7 @@ import { getAllUsers, renderUsersBySearch } from "../../services/admin.service";
 import "./ManageUsers.css"
 import BanButton from "../Buttons/BanButton/BanButton";
 import UnbanButton from "../Buttons/UnbanButton.jsx/UnbanButton";
+import PromoteButton from "../Buttons/PromoteButton/PromoteButton";
 const ManageUsers = () => {
 
   const [users, setUsers] = useState([]);
@@ -65,7 +66,11 @@ const ManageUsers = () => {
                       {u.isAdmin ? (
                         <p>ADMIN</p>
                       ) : (
-                        <BanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-ban-button`} />
+                        <div className="admin-buttons">
+                          <BanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-ban-button`} />
+                          <PromoteButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-promote-button`}/>
+                        </div>
+
                       )}
                     </>
 

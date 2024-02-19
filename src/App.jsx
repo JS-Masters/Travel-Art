@@ -164,7 +164,7 @@ const App = (props) => {
               <Route path="/upload-form" element={<UploadForm />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/all-posts" element={<AllPosts />} />
-              <Route path="/single-post/:id" element={<SinglePost key={reload} setReload={setReload}/>} />
+              <Route path="/single-post/:id" element={<SinglePost key={reload} setReload={setReload} />} />
               <Route
                 path="/edit-profile"
                 element={
