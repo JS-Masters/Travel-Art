@@ -6,7 +6,7 @@ import Authenticated from "../hoc/Authenticated";
 import DeletePostButton from "../Buttons/DeletePostButton/DeletePostButton";
 import { AppContext } from "../../providers/AppContext";
 import SearchMenu from "../SearchMenu/SearchMenu";
-
+import "./AllPosts.css"
 
 
 export default function AllPosts() {
@@ -113,46 +113,53 @@ export default function AllPosts() {
       />
       {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
       {isCheckedSortByComments ? sortPostsByComments(posts).map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="post-box">
           <h3>
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
           <p>Posted by: {post.authorHandle}</p>
           {post.tags && <p>Tags: {post.tags}</p>}
+          {<p>Likes: {post.likes}</p>}
+          {}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
           {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : isCheckedSortByLikes ? sortPostsByLikes(posts).map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="post-box">
           <h3>
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
           <p>Posted by: {post.authorHandle}</p>
           {post.tags && <p>Tags: {post.tags}</p>}
+          {<p>Likes: {post.likes}</p>}
+          {/* {(Object.keys(post.comments).length) ? (<p>Comments: {Object.keys(post.comments).length}</p>) : (<p>Comments: 0</p>)} */}
+          {/* {Object.keys(post.comments).length && <p>Comments: {Object.keys(post.comments).length}</p>} */}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
           {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : isCheckedSortByDate ? sortPostsByDate(posts).map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="post-box">
           <h3>
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
           <p>Posted by: {post.authorHandle}</p>
           {post.tags && <p>Tags: {post.tags}</p>}
+          {<p>Likes: {post.likes}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
           {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>
       )) : posts.map((post) => (
-        <div key={post.id}>
+        <div key={post.id} className="post-box">
           <h3>
             <Link to={`/single-post/${post.id}`}>{post.title}</Link>
           </h3>
           <p>{new Date(post.createdOn).toLocaleString()}</p>
           <p>Posted by: {post.authorHandle}</p>
           {post.tags && <p>Tags: {post.tags}</p>}
+          {<p>Likes: {post.likes}</p>}
           <Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated>
           {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         </div>

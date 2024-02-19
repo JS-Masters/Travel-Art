@@ -35,7 +35,7 @@ const SinglePost = ({ setReload }) => {
   const navigate = useNavigate();
   const [editingPost, setEditingPost] = useState(false);
   const [editedPostContent, setEditedPostContent] = useState("");
-
+  const [isCheckedSortByLikes, setIsCheckedSortByLikes] = useState(false);
   const [editingTags, setEditingTags] = useState(false);
   const [currentTags, setCurrentTags] = useState("");
   const [allTags, setAllTags] = useState([]);
@@ -55,19 +55,19 @@ const SinglePost = ({ setReload }) => {
       .then((snapshot) => {
         setAllTags(snapshot.val());
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const getCurrentPostComments = async (id, searchTerm) => {
     const currentPost = await getPostById(id);
     if ("comments" in currentPost) {
-      if(searchTerm) {
+      if (searchTerm) {
         const commentsSortedBySearchTerm = Object.values(currentPost.comments)
-        .filter(c => (c.content.toLowerCase().startsWith(searchTerm.toLowerCase())) || (c.authorHandle.toLowerCase().startsWith(searchTerm.toLowerCase())))
-          setCommentsArr(commentsSortedBySearchTerm);
+          .filter(c => (c.content.toLowerCase().startsWith(searchTerm.toLowerCase())) || (c.authorHandle.toLowerCase().startsWith(searchTerm.toLowerCase())))
+        setCommentsArr(commentsSortedBySearchTerm);
       } else {
         setCommentsArr(Object.values(currentPost.comments));
-      }  
+      }
     }
   };
 
@@ -203,31 +203,39 @@ const SinglePost = ({ setReload }) => {
 
         {(userData.handle === post.authorHandle ||
           userData.isAdmin === true) && (
-          <>
-            {editingTags && (
-              <div>
-                <PostTags
-                  allTags={allTags}
-                  selectedTags={post.tags.split(" ")}
-                  addTag={addTag}
-                  removeTag={removeTag}
-                />
-                <button
-                  onClick={() => {
-                    editTags()
-                      .then(() => setEditingTags(false))
-                      .catch((err) => {});
-                  }}
-                >
-                  Save Tags
-                </button>
-                <button onClick={() => setEditingTags(false)}>Close</button>
-              </div>
-            )}
-          </>
-        )}
+            <>
+              {editingTags && (
+                <div>
+                  <PostTags
+                    allTags={allTags}
+                    selectedTags={post.tags.split(" ")}
+                    addTag={addTag}
+                    removeTag={removeTag}
+                  />
+                  <button
+                    onClick={() => {
+                      editTags()
+                        .then(() => setEditingTags(false))
+                        .catch((err) => { });
+                    }}
+                  >
+                    Save Tags
+                  </button>
+                  <button onClick={() => setEditingTags(false)}>Close</button>
+                </div>
+              )}
+            </>
+          )}
       </div>
     );
+  };
+
+  const sortCommentsByLikes = (postsToSort) => {
+    return postsToSort.slice().sort((a, b) => {
+      const numCommentsA = Object.keys(a.likedBy || {}).length;
+      const numCommentsB = Object.keys(b.likedBy || {}).length;
+      return numCommentsB - numCommentsA;
+    });
   };
 
   const editPost = async () => {
@@ -277,7 +285,13 @@ const SinglePost = ({ setReload }) => {
           <h2>Comments:</h2>
           <label htmlFor="search-comments">Search in comments: </label>
           <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search-comments" id="search-comments" /><br />
-          {commentsArr.map((comment) => (
+          <span>Sort by Most Liked </span>
+          <input
+            type="checkbox"
+            checked={isCheckedSortByLikes}
+            onChange={() => setIsCheckedSortByLikes(prevState => !prevState)}
+          /><br />
+          {isCheckedSortByLikes ? (sortCommentsByLikes(commentsArr).map((comment) => (
             <SingleComment
               key={comment.id}
               comment={comment}
@@ -286,7 +300,16 @@ const SinglePost = ({ setReload }) => {
               setIsCommentLiked={setIsCommentLiked}
               setReload={setReload}
             />
-          ))}
+          ))) : (commentsArr.map((comment) => (
+            <SingleComment
+              key={comment.id}
+              comment={comment}
+              commentsArr={commentsArr}
+              setCommentsArr={setCommentsArr}
+              setIsCommentLiked={setIsCommentLiked}
+              setReload={setReload}
+            />
+          )))}
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
               <br />
