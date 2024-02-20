@@ -101,17 +101,6 @@ export const dislikePost = async (handle, postId) => {
 };
 
 
-export const getUserByHandle = async (handle) => {
-  return get(query(ref(db, 'users'), orderByChild('handle'), equalTo(handle)))
-    .then(snapshot => {
-      if (!snapshot.exists()) {
-        throw new Error(`User with handle @${handle} does not exist!`);
-      }
-
-      const user = snapshot.val();
-      return user;
-    });
-};
 
 export const addComment = async (comment, postID) => {
 
@@ -259,8 +248,9 @@ export const editReply = async (postID, commentID, replyID, replyContentEdit) =>
   const updatedReplyValue = updatedReply.val();
   return updatedReplyValue;
 
-
 }
+
+
 
 /**
  * Retrieves the count of all posts.

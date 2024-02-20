@@ -19,3 +19,9 @@ export const updateAllTags = (tags = []) => {
             })
     });
 };
+
+export const showHashtagOnTags = (tagsString) => {
+    const tagsArr = tagsString.split(' ');
+    const result = tagsArr.map((tag) => `#${tag}`).join(' ');
+    return result;
+  };

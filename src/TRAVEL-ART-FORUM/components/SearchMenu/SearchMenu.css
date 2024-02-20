@@ -1,6 +1,7 @@
 .search-tags-menu {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+
 }
 
 .search-tags-menu > h3 {

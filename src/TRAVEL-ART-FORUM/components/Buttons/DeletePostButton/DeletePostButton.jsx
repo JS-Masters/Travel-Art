@@ -1,5 +1,6 @@
 import { ref, remove } from "firebase/database";
 import { db } from "../../../config/firebase-config";
+import "./DeletePostButton.css";
 
 const DeletePostButton = ({postID, rerenderAfterClick}) => {
 
@@ -17,7 +18,7 @@ const DeletePostButton = ({postID, rerenderAfterClick}) => {
   }
 
 return (
-  <button onClick={() => handleDeleteClick(postID)}>DELETE</button>
+  <button className="delete-post-button" onClick={() => handleDeleteClick(postID)}>DELETE</button>
 )
 
 

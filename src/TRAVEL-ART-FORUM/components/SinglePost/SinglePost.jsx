@@ -13,7 +13,7 @@ import { db } from "../../config/firebase-config";
 import "./SinglePost.css";
 import SingleComment from "../SingleComment/SingleComment";
 import PostTags from "../PostTags/PostTags";
-import { getAllTags, updateAllTags } from "../../services/tag.service";
+import { getAllTags, showHashtagOnTags, updateAllTags } from "../../services/tag.service";
 import { EditIcon } from "@chakra-ui/icons";
 
 const SinglePost = ({ setReload }) => {
@@ -244,6 +244,19 @@ const SinglePost = ({ setReload }) => {
     updatePost();
   };
 
+  const renderComments = (comment) => {
+    return (
+      <SingleComment
+        key={comment.id}
+        comment={comment}
+        commentsArr={commentsArr}
+        setCommentsArr={setCommentsArr}
+        setIsCommentLiked={setIsCommentLiked}
+        setReload={setReload}
+      />
+    )
+  }
+
   return (
     <div>
       {post && (
@@ -263,7 +276,7 @@ const SinglePost = ({ setReload }) => {
             {likedByCurrentUser ? "Dislike" : "Like"}
           </button>
           <p>
-            Tags: {post.tags.length > 0 ? post.tags : "No tags yet"}{" "}
+            Tags: {post.tags.length > 0 ? showHashtagOnTags(post.tags) : "No tags yet"}{" "}
             <EditIcon
               style={{ cursor: "pointer" }}
               onClick={() => setEditingTags(true)}
@@ -292,25 +305,7 @@ const SinglePost = ({ setReload }) => {
             checked={isCheckedSortByLikes}
             onChange={() => setIsCheckedSortByLikes(prevState => !prevState)}
           /><br />
-          {isCheckedSortByLikes ? (sortCommentsByLikes(commentsArr).map((comment) => (
-            <SingleComment
-              key={comment.id}
-              comment={comment}
-              commentsArr={commentsArr}
-              setCommentsArr={setCommentsArr}
-              setIsCommentLiked={setIsCommentLiked}
-              setReload={setReload}
-            />
-          ))) : (commentsArr.map((comment) => (
-            <SingleComment
-              key={comment.id}
-              comment={comment}
-              commentsArr={commentsArr}
-              setCommentsArr={setCommentsArr}
-              setIsCommentLiked={setIsCommentLiked}
-              setReload={setReload}
-            />
-          )))}
+          {isCheckedSortByLikes ? (sortCommentsByLikes(commentsArr).map(renderComments)) : (commentsArr.map(renderComments))}
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
               <br />

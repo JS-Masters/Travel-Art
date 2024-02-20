@@ -1,0 +1,8 @@
+.delete-post-button {
+    font-size: 20px;
+    font-weight: bold;
+    float: right;
+    margin-top: 5px;
+    margin-right: 10px;
+   color: rgb(150, 28, 28);
+}

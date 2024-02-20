@@ -1,7 +1,49 @@
 .post-box {
 border: 3px solid blue;
+height: 150px;
+position: relative;
+div {
+display: flex;
+justify-content: space-between;
+margin-top: 40px;
+position: absolute;
+bottom: 0;
+}
+}
+#post-author {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    color: bisque;
 }
 
-.all-posts-form {
-    display: inline-block !important;
+#comments-and-likes {
+    display: inline;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    color: bisque;
+    font-size: 22px;
 }
+#likes-number {
+    margin-left: 10px;   
+}
+
+.search-posts-box {
+text-align: left;
+margin-left: 50px;
+}
+
+.all-posts-box {
+    border: 3px solid red;
+    float: left;
+    width: 800px;
+    margin-left: 50px;
+    h2 {
+        font-size: 30px; 
+        display: inline;
+        text-align: left;
+    }
+}
+
+
