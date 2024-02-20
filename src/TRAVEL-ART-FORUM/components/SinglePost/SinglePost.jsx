@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState} from "react";
+import { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import {
@@ -261,51 +261,57 @@ const SinglePost = ({ setReload }) => {
   return (
     <div>
       {post && (
-        <div>
-          <h1>{post.title}</h1>
-          <p>{post.content}</p>
-          <p>Author: {post.authorHandle}</p>
-          <p>Created on: {post.createdOn.toLocaleString()}</p>
-          <p>Likes: {post.likes}</p>
-          <p>
-            Liked by:{" "}
-            {isPostLikedBy()
-              ? post.likedBy.filter((u) => u !== 1).join(", ")
-              : "No likes yet"}
-          </p>
-          <button onClick={togglePostLike}>
-            {likedByCurrentUser ? "Dislike" : "Like"}
-          </button>
-          <p>
-  Tags: 
-  {post.tags.length > 0 ? 
-    post.tags.split(" ").map((tag, index) => (
-      <div key={index}>
-        <Link to={`/posts-by-tag/:${tag}`}>
-          {showHashtagOnTags(tag)}
-        </Link>{" "}
-      </div>
-    )) 
-    : "No tags yet"}{" "}
-  <EditIcon
-    style={{ cursor: "pointer" }}
-    onClick={() => setEditingTags(true)}
-  />
-</p>
+        <div className="single-post-view">
+          <div className="post-info">
+            <h1>{post.title}</h1>
+            <p>{post.content}</p>
+            <span id="post-author"><img src={post.userAvatarUrl}
+              alt="user-avatar"
+              style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> {post.authorHandle}</span>
+            <p>Created on: {post.createdOn.toLocaleString()}</p>
+            <p>{post.likes} Likes</p>
+            <p>
+              Liked by:{" "}
+              {isPostLikedBy()
+                ? post.likedBy.filter((u) => u !== 1).join(", ")
+                : "No likes yet"}
+            </p>
+            <button onClick={togglePostLike}>
+              {likedByCurrentUser ? "Dislike" : "Like"}
+            </button>
+            <p>
+              Tags:
+              {post.tags.length > 0 ?
+                post.tags.split(" ").map((tag, index) => (
+                  <div key={index}>
+                    <Link to={`/posts-by-tag/:${tag}`}>
+                      {showHashtagOnTags(tag)}
+                    </Link>{" "}
+                  </div>
+                ))
+                : "No tags yet"}{" "}
+              <EditIcon
+                style={{ cursor: "pointer" }}
+                onClick={() => setEditingTags(true)}
+              />
+            </p>
 
-          {(userData.handle === post.authorHandle ||
-            userData.isAdmin === true) && (
-              <button
-                onClick={() => {
-                  deletePost(post.id).then(() => navigate("/all-posts"));
-                }}
-              >
-                Delete Post
-              </button>
-            )}
-          {renderPost()}
-          <br />
-          <br />
+            {(userData.handle === post.authorHandle ||
+              userData.isAdmin === true) && (
+                <button
+                  onClick={() => {
+                    deletePost(post.id).then(() => navigate("/all-posts"));
+                  }}
+                >
+                  Delete Post
+                </button>
+              )}
+            {renderPost()}
+          </div>
+
+          <div>
+
+          </div>
           <h2>Comments:</h2>
           <label htmlFor="search-comments">Search in comments: </label>
           <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search-comments" id="search-comments" /><br />

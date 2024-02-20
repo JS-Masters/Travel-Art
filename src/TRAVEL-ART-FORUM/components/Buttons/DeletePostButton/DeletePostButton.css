@@ -15,4 +15,6 @@
      padding-right: 5px;  
 }
 
-
+.delete-post-button:active {
+  opacity: 0.5;
+}
