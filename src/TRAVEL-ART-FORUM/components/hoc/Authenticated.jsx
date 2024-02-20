@@ -4,18 +4,18 @@ import { AppContext } from "../../providers/AppContext";
 const Authenticated = ({ children }) => {
   const { userData } = useContext(AppContext);
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (userData) {
       setIsAdmin(userData.isAdmin);
-      setLoading(false);
+      // setLoading(false);
     }
   }, [userData]);
 
-  if (loading) {
-    return <h1>LOADING...</h1>
-  }
+  // if (loading) {
+  //   return <h1>LOADING...</h1>
+  // }
 
   if (!isAdmin) {
     return;

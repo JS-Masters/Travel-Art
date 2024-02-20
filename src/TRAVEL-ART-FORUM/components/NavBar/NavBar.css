@@ -7,6 +7,8 @@
     justify-content: space-between;
     /* gap: 150px; */
     text-align: center;
+    padding-left: 50px;
+ 
 }
 
 .navbar > .home-page-logo {
@@ -16,8 +18,11 @@
     font-family: "Aguafina Script", cursive;
     font-weight: 400;
     font-style: normal;
+    text-decoration: none;
 }
-
+.navbar > .home-page-logo:hover {
+    opacity: 0.5;
+}
 .navbar a {
     text-decoration: none;
     color: #fff;

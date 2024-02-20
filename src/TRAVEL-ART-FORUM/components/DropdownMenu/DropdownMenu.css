@@ -15,3 +15,9 @@
     cursor: pointer;
     font-size: 17px;
 }
+.profile-menu > li:hover {
+  opacity: 0.5;
+}
+.dropdown span:hover {
+  opacity: 0.5;
+}

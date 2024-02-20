@@ -171,14 +171,7 @@ const SinglePost = ({ setReload }) => {
           <div>
             {editingPost ? (
               <>
-                <input
-                  value={editedPostContent}
-                  onChange={(e) => setEditedPostContent(e.target.value)}
-                  type="text"
-                  name="edit-post"
-                  id="edit-post"
-                />
-                <button
+               <button className="save-edit-button"
                   onClick={() => {
                     editPost().then(() => {
                       setEditingPost(false);
@@ -188,10 +181,17 @@ const SinglePost = ({ setReload }) => {
                 >
                   Save
                 </button>
-                <button onClick={() => setEditingPost(false)}>Cancel</button>
+                <button className="cancel-edit-button"onClick={() => setEditingPost(false)}>Cancel</button>
+              <input
+                  value={editedPostContent}
+                  onChange={(e) => setEditedPostContent(e.target.value)}
+                  type="text"
+                  name="edit-post"
+                  id="edit-post"
+                /> 
               </>
             ) : (
-              <button
+              <button className="edit-button"
                 onClick={() => {
                   setEditedPostContent(post.content);
                   setEditingPost(true);
@@ -263,50 +263,55 @@ const SinglePost = ({ setReload }) => {
       {post && (
         <div className="single-post-view">
           <div className="post-info">
-            <h1>{post.title}</h1>
-            <p>{post.content}</p>
-            <span id="post-author"><img src={post.userAvatarUrl}
-              alt="user-avatar"
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> {post.authorHandle}</span>
-            <p>Created on: {post.createdOn.toLocaleString()}</p>
-            <p>{post.likes} Likes</p>
-            <p>
-              Liked by:{" "}
-              {isPostLikedBy()
-                ? post.likedBy.filter((u) => u !== 1).join(", ")
-                : "No likes yet"}
-            </p>
-            <button onClick={togglePostLike}>
-              {likedByCurrentUser ? "Dislike" : "Like"}
-            </button>
-            <p>
-              Tags:
+            <h1>{post.title}</h1><br />
+            <span>
               {post.tags.length > 0 ?
+              
                 post.tags.split(" ").map((tag, index) => (
-                  <div key={index}>
+                  <span key={index} className="single-tag-span">
                     <Link to={`/posts-by-tag/:${tag}`}>
                       {showHashtagOnTags(tag)}
                     </Link>{" "}
-                  </div>
+                  </span>
                 ))
                 : "No tags yet"}{" "}
               <EditIcon
+              className="edit-tags-icon"
                 style={{ cursor: "pointer" }}
                 onClick={() => setEditingTags(true)}
               />
-            </p>
-
+            </span>
             {(userData.handle === post.authorHandle ||
               userData.isAdmin === true) && (
                 <button
+                  className="delete-post-button"
                   onClick={() => {
                     deletePost(post.id).then(() => navigate("/all-posts"));
                   }}
                 >
-                  Delete Post
+                  DELETE POST
                 </button>
               )}
-            {renderPost()}
+                {renderPost()}
+            <p id="post-content">{post.content}</p>
+            <span id="post-author"><img src={post.userAvatarUrl}
+              alt="user-avatar"
+              style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> {post.authorHandle} <span id="creted-on">Created on: {new Date(post.createdOn).toLocaleDateString()}</span></span>
+            <div className="likes-info">          
+              <button onClick={togglePostLike}>
+                {likedByCurrentUser ? "Dislike" : "Like"}
+              </button>
+              <p>{post.likes} Likes</p>
+              <p>
+                Liked by:{" "}
+                {isPostLikedBy()
+                  ? post.likedBy.filter((u) => u !== 1).join(", ")
+                  : "No likes yet"}
+              </p>
+            </div>
+
+           
+          
           </div>
 
           <div>
