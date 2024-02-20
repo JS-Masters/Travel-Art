@@ -4,12 +4,11 @@ import { useContext, useEffect, useState } from "react";
 import { getAllPostsValues } from "../../services/posts.service";
 import MostCommented from "../../views/MostCommented/MostCommented";
 import RecentlyCreated from "../../views/RecentlyCreated/RecentlyCreated";
-import "./Home.css"
+import "./Home.css";
 import { AppContext } from "../../providers/AppContext";
 import { NavLink } from "react-router-dom";
 
 const Home = (props) => {
-
   const { user, citySearch, cityClick } = useContext(AppContext);
   const [users, setUsers] = useState(0);
   const [totalPosts, setTotalPosts] = useState([]);
@@ -33,34 +32,31 @@ const Home = (props) => {
 
   return (
     <div className="home-page">
-      <div className="most-commented-posts">
-        <MostCommented totalPosts={totalPosts} />
-      </div>
-      <div className="recently-created-posts">
-        <RecentlyCreated totalPosts={totalPosts} />
-      </div>
-      <div className="general-info" style={{marginBottom: '20px'}}>
+      <MostCommented totalPosts={totalPosts} />
+      <RecentlyCreated totalPosts={totalPosts} />
+      <div className="general-info" style={{ marginBottom: "20px" }}>
         <h2>Total posts created: {totalPosts.length}</h2>
         <h2>Our Travelers: {users}</h2>
       </div>
-      {user && <div className="globe-results">
-        {(citySearch || cityClick) && (
-          <NavLink to="/hotels-by-city">
-            See Hotels in {citySearch || cityClick}
-          </NavLink>
-        )}
-        {(citySearch || cityClick) && (
-          <NavLink to="/restaurants-by-city">
-            See Restaurants in {citySearch || cityClick}
-          </NavLink>
-        )}
-        {(citySearch || cityClick) && (
-          <NavLink to="/things-to-do-by-city">
-            Things to do in {citySearch || cityClick}
-          </NavLink>
-        )}
-      </div>}
-
+      {user && (
+        <div className="globe-results">
+          {(citySearch || cityClick) && (
+            <NavLink to="/hotels-by-city">
+              See Hotels in {citySearch || cityClick}
+            </NavLink>
+          )}
+          {(citySearch || cityClick) && (
+            <NavLink to="/restaurants-by-city">
+              See Restaurants in {citySearch || cityClick}
+            </NavLink>
+          )}
+          {(citySearch || cityClick) && (
+            <NavLink to="/things-to-do-by-city">
+              Things to do in {citySearch || cityClick}
+            </NavLink>
+          )}
+        </div>
+      )}
     </div>
   );
 };

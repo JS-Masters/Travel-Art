@@ -14,11 +14,8 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
   }, [totalPosts]);
 
   return (
-    <div className="recently-created-box">
-      <div className="recently-created-title">
+    <div className="recently-created-posts">
       <h1>Recently Created Posts</h1>
-      </div>
-      
       <div>
         {recentlyCreated.map((post) => (
           <div key={post.id} className="single-post">

@@ -17,10 +17,7 @@ const MostCommented = ({ totalPosts = [] }) => {
 
   return (
     <div className="most-commented-box">
-    <div className="most-commented-title">
-    <h1>Most Commented Posts</h1>
-    </div>
-      
+      <h1>Most Commented Posts</h1>
       <div>
         {mostCommented.map((post) => (
           <div key={post.id} className="single-post">
