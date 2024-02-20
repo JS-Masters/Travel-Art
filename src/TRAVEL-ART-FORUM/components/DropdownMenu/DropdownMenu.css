@@ -1,0 +1,17 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+
+.dropdown span {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  color: bisque;
+  font-size: 25px;
+  margin-top: 12px;
+}
+
+.profile-menu > li {
+    font-family: "Oswald", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 17px;
+}

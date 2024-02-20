@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { logoutUser } from "../../services/auth.service";
 import Authenticated from "../hoc/Authenticated";
+import "./DropdownMenu.css";
 
 const DropdownMenu = ({
   username = null,
@@ -32,16 +33,7 @@ const DropdownMenu = ({
         }}
         onClick={toggleMenu}
       >
-        <span
-          style={{
-            fontFamily: "monospace",
-            fontStyle: "italic",
-            fontSize: "20px",
-            marginTop: "19px",
-          }}
-        >
-          {username}
-        </span>
+        <span>{username}</span>
         {avatarUrl && (
           <img
             style={{
@@ -55,41 +47,17 @@ const DropdownMenu = ({
         )}
       </button>
       {showMenu && (
-        <ul style={{ listStyle: "none", position: 'absolute' }} className="menu">
-          <li 
-            style={{ cursor: "pointer", fontStyle: "italic" }}
-            onClick={() => navigate("/my-profile")}
-          >
-          My Profile
-          </li>
-          <li
-            style={{ cursor: "pointer", fontStyle: "italic" }}
-            onClick={() => navigate("/upload-form")}
-          >
-            Change Avatar
-          </li>
-          <li
-            style={{ cursor: "pointer", fontStyle: "italic" }}
-            onClick={() => navigate("/edit-profile")}
-          >
-            Edit profile
-          </li>
-
+        <ul
+          style={{ listStyle: "none", position: "absolute" }}
+          className="profile-menu"
+        >
+          <li onClick={() => navigate("/my-profile")}>My Profile</li>
+          <li onClick={() => navigate("/upload-form")}>Change Avatar</li>
+          <li onClick={() => navigate("/edit-profile")}>Edit profile</li>
           <Authenticated>
-            <li
-              style={{ cursor: "pointer", fontStyle: "italic" }}
-              onClick={() => navigate("/manage-users")}
-            >
-              Manage Users
-            </li>
+            <li onClick={() => navigate("/manage-users")}>Manage Users</li>
           </Authenticated>
-
-          <li
-            style={{ cursor: "pointer", fontStyle: "italic" }}
-            onClick={signOut}
-          >
-            Sign out
-          </li>
+          <li onClick={signOut}>Sign out</li>
         </ul>
       )}
     </div>

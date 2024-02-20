@@ -1,34 +1,28 @@
-.select-kit-header {
-  border-color: blue;
-  outline: 1px solid blue;
-  outline-offset: 0;
-  display: inline-block;
-  align-items: stretch;
-  cursor: pointer;
-  padding: 5px;
-}
-
-.select-kit-header-wrapper {
-  border: "1px solid white";
-  display: "inline-block";
-  padding: "5px";
-}
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 
 .tags-menu {
   text-align: center;
+  margin-top: 10px;
   width: 450px;
-  padding: "5px";
+  padding: 5px;
   color: black;
-  background-color: white;
-  ul {
-    list-style: none;
-  }
-  input {
-    width: 90%;
-    padding: 5px;
-    margin: 5px 0;
-    color: white;
-  }
+  background-color: transparent;
+  border-radius: 20px;
+  border-left: 1px solid rgba(255, 255, 255, 0.3);
+  border-top: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  box-shadow: 20px 20px 40px -6px rgba(255, 255, 255, 0.2);
+}
+
+.select-kit-header-wrapper {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  font-size: 25px;
 }
 
 .formatted-selection {
@@ -36,17 +30,38 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   display: inline-block;
-  width: 160px;
+  width: 80%;
+  color: white;
 }
 
-.select-kit-header-wrapper {
-  width: 450px;
+.drop-down-menu > ul {
+  color: white;
+  list-style: none;
 }
 
-/* .drop-down-menu {
-  border-radius: 15px;
-} */
-/* .tags-ul {
-  position: absolute;
-  color: red;
-} */
+.drop-down-menu > input {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+
+  width: 90%;
+  padding: 5px 10px;
+  margin: 5px 0;
+  color: bisque;
+  font-size: 23px;
+
+  background-color: transparent;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.drop-down-menu > input::placeholder {
+  color: bisque;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 23px;
+}
+
+.selected-content {
+  color: white;
+  border-radius: 10px;
+}

@@ -21,7 +21,7 @@ const PostTags = ({
   const formattedSelection =
     selectedTags.length > 0
       ? selectedTags.join(", ")
-      : "select at least 1 tag…";
+      : "Select at least 1 tag…";
 
   const menu = () => {
     const foundTags = Object.keys(allTags)
@@ -45,7 +45,8 @@ const PostTags = ({
                   style={{
                     cursor: "pointer",
                     backgroundColor: "darkgray",
-                    color: "red",
+                    color: "black",
+                    margin: "2px",
                   }}
                 >
                   {tag}{" "}
@@ -54,7 +55,7 @@ const PostTags = ({
               ))
             : "No tags selected yet!"}
         </div>
-        <ul className="tags-ul">
+        <ul>
           {foundTags.length
             ? foundTags.map((key) => (
                 <li key={v4()} style={{ cursor: "pointer" }} onClick={addTag}>
@@ -73,22 +74,14 @@ const PostTags = ({
 
   return (
     <div className="tags-menu">
-      <summary
-        data-name=""
-        data-value=""
-        role="listbox"
-        id="ember253-header"
-        className="select-kit-header"
-      >
-        <div className="select-kit-header-wrapper">
-          <span className="formatted-selection">{formattedSelection}</span>
-          <IconButton
-            aria-label="Add tag"
-            icon={<PlusSquareIcon />}
-            onClick={() => setShowMenu(!showMenu)}
-          />
-        </div>
-      </summary>
+      <div className="select-kit-header-wrapper">
+        <span className="formatted-selection">{formattedSelection}</span>
+        <IconButton
+          aria-label="Add tag"
+          icon={<PlusSquareIcon />}
+          onClick={() => setShowMenu(!showMenu)}
+        />
+      </div>
 
       {showMenu && menu()}
     </div>
