@@ -48,9 +48,12 @@ const MyProfile = () => {
                     <br />
                     <h1>About {userData.handle}`s travels </h1>
                     <ul>
-                        {posts.map(post => (
-                            <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+                        {posts.map((post) => (
+                            <li key={post.id}>
+                                <Link to={`/single-post/${post.id}`}>{post.title}</Link>
+                            </li>
                         ))}
+    
                     </ul>
                 </>
             ) : (

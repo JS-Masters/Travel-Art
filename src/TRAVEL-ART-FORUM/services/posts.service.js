@@ -281,6 +281,37 @@ export const getPostByAuthor = async (authorHandle) => {
   return filteredPosts;
 };
 
+export const getPostsByTag = async (tag) => {
+  const lowerCaseTag = tag.toLowerCase();
+  const withoutFirstChar = lowerCaseTag.slice(1);
+  const snapshot = await get(ref(db, 'posts'));
+
+  if (!snapshot.exists()) {
+    throw new Error('No posts found.');
+  }
+
+  const postsDocument = snapshot.val();
+
+  const filteredPosts = Object.keys(postsDocument)
+    .filter(key => postsDocument[key].tags.toLowerCase().includes(withoutFirstChar))
+    .map(key => {
+      const post = postsDocument[key];
+
+      return {
+        ...post,
+        id: key,
+        createdOn: new Date(post.createdOn),
+        likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
+      };
+    });
+
+  if (filteredPosts.length === 0) {
+    throw new Error(`No posts found for tag ${tag}`);
+  }
+console.log(filteredPosts)
+  return filteredPosts;
+}
+
 /**
  * Retrieves the count of all posts.
  * @returns {Promise<object>} all posts.

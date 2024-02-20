@@ -25,6 +25,7 @@ import Home from "./TRAVEL-ART-FORUM/pages/Home/Home";
 import "./App.css";
 import AboutView from "./TRAVEL-ART-FORUM/views/AboutView/AboutView";
 import MyProfile from "./TRAVEL-ART-FORUM/components/MyProfile/MyProfile";
+import PostByTag from "./TRAVEL-ART-FORUM/pages/PostsByTag/PostsByTag";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -179,7 +180,7 @@ const App = (props) => {
               />
               <Route path="*" element={<NotFound />} />
              <Route path="/my-profile" element={<MyProfile />} />
-
+<Route path="/posts-by-tag/:tag" element={<PostByTag />} />
             </Routes>
           </div>
         </BrowserRouter>
