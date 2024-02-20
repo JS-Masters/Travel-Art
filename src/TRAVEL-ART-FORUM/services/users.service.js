@@ -33,3 +33,33 @@ export const getAllUsers = () => {
 
   return get(ref(db, 'users'));
 };
+export const getAllAvatars = async () => {
+  const snapshot = await get(ref(db, 'users'));
+
+  if (!snapshot.exists()) {
+    throw new Error('No avatars found.');
+  }
+  const usersDocument = snapshot.val();
+  const avatars = Object.keys(usersDocument).map(key => {
+    const user = usersDocument[key];
+    return {
+      handle: user.handle,
+      avatar: user.avatar,  
+    };
+  });
+
+  return avatars;
+};
+
+
+export const getUserAvatar = async (handle) => {
+  const snapshot = await get(ref(db, `users/${handle}`));
+
+  if (!snapshot.exists()) {
+    throw new Error('No avatar found.');
+  }
+
+  const userDocument = snapshot.val();
+//console.log(userDocument) - тук връща линк към снимката
+  return userDocument;
+};
