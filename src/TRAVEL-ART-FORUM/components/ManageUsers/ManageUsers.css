@@ -1,8 +1,75 @@
 .single-user {
-  display: flex;
-  align-items: center; /* To vertically align items */
+  display: inline-block;
+  width:500px   ;
+  border: 2px solid bisque;
+  border-radius: 15px;
+  text-align: left !important;
+  margin-top: 35px;
+}
+.single-user h1 {
+  display: inline;
+  margin-left: 17px;
+}
+.single-user h2 {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 20px;
+}
+.single-user img {
+  display: inline-block;
+}
+.single-user p {
+  float: right;
+  padding: 10px;
+  font-size: 25px;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  color: bisque;
+}
+
+.admin-buttons {
+float: right;
+padding: 10px;
+font-family: "Oswald", sans-serif;
+font-size: 23px;
+}
+
+.promote-buttons{
+  margin-left: 10px;
+  color: bisque;
+  border: 1px solid bisque;
+}
+.promote-buttons:hover {
+  opacity: 0.7;
+}
+
+.ban-buttons {
+  color: rgb(150, 28, 28);
+  font-weight: bold;
+}
+.ban-buttons:hover {
+  opacity: 0.7;
 }
 
 .user-avatar {
-  margin-right: 10px; /* Add some space between the avatar and text */
+  margin-right: 10px;
+}
+
+.manage-users-page {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+#first-line {
+  width: 100%;
+  float: left !important;
+  padding: 10px;
+}
+
+#search-users-label {
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: 30px;
 }

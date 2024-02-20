@@ -21,3 +21,7 @@
 .dropdown span:hover {
   opacity: 0.5;
 }
+
+.dropdown > ul {
+  z-index: 1;
+}

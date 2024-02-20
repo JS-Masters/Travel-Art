@@ -7,6 +7,7 @@ import { get, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import { useNavigate } from "react-router-dom";
 import "./CreatePost.css";
+import { defaultAvatarUrl } from "../../../data/urls";
 
 const CreatePost = () => {
   const { userData } = useContext(AppContext);
@@ -71,7 +72,7 @@ const CreatePost = () => {
     }
     const userAvatarUrl = userData.avatarUrl
       ? userData.avatarUrl
-      : "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration.jpg";
+      : defaultAvatarUrl;
     const postID = await addPost(
       userData.handle,
       post.title,

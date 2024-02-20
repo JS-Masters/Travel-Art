@@ -34,24 +34,23 @@ const ManageUsers = () => {
 
   return (
     <>
-      <label htmlFor="search">Search Users </label>
+      <label id="search-users-label" htmlFor="search">Search Users </label>
       <input value={searchTerm} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br />
-      {users.length && users.map((u) => {
-        return (
-          <div className="single-user" key={`${u.uid}-single-user`}>
-            <div className="user-avatar" key={`${u.uid}-avatar`}>
-              {u.avatarUrl &&
+      <div className="manage-users-page">
+        {users.length && users.map((u) => {
+          return (
+            <div className="single-user" key={`${u.uid}-single-user`}>
+              <div id="first-line">
                 <img
                   style={{ height: "50px", width: "50px", borderRadius: "50%" }}
                   src={u.avatarUrl}
-                />}
-            </div>
-            <div className="single-user-info" key={`${u.uid}-info`}>
+                />
+                <h1>{u.handle}</h1>
+              </div>
               {u.handle &&
-                <div key={`${u.uid}-content`}>
-                  <h1>Username: {u.handle}</h1>
-                  <h2>Email: {u.email}</h2>
+                <>
                   <h2>Name: {u.firstName} {u.lastName}</h2>
+                  <h2>Email: {u.email}</h2>
                   {u.isBanned ? (
                     <>
                       {u.isAdmin ? (
@@ -60,7 +59,6 @@ const ManageUsers = () => {
                         <UnbanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-unban-button`} />
                       )}
                     </>
-
                   ) : (
                     <>
                       {u.isAdmin ? (
@@ -68,21 +66,23 @@ const ManageUsers = () => {
                       ) : (
                         <div className="admin-buttons">
                           <BanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-ban-button`} />
-                          <PromoteButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-promote-button`}/>
+                          <PromoteButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-promote-button`} />
                         </div>
 
                       )}
                     </>
 
                   )}
-                </div>
+                </>
               }
+
+
             </div>
+          )
 
-          </div>
-        )
+        })}
+      </div>
 
-      })}
     </>
   )
 }

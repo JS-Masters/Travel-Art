@@ -1,0 +1,1 @@
+export const defaultAvatarUrl = "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration.jpg";

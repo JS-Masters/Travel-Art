@@ -8,6 +8,7 @@ import {
 import { registerUser } from "../../services/auth.service";
 import Button from "../../components/Button/Button";
 import "./SignUp.css";
+import { defaultAvatarUrl } from "../../../data/urls";
 
 const SignUp = () => {
   const { setContext } = useContext(AppContext);
@@ -54,7 +55,8 @@ const SignUp = () => {
         form.lastName,
         form.email,
         form.isAdmin,
-        form.isBanned
+        form.isBanned,
+        defaultAvatarUrl
       );
 
       setContext({ user, userData: null });
