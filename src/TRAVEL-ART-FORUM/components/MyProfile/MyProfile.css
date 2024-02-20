@@ -1,18 +1,54 @@
-.profile-container .user-info-container {
-    max-width: 800px;
-    margin: left;
-    margin-right: auto;
+.posts-container {
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 40px;
+    margin-top: 120px;
+    margin-left: 300px;
+    margin-right: 300px;
+    text-align: center;
+  }
+  
+  .commented-posts-container {
+    border-right: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    position: relative;
+    margin-bottom: 40px;
+    margin-top: 120px;
+    margin-left: 300px;
+    margin-right: 300px;
+    text-align: center;
+  }
+  
+ 
+  
+  .commented-posts-container .commented-posts-box {
+    margin-left: 0;
+    margin-right: 0;
+  }
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     padding: 20px;
   }
   
   .user-info-container {
     display: flex;
     align-items: center;
+    margin-bottom: 20px;
   }
   
   .user-avatar {
     margin-right: 20px;
-    margin-bottom: 50px;
   }
   
   .user-avatar img {
@@ -22,65 +58,68 @@
     height: auto;
     border-radius: 50%;
   }
-
-.posts-and-comments {
+  
+  .posts-and-comments {
     display: flex;
-    justify-content: space-between;
-}
-
-.posts-container,
-.commented-posts-container {
-    margin-top: 20px;
-    border: 1px solid #007bff;
+    width: 100%;
+    
+  }
+  
+  .posts-container,
+  .commented-posts-container {
     flex: 1;
-}
-
-.section-title h2 {
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin: 0 10px;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+  
+  .section-title {
     font-size: 1.5rem;
     margin-bottom: 10px;
-    border: 1px solid #007bff;
-    display: inline-block;
-    padding-left: 20px;
-    padding-right: 20px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 60px;
-}
-
-.post-list,
-.comment-list {
+  }
+  
+  .post-list,
+  .comment-list {
     list-style: none;
     padding: 0;
-}
-
-.post-item,
-.comment-item {
+  }
+  
+  .post-item,
+  .comment-item {
     margin-bottom: 10px;
-}
-
-.post-container,
-.comment-container {
-    border: 1px solid #007bff;
+  }
+  
+  .post-container,
+  .comment-container {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
     padding: 10px;
-}
-
-.post-title,
-.comment-title {
-    font-size: 1.2rem;
+    box-sizing: border-box;
+  }
+  
+  .post-title,
+  .comment-title {
+    font-size:50px;
     margin-bottom: 10px;
-}
+  }
+  
+  .post-content,
+  .comment-content {
+    font-size: 30px;
 
-.post-content,
-.comment-content {
-    margin-bottom: 10px;
-}
 
-a {
+  }
+  
+  a {
     text-decoration: none;
-
-}
-
-a:hover {
+  }
+  
+  a:hover {
     text-decoration: underline;
-
-}
+  }
+  .handle{
+    font-size: 50px;
+    color: bisque
+  }

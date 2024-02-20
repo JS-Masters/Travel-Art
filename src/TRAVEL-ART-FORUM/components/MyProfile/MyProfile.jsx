@@ -64,8 +64,8 @@ const MyProfile = () => {
 
       <div className="posts-and-comments">
         <div className="posts-container">
-          <div className="section-title">
-            <h2>About {userData.handle}'s travels</h2>
+          <div className="section-title-posts">
+            <h2 class='handle'>About {userData.handle}'s travels</h2>
           </div>
           <ul className="post-list">
             {posts.map((post) => (
@@ -85,7 +85,7 @@ const MyProfile = () => {
 
         <div className="commented-posts-container">
           <div className="section-title">
-            <h2>Commented posts</h2>
+            <h2 class='handle'>Commented posts</h2>
           </div>
           <ul className="comment-list">
             {commentedPosts.map((post) => (
@@ -94,12 +94,13 @@ const MyProfile = () => {
                   <div className='comment-title'>
                     <Link to={`/single-post/${post.id}`}>{post.title}</Link>
                   </div>
+                
                   <div className='comment-content'>
-                    Comment:
+                    
                     {Object.values(post.comments)
                       .filter(comment => comment.authorHandle === userData.handle)
                       .map((comment) => (
-                        <p key={comment.id}>{comment.content}</p>
+                        <p key={comment.id}> Comment:{comment.content}</p>
                       ))}
                   </div>
                 </div>
