@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script&family=Oswald:wght@200..700&family=Protest+Revolution&display=swap');
+
 .delete-post-button {
     font-size: 20px;
     font-weight: bold;
@@ -5,4 +7,12 @@
     margin-top: 5px;
     margin-right: 10px;
    color: rgb(150, 28, 28);
+     font-family: "Oswald", sans-serif;
+     border: 1px solid rgb(150, 28, 28);
+     padding: 2px;
+     border-radius: 5px;
+     padding-left: 5px;
+     padding-right: 5px;  
 }
+
+

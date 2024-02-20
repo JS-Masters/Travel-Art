@@ -89,7 +89,7 @@ export default function AllPosts() {
   const singlePostBox = (post) => {
     return (
       <div key={post.id} className="post-box">
-        <h2>
+        <h2 className="post-title-all-posts">
           <Link to={`/single-post/${post.id}`}>{post.title}</Link>
         </h2>
         <span><Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated></span>

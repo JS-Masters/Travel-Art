@@ -1,7 +1,15 @@
 .post-box {
-    border: 3px solid blue;
+    /* border: 3px solid blue; */
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
     height: 150px;
     position: relative;
+    margin-bottom: 25px;
+    /* padding: 20px; */
 
     div {
         display: flex;
@@ -17,6 +25,8 @@
     left: 0;
     bottom: 0;
     color: bisque;
+    margin-left: 10px;
+    font-size: 25px;
 }
 
 #comments-and-likes {
@@ -26,6 +36,7 @@
     bottom: 0;
     color: bisque;
     font-size: 22px;
+    margin-right: 20px;
 }
 
 #likes-number {
@@ -72,7 +83,6 @@ transform: scale(2);
 }
 
 .all-posts-box {
-    border: 3px solid red;
     float: left;
     width: 800px;
     margin-left: 50px;
@@ -82,4 +92,8 @@ transform: scale(2);
         display: inline;
         text-align: left;
     }
+}
+
+.post-title-all-posts:hover {
+    opacity: 0.5;
 }
