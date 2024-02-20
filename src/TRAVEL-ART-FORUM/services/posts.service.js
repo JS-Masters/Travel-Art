@@ -327,3 +327,36 @@ export const getAllPostsValues = async () => {
 
   return snapshot.val();
 };
+
+export const getCommentedPostsByUser = async (handle) => {
+  const snapshot = await get(ref(db, 'posts'));
+
+  if (!snapshot.exists()) {
+    throw new Error('No posts found.');
+  }
+
+  const postsDocument = snapshot.val();
+
+  const commentedPosts = Object.keys(postsDocument)
+    .filter(key => {
+      const post = postsDocument[key];
+      return post.comments && Object.keys(post.comments).some(commentKey => post.comments[commentKey].authorHandle === handle);
+    })
+    .map(key => {
+      const post = postsDocument[key];
+
+      return {
+        ...post,
+        id: key,
+        createdOn: new Date(post.createdOn),
+        likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
+      };
+    });
+
+  if (commentedPosts.length === 0) {
+    throw new Error(`No posts found for user ${handle}`);
+  }
+
+  console.log(commentedPosts)
+  return commentedPosts;
+}
