@@ -1,18 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import {
-  addPost
-} from "../../services/posts.service";
+import { addPost } from "../../services/posts.service";
 import { AppContext } from "../../providers/AppContext";
 import PostTags from "../PostTags/PostTags";
 import { getAllTags, updateAllTags } from "../../services/tag.service";
 import { get, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import { useNavigate } from "react-router-dom";
-import "./CreatePost.css"
-
+import "./CreatePost.css";
 
 const CreatePost = () => {
-
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState({
     title: "",
@@ -34,10 +30,10 @@ const CreatePost = () => {
 
     if (tag === "Create") {
       tag = event.target.innerText.split(" ")[1];
-    };
+    }
     if (post.tags.includes(tag)) {
       return;
-    };
+    }
 
     setPost({
       ...post,
@@ -63,7 +59,6 @@ const CreatePost = () => {
     });
   };
 
-
   const createPost = async () => {
     if (post.title.length < 10 || post.title.length > 32) {
       return alert("Title must be between 16 and 64 characters long");
@@ -71,7 +66,12 @@ const CreatePost = () => {
     if (post.content.length < 32 || post.content.length > 8192) {
       return alert("Content must be between 32 and 8192 characters long");
     }
-const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration.jpg';
+    if (post.tags.length === 0) {
+      return alert("Select at least one tag!");
+    }
+    const userAvatarUrl = userData.avatarUrl
+      ? userData.avatarUrl
+      : "https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration.jpg";
     const postID = await addPost(
       userData.handle,
       post.title,
@@ -94,15 +94,18 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
       tags: [],
       content: "",
     });
-    navigate('/');
+    navigate("/");
   };
 
   return (
     <div className="create-post-form">
       {userData && !userData.isBanned ? (
-        <div >
+        <div>
           <h1 id="new-post">New Post</h1>
-          <label className="create-form-labels" htmlFor="input-title">Title</label><br/>
+          <label className="create-form-labels" htmlFor="input-title">
+            Title
+          </label>
+          <br />
           <input
             value={post.title}
             onChange={(e) => setPost({ ...post, title: e.target.value })}
@@ -117,7 +120,9 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
             removeTag={removeTag}
           />
           <br />
-          <label className="create-form-labels" htmlFor="input-content">Content</label>
+          <label className="create-form-labels" htmlFor="input-content">
+            Content
+          </label>
           <br />
           <textarea
             value={post.content}
@@ -128,11 +133,12 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
             rows="10"
           ></textarea>
           <br />
-          <button className="create-post-button"onClick={createPost}>Create</button>
+          <button className="create-post-button" onClick={createPost}>
+            Create
+          </button>
         </div>
       ) : (
         userData && <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
-        
       )}
     </div>
   );
