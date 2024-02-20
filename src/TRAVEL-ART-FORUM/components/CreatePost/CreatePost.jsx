@@ -71,14 +71,15 @@ const CreatePost = () => {
     if (post.content.length < 32 || post.content.length > 8192) {
       return alert("Content must be between 32 and 8192 characters long");
     }
-
+const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://previews.123rf.com/images/triken/triken1608/triken160800029/61320775-male-avatar-profile-picture-default-user-avatar-guest-avatar-simply-human-head-vector-illustration.jpg';
     const postID = await addPost(
       userData.handle,
       post.title,
       post.tags.join(" "),
       post.content,
       {},
-      {}
+      {},
+      userAvatarUrl
     );
 
     const newPost = await get(ref(db, `posts/${postID}`));

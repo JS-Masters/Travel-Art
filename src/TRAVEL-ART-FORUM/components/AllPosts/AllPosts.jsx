@@ -121,7 +121,10 @@ export default function AllPosts() {
         {post.tags && <p>{showHashtagOnTags(post.tags)}</p>}
         {/* <p>{new Date(post.createdOn).toLocaleString()}</p> */}
         {/* <img src={postAuthorAvatar} /> */}
-        <span id="post-author">Posted by: {post.authorHandle}</span>
+       {console.log(post.userAvatarUrl)}
+        <span id="post-author"><img src={post.userAvatarUrl} 
+        alt="user-avatar"
+        style={{ width: '50px', height: '50px', borderRadius: '50%' }}/> {post.authorHandle}</span>
 
         <div id="comments-and-likes">
           <span id="comments-number">{post?.comments ? `${Object.keys(post.comments).length} Comments` : '0 Comments'}</span>

@@ -20,7 +20,7 @@ const fromPostsDocument = (snapshot, searchTerm) => {
   return posts;
 };
 
-export const addPost = async (authorHandle, title, tags, content, comments, replies) => {
+export const addPost = async (authorHandle, title, tags, content, comments, replies, userAvatarUrl) => {
   const newPostRef = push(ref(db, 'posts'), {
     title,
     tags,
@@ -30,7 +30,8 @@ export const addPost = async (authorHandle, title, tags, content, comments, repl
     likes: 0,
     likedBy: [1],
     comments,
-    replies
+    replies,
+    userAvatarUrl
   });
 
   return newPostRef.key;
