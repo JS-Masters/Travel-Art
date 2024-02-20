@@ -17,6 +17,7 @@ import { getAllTags, updateAllTags } from "../../services/tag.service";
 import { EditIcon } from "@chakra-ui/icons";
 
 const SinglePost = ({ setReload }) => {
+
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState(null);
   const [commentsArr, setCommentsArr] = useState([]);

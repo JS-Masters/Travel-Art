@@ -1,7 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AppContext } from "../../providers/AppContext";
 
-const Loaded = ({ children }) => {
+const Loaded = ({ children, setReload }) => {
   const { userData } = useContext(AppContext);
   const [loading, setLoading] = useState(true);
 
@@ -15,7 +15,7 @@ const Loaded = ({ children }) => {
     return <h1>LOADING...</h1>;
   }
 
-  return <>{children}</>;
+  return <div>{React.cloneElement(children, { setReload })}</div>;
 };
 
 export default Loaded;

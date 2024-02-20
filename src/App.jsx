@@ -7,7 +7,6 @@ import lodash from "lodash";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { AppContext } from "./TRAVEL-ART-FORUM/providers/AppContext";
 import { useAuthState } from "react-firebase-hooks/auth";
-import ResultsByCity from "./TRAVEL-ART-FORUM/components/ResultsByCity/ResultsByCity";
 import NavBar from "./TRAVEL-ART-FORUM/components/NavBar/NavBar";
 import SignIn from "./TRAVEL-ART-FORUM/pages/SignIn/SignIn";
 import SignUp from "./TRAVEL-ART-FORUM/pages/SignUp/SignUp";
@@ -15,11 +14,10 @@ import ForgotPassword from "./TRAVEL-ART-FORUM/pages/ForgotPassword/ForgotPasswo
 import { auth } from "./TRAVEL-ART-FORUM/config/firebase-config";
 import { getUserData } from "./TRAVEL-ART-FORUM/services/users.service";
 import UploadForm from "./TRAVEL-ART-FORUM/pages/UploadForm/UploadForm";
-import CreatePost from "./TRAVEL-ART-FORUM/components/CreatePost/CreatePost";
 import AllPosts from "./TRAVEL-ART-FORUM/components/AllPosts/AllPosts";
 import SinglePost from "./TRAVEL-ART-FORUM/components/SinglePost/SinglePost";
 import Authenticated from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
-import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Authenticated";
+import Loaded from "./TRAVEL-ART-FORUM/components/hoc/Loaded";
 import ManageUsers from "./TRAVEL-ART-FORUM/components/ManageUsers/ManageUsers";
 import NotFound from "./TRAVEL-ART-FORUM/pages/NotFound/NotFound";
 import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile";
@@ -164,11 +162,12 @@ const App = (props) => {
               <Route
                 path="/single-post/:id"
                 element={
-                  <Loaded>
+                  <Loaded setReload={setReload}>
                     <SinglePost key={reload} setReload={setReload} />
                   </Loaded>
                 }
               />
+
               <Route
                 path="/edit-profile"
                 element={
