@@ -77,6 +77,7 @@ const PostTags = ({
       <div className="select-kit-header-wrapper">
         <span className="formatted-selection">{formattedSelection}</span>
         <IconButton
+        style={{backgroundColor: "transparent", color: "bisque", marginRight: '5px', borderRadius: "5px", padding: "5px"}}
           aria-label="Add tag"
           icon={<PlusSquareIcon />}
           onClick={() => setShowMenu(!showMenu)}

@@ -13,12 +13,15 @@ import { db } from "../../config/firebase-config";
 import "./SinglePost.css";
 import SingleComment from "../SingleComment/SingleComment";
 import PostTags from "../PostTags/PostTags";
-import { getAllTags, showHashtagOnTags, updateAllTags } from "../../services/tag.service";
+import {
+  getAllTags,
+  showHashtagOnTags,
+  updateAllTags,
+} from "../../services/tag.service";
 import { EditIcon } from "@chakra-ui/icons";
 import PostByTag from "../../pages/PostsByTag/PostsByTag";
 
 const SinglePost = ({ setReload }) => {
-
   const { userData } = useContext(AppContext);
   const [post, setPost] = useState(null);
   const [commentsArr, setCommentsArr] = useState([]);
@@ -42,7 +45,7 @@ const SinglePost = ({ setReload }) => {
   const [currentTags, setCurrentTags] = useState("");
   const [allTags, setAllTags] = useState([]);
 
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     updatePost(id);
@@ -57,15 +60,20 @@ const SinglePost = ({ setReload }) => {
       .then((snapshot) => {
         setAllTags(snapshot.val());
       })
-      .catch((err) => { });
+      .catch((err) => {});
   }, []);
 
   const getCurrentPostComments = async (id, searchTerm) => {
     const currentPost = await getPostById(id);
     if ("comments" in currentPost) {
       if (searchTerm) {
-        const commentsSortedBySearchTerm = Object.values(currentPost.comments)
-          .filter(c => (c.content.toLowerCase().startsWith(searchTerm.toLowerCase())) || (c.authorHandle.toLowerCase().startsWith(searchTerm.toLowerCase())))
+        const commentsSortedBySearchTerm = Object.values(
+          currentPost.comments
+        ).filter(
+          (c) =>
+            c.content.toLowerCase().startsWith(searchTerm.toLowerCase()) ||
+            c.authorHandle.toLowerCase().startsWith(searchTerm.toLowerCase())
+        );
         setCommentsArr(commentsSortedBySearchTerm);
       } else {
         setCommentsArr(Object.values(currentPost.comments));
@@ -164,6 +172,32 @@ const SinglePost = ({ setReload }) => {
     }
   };
 
+  const editTagsMenu = () =>
+    (userData.handle === post.authorHandle || userData.isAdmin === true) && (
+      <>
+        {editingTags && (
+          <div className="edit-tags-menu">
+            <button
+              onClick={() => {
+                editTags()
+                  .then(() => setEditingTags(false))
+                  .catch((err) => {});
+              }}
+            >
+              Save Tags
+            </button>
+            <button onClick={() => setEditingTags(false)}>Close</button>
+            <PostTags
+              allTags={allTags}
+              selectedTags={post.tags.split(" ")}
+              addTag={addTag}
+              removeTag={removeTag}
+            />
+          </div>
+        )}
+      </>
+    );
+
   const renderPost = () => {
     return (
       <div>
@@ -171,7 +205,8 @@ const SinglePost = ({ setReload }) => {
           <div>
             {editingPost ? (
               <>
-               <button className="save-edit-button"
+                <button
+                  className="save-edit-button"
                   onClick={() => {
                     editPost().then(() => {
                       setEditingPost(false);
@@ -181,17 +216,23 @@ const SinglePost = ({ setReload }) => {
                 >
                   Save
                 </button>
-                <button className="cancel-edit-button"onClick={() => setEditingPost(false)}>Cancel</button>
-              <input
+                <button
+                  className="cancel-edit-button"
+                  onClick={() => setEditingPost(false)}
+                >
+                  Cancel
+                </button>
+                <input
                   value={editedPostContent}
                   onChange={(e) => setEditedPostContent(e.target.value)}
                   type="text"
                   name="edit-post"
                   id="edit-post"
-                /> 
+                />
               </>
             ) : (
-              <button className="edit-button"
+              <button
+                className="edit-button"
                 onClick={() => {
                   setEditedPostContent(post.content);
                   setEditingPost(true);
@@ -202,32 +243,6 @@ const SinglePost = ({ setReload }) => {
             )}
           </div>
         )}
-
-        {(userData.handle === post.authorHandle ||
-          userData.isAdmin === true) && (
-            <>
-              {editingTags && (
-                <div>
-                  <PostTags
-                    allTags={allTags}
-                    selectedTags={post.tags.split(" ")}
-                    addTag={addTag}
-                    removeTag={removeTag}
-                  />
-                  <button
-                    onClick={() => {
-                      editTags()
-                        .then(() => setEditingTags(false))
-                        .catch((err) => { });
-                    }}
-                  >
-                    Save Tags
-                  </button>
-                  <button onClick={() => setEditingTags(false)}>Close</button>
-                </div>
-              )}
-            </>
-          )}
       </div>
     );
   };
@@ -255,49 +270,58 @@ const SinglePost = ({ setReload }) => {
         setIsCommentLiked={setIsCommentLiked}
         setReload={setReload}
       />
-    )
-  }
+    );
+  };
 
   return (
     <div>
       {post && (
         <div className="single-post-view">
           <div className="post-info">
-            <h1>{post.title}</h1><br />
+            <h1>{post.title}</h1>
+            <br />
             <span>
-              {post.tags.length > 0 ?
-              
-                post.tags.split(" ").map((tag, index) => (
-                  <span key={index} className="single-tag-span">
-                    <Link to={`/posts-by-tag/:${tag}`}>
-                      {showHashtagOnTags(tag)}
-                    </Link>{" "}
-                  </span>
-                ))
+              {post.tags.length > 0
+                ? post.tags.split(" ").map((tag, index) => (
+                    <span key={index} className="single-tag-span">
+                      <Link to={`/posts-by-tag/:${tag}`}>
+                        {showHashtagOnTags(tag)}
+                      </Link>{" "}
+                    </span>
+                  ))
                 : "No tags yet"}{" "}
               <EditIcon
-              className="edit-tags-icon"
+                className="edit-tags-icon"
                 style={{ cursor: "pointer" }}
                 onClick={() => setEditingTags(true)}
               />
             </span>
             {(userData.handle === post.authorHandle ||
               userData.isAdmin === true) && (
-                <button
-                  className="delete-post-button"
-                  onClick={() => {
-                    deletePost(post.id).then(() => navigate("/all-posts"));
-                  }}
-                >
-                  DELETE POST
-                </button>
-              )}
-                {renderPost()}
+              <button
+                className="delete-post-button"
+                onClick={() => {
+                  deletePost(post.id).then(() => navigate("/all-posts"));
+                }}
+              >
+                DELETE POST
+              </button>
+            )}
+            {editTagsMenu()}
+            {renderPost()}
             <p id="post-content">{post.content}</p>
-            <span id="post-author"><img src={post.userAvatarUrl}
-              alt="user-avatar"
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> {post.authorHandle} <span id="creted-on">Created on: {new Date(post.createdOn).toLocaleDateString()}</span></span>
-            <div className="likes-info">          
+            <span id="post-author">
+              <img
+                src={post.userAvatarUrl}
+                alt="user-avatar"
+                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+              />{" "}
+              {post.authorHandle}{" "}
+              <span id="creted-on">
+                Created on: {new Date(post.createdOn).toLocaleDateString()}
+              </span>
+            </span>
+            <div className="likes-info">
               <button onClick={togglePostLike}>
                 {likedByCurrentUser ? "Dislike" : "Like"}
               </button>
@@ -309,24 +333,29 @@ const SinglePost = ({ setReload }) => {
                   : "No likes yet"}
               </p>
             </div>
-
-           
-          
           </div>
 
-          <div>
-
-          </div>
+          <div></div>
           <h2>Comments:</h2>
           <label htmlFor="search-comments">Search in comments: </label>
-          <input value={searchTerm} onChange={e => setSearchTerm(e.target.value)} type="text" name="search-comments" id="search-comments" /><br />
+          <input
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            type="text"
+            name="search-comments"
+            id="search-comments"
+          />
+          <br />
           <span>Sort by Most Liked </span>
           <input
             type="checkbox"
             checked={isCheckedSortByLikes}
-            onChange={() => setIsCheckedSortByLikes(prevState => !prevState)}
-          /><br />
-          {isCheckedSortByLikes ? (sortCommentsByLikes(commentsArr).map(renderComments)) : (commentsArr.map(renderComments))}
+            onChange={() => setIsCheckedSortByLikes((prevState) => !prevState)}
+          />
+          <br />
+          {isCheckedSortByLikes
+            ? sortCommentsByLikes(commentsArr).map(renderComments)
+            : commentsArr.map(renderComments)}
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
               <br />

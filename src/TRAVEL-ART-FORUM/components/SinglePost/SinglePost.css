@@ -149,3 +149,11 @@ opacity: 0.5;
   font-size: 20px;
   color: bisque;
 }
+
+
+.edit-tags-menu {
+  width: fit-content;
+  button {
+    margin-left: 10px;
+  }
+}
