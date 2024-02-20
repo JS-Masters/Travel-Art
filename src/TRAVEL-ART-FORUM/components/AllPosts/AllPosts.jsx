@@ -8,9 +8,6 @@ import SearchMenu from "../SearchMenu/SearchMenu";
 import "./AllPosts.css"
 import CreatePost from "../CreatePost/CreatePost";
 import { showHashtagOnTags } from "../../services/tag.service";
-import { getUserByHandle } from "../../services/users.service";
-import { auth } from "../../config/firebase-config";
-
 
 export default function AllPosts() {
 
@@ -20,9 +17,6 @@ export default function AllPosts() {
   const [oldPosts, setOldPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const [clickTrigger, setClickTrigger] = useState(false);
-
-  const [postAuthorAvatar, setPostAuthorAvatar] = useState('../../../../images/anonymous-avatar.jpg');
-
   const [isCheckedSortByComments, setIsCheckedSortByComments] = useState(false);
   const [isCheckedSortByLikes, setIsCheckedSortByLikes] = useState(false);
   const [isCheckedSortByDate, setIsCheckedSortByDate] = useState(false);
@@ -91,47 +85,23 @@ export default function AllPosts() {
       return dateB - dateA;
     });
   };
-  // const getAvatar = async (authorHandle) => {
-  //   try {
-  //     const authorSnapshot = await getUserByHandle(authorHandle);
-  //     const author = authorSnapshot.val();
-  //     const avatarURL = author.avatarUrl;
-  //     setPostAuthorAvatar(avatarURL);
-  //   } catch (error) {
-  //     console.log(error.message);
-  //   }
-
-  // };
-
-
-
-
 
   const singlePostBox = (post) => {
-    // getAvatar(post.authorHandle);
-    // console.log(postAuthorAvatar);
     return (
       <div key={post.id} className="post-box">
-
         <h2>
           <Link to={`/single-post/${post.id}`}>{post.title}</Link>
         </h2>
         <span><Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated></span>
-
         {post.tags && <p>{showHashtagOnTags(post.tags)}</p>}
-        {/* <p>{new Date(post.createdOn).toLocaleString()}</p> */}
-        {/* <img src={postAuthorAvatar} /> */}
-       {console.log(post.userAvatarUrl)}
-        <span id="post-author"><img src={post.userAvatarUrl} 
-        alt="user-avatar"
-        style={{ width: '50px', height: '50px', borderRadius: '50%' }}/> {post.authorHandle}</span>
+        <span id="post-author"><img src={post.userAvatarUrl}
+          alt="user-avatar"
+          style={{ width: '50px', height: '50px', borderRadius: '50%' }} /> {post.authorHandle}</span>
 
         <div id="comments-and-likes">
           <span id="comments-number">{post?.comments ? `${Object.keys(post.comments).length} Comments` : '0 Comments'}</span>
           <span id="likes-number">{post.likes} Likes</span>
         </div>
-
-
         {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
       </div>
     );
@@ -140,38 +110,37 @@ export default function AllPosts() {
   return (
     <>
       <div className="all-posts-form">
-        <div className="search-posts-box">
-          <br />
+        <div id="search-bar">
           <label htmlFor="search">Search </label>
-          <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" /><br />
-          <span>Sort by Most Commented</span>
-          <input
+          <input value={search} onChange={e => setSearch(e.target.value)} type="text" name="search" id="search" />
+        </div><br />
+        <div className="sort-posts-box">
+          <span>Sort by Most Commented <input
             type="checkbox"
             checked={isCheckedSortByComments}
             onChange={handleCommentsCheckboxChange}
-          /><br />
-          <span>Sort by Most Liked</span>
-          <input
+          /></span>
+
+          <span>Sort by Most Liked <input
             type="checkbox"
             checked={isCheckedSortByLikes}
             onChange={handleLikesCheckboxChange}
-          /><br />
-          <span>Sort by Most Recent</span>
-          <input
+          /></span>
+
+          <span>Sort by Most Recent <input
             type="checkbox"
             checked={isCheckedSortByDate}
             onChange={handleDateCheckboxChange}
-          />
-          <br />
-          {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
+          /></span>
+
         </div>
+        {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
         <div className="all-posts-box">
           {isCheckedSortByComments ? sortPostsByComments(posts).map(singlePostBox)
             : isCheckedSortByLikes ? sortPostsByLikes(posts).map(singlePostBox)
               : isCheckedSortByDate ? sortPostsByDate(posts).map(singlePostBox)
                 : posts.map(singlePostBox)}
         </div>
-
       </div>
       <CreatePost />
     </>

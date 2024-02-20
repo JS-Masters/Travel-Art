@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 import "./SearchMenu.css";
-import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ChevronRightIcon, SearchIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { getAllTags } from "../../services/tag.service";
 import { v4 } from "uuid";
@@ -43,7 +43,7 @@ const SearchMenu = ({ oldPosts = [], setPosts = () => {} }) => {
 
   return (
     <ul className="search-tags-menu">
-      <h3 onClick={toggleMenu}>Tags {<ChevronDownIcon />}</h3>
+      <h3 onClick={toggleMenu}>Tags {<ChevronRightIcon />}</h3>
       {showMenu &&
         tags.map((tag) => (
           <li

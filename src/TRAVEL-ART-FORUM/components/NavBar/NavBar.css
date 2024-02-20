@@ -10,9 +10,9 @@
 }
 
 .navbar > .home-page-logo {
-    font-size: 3.5rem;
+    font-size: 4.3rem;
     padding: 0;
-    color: green;
+    color: rgb(193, 211, 223);
     font-family: "Aguafina Script", cursive;
     font-weight: 400;
     font-style: normal;
@@ -25,5 +25,9 @@
     font-weight: bold;
     padding-top: 1rem;
     transition: 0.5s;
+}
+
+.navbar > .home-page-logo > span {
+    margin-left: 40px;
 }
 

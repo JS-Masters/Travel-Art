@@ -1,4 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
+
 .create-post-form {
     display: inline-block !important;
-    /* margin-bottom: 200px; */
+}
+
+#new-post{
+    font-size: 55px !important;
+}
+
+.create-form-labels {
+    font-size: 25px;
+    font-family: "Protest Revolution", sans-serif;
+    float: left;
+    margin-left: 20px;
+}
+
+.create-post-button {
+    font-size: 35px;
+}
+
+#input-title {
+    border-radius: 15px;
+    width: 450px;
+    height: 65px;
+    font-size: 42px;
+    padding: 0 20px;
+    background-color: rgb(36, 34, 34);
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+}
+
+#input-content {
+    width: 450px;
+    border-radius: 15px;
+    background-color: rgb(36, 34, 34);
+    border-left: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    font-size: 28px;
+    padding: 0 20px;
+    outline: 0;
 }

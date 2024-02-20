@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap');
+
+
 .App {
   /* display: flex; */
   flex-direction: column;
@@ -6,6 +10,9 @@
   width: 100%;
   height: 100%;
   background: url('../images/Background-Final.jpg') !important;
+  /* font-family: "Protest Revolution", sans-serif; */
+  font-family: "Dancing Script", cursive;
+  font-weight: bold
 }
 
 h1 {
@@ -17,4 +24,6 @@ h2 {
   text-align: left;
   padding-left: 20px;
 }
+
+
 

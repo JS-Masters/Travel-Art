@@ -54,7 +54,7 @@ const PostTags = ({
               ))
             : "No tags selected yet!"}
         </div>
-        <ul>
+        <ul className="tags-ul">
           {foundTags.length
             ? foundTags.map((key) => (
                 <li key={v4()} style={{ cursor: "pointer" }} onClick={addTag}>

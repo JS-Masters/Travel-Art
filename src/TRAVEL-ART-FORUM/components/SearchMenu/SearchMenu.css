@@ -1,7 +1,7 @@
 .search-tags-menu {
   display: flex;
   flex-direction: row;
-
+margin-left: 50px;
 }
 
 .search-tags-menu > h3 {
@@ -17,8 +17,8 @@
 }
 
 .search-tags-menu > h3:hover {
-  color: rgb(217, 225, 65);
-  background-color: rgba(100, 96, 50, 0.329);
+  color: rgb(207, 207, 195);
+  background-color: rgba(54, 53, 35, 0.329);
 }
 
 .search-tags-menu > li {
@@ -32,4 +32,5 @@
   color: #fff;
   font-size: 0.9rem;
   margin-right: 0.5rem;
+  /* color: rgb(207, 207, 195); */
 }

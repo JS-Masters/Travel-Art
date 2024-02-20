@@ -16,8 +16,8 @@ const NavBar = () => {
       <nav className="navbar">
 
         <NavLink to="/about">Our Community</NavLink>
-        <NavLink className='home-page-logo' to="/">Travel-Art</NavLink>
-        <NavLink to="/all-posts">FORUM</NavLink>
+        <NavLink className='home-page-logo' to="/"><span>Travel</span><span>Art</span></NavLink>
+        <NavLink to={ userData ? "/all-posts" : "/sign-in"}>FORUM</NavLink>
 
         {userData ? (
           <DropdownMenu

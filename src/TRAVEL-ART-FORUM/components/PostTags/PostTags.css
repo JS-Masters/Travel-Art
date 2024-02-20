@@ -16,7 +16,7 @@
 
 .tags-menu {
   text-align: center;
-  width: 210px;
+  width: 450px;
   padding: "5px";
   color: black;
   background-color: white;
@@ -38,3 +38,15 @@
   display: inline-block;
   width: 160px;
 }
+
+.select-kit-header-wrapper {
+  width: 450px;
+}
+
+/* .drop-down-menu {
+  border-radius: 15px;
+} */
+/* .tags-ul {
+  position: absolute;
+  color: red;
+} */

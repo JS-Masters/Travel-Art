@@ -101,8 +101,8 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
     <div className="create-post-form">
       {userData && !userData.isBanned ? (
         <div >
-          <h1>Create Posts</h1>
-          <label htmlFor="input-title">Title:</label>
+          <h1 id="new-post">New Post</h1>
+          <label className="create-form-labels" htmlFor="input-title">Title</label><br/>
           <input
             value={post.title}
             onChange={(e) => setPost({ ...post, title: e.target.value })}
@@ -117,7 +117,7 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
             removeTag={removeTag}
           />
           <br />
-          <label htmlFor="input-content">Content:</label>
+          <label className="create-form-labels" htmlFor="input-content">Content</label>
           <br />
           <textarea
             value={post.content}
@@ -128,10 +128,11 @@ const userAvatarUrl = userData.avatarUrl ? userData.avatarUrl : 'https://preview
             rows="10"
           ></textarea>
           <br />
-          <button onClick={createPost}>Create</button>
+          <button className="create-post-button"onClick={createPost}>Create</button>
         </div>
       ) : (
-        <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
+        userData && <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
+        
       )}
     </div>
   );
