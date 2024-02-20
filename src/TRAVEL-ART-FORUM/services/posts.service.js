@@ -251,6 +251,35 @@ export const editReply = async (postID, commentID, replyID, replyContentEdit) =>
 }
 
 
+export const getPostByAuthor = async (authorHandle) => {
+  const lowerCaseHandle = authorHandle.toLowerCase();
+  const snapshot = await get(ref(db, 'posts'));
+
+  if (!snapshot.exists()) {
+    throw new Error('No posts found.');
+  }
+
+  const postsDocument = snapshot.val();
+
+  const filteredPosts = Object.keys(postsDocument)
+    .filter(key => postsDocument[key].authorHandle.toLowerCase() === lowerCaseHandle)
+    .map(key => {
+      const post = postsDocument[key];
+
+      return {
+        ...post,
+        id: key,
+        createdOn: new Date(post.createdOn),
+        likedBy: post.likedBy ? Object.keys(post.likedBy) : [],
+      };
+    });
+
+  if (filteredPosts.length === 0) {
+    throw new Error(`No posts found for author ${authorHandle}`);
+  }
+
+  return filteredPosts;
+};
 
 /**
  * Retrieves the count of all posts.

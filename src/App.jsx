@@ -24,6 +24,7 @@ import UpdateProfile from "./TRAVEL-ART-FORUM/pages/UpdateProfile/UpdateProfile"
 import Home from "./TRAVEL-ART-FORUM/pages/Home/Home";
 import "./App.css";
 import AboutView from "./TRAVEL-ART-FORUM/views/AboutView/AboutView";
+import MyProfile from "./TRAVEL-ART-FORUM/components/MyProfile/MyProfile";
 
 const App = (props) => {
   /*  Life-cycles Methods */
@@ -177,6 +178,8 @@ const App = (props) => {
                 }
               />
               <Route path="*" element={<NotFound />} />
+             <Route path="/my-profile" element={<MyProfile />} />
+
             </Routes>
           </div>
         </BrowserRouter>
