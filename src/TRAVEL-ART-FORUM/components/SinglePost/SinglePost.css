@@ -34,9 +34,6 @@
   margin-bottom: 5px;
 }
 
-.comment-info {
-  border: 2px solid blue;
-}
 
 .post-info {
   border-left: 2px solid rgba(255, 255, 255, 0.3);
@@ -252,6 +249,7 @@ margin-right: 50px;
 .comment-input {
   font-size: 25px !important;
   font-family: "Oswald", sans-serif;
+  background-color: transparent !important;
 }
 .comment-input::placeholder {
   color: #999;
@@ -274,10 +272,12 @@ text-align: left !important;
 }
 .search-comments {
   font-size: 25px;
+  margin-left: 30px;
 }
 .sort-comments {
   float: left;
   font-size: 20px;
+  margin-left: 30px;
 }
 .sort-comments-checkbox {
   float: left;
@@ -290,8 +290,7 @@ text-align: left !important;
   background-color: transparent;
   border-left: 2px solid rgba(255, 255, 255, 0.3);
   border-top: 2px solid rgba(255, 255, 255, 0.3);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+
   box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
   font-family: "Oswald", sans-serif;
 

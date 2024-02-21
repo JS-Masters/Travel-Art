@@ -368,8 +368,10 @@ const SinglePost = ({ setReload }) => {
                   );
                   setCurrentComment({
                     content: "",
-                    authorHandle: "",
+                    authorHandle: userData.handle,
                     createdOn: "",
+                    likes: 0,
+                    likedBy: {}
                   });
                 }}
               >Add Comment</button>
