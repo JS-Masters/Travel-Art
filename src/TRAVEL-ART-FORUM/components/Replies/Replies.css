@@ -32,3 +32,17 @@
   .single-reply button:hover {
     opacity: 0.8;
   }
+
+  .reply-info-size {
+    font-size: 10px;
+  }
+
+  .reply-content-name {
+    font-size: 23px !important;
+    color: bisque;
+  }
+
+  #delete-reply-button {
+    color: rgb(150, 28, 28);
+    border: 1px solid rgb(150, 28, 28);
+  }

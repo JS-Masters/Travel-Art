@@ -22,7 +22,7 @@ const MostCommented = ({ totalPosts = [] }) => {
         {mostCommented.map((post) => (
           <div key={post.id} className="single-post">
             <NavLink to={userData ? `/single-post/${post.id}` : "/sign-in"}>
-              <h2 className="title-most-commented">{post.title}</h2>
+              <h2 className="title-most-commented">- {post.title}</h2>
             </NavLink>
           </div>
         ))}

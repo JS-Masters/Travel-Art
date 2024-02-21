@@ -66,12 +66,12 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
   return (
     <>
       {currentComment && <div key={comment.id} className="comment-info">
-        <p>{comment.content}</p>
+        <p id="comment-content-title">{comment.content}</p>
         <p>
           Author: {comment.authorHandle} | Created on: {comment.createdOn}
         </p>
         <p>{comment.likes} Likes</p>
-        {!('likedBy' in comment) && <button onClick={() => {
+        {!('likedBy' in comment) && <button className="like-comment-button" onClick={() => {
           toggleCommentLike(comment.id, id, userData).then((result) => {
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
@@ -79,7 +79,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
             setCommentsArr(updatedCommentsArr);
           })
         }}>Like</button>}
-        {('likedBy' in comment) && (!Object.keys(comment.likedBy).includes(userData.handle)) && <button onClick={() => {
+        {('likedBy' in comment) && (!Object.keys(comment.likedBy).includes(userData.handle)) && <button className="like-comment-button"  onClick={() => {
           toggleCommentLike(comment.id, id, userData).then((result) => {
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
@@ -87,7 +87,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
             setCommentsArr(updatedCommentsArr);
           })
         }}>Like</button>}
-        {'likedBy' in comment && Object.keys(comment.likedBy).includes(userData.handle) && <button onClick={() => {
+        {'likedBy' in comment && Object.keys(comment.likedBy).includes(userData.handle) && <button className="like-comment-button"  onClick={() => {
           toggleCommentDisike(comment.id, id, userData).then((result) => {
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
@@ -98,12 +98,12 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
         <br />
         {(userData.handle === comment.authorHandle || userData.isAdmin === true) && (
           <div>
-            <button onClick={() => {
+            <button className="delete-comment-button" onClick={() => {
               deleteComment(comment.id, id).then(() => {
                 const commentsFiltered = commentsArr.filter((c) => c.id !== comment.id);
                 setCommentsArr(commentsFiltered);
               });
-            }}>Delete</button>
+            }}>Delete Comment</button>
           </div>
         )}
         {userData.handle === comment.authorHandle &&
