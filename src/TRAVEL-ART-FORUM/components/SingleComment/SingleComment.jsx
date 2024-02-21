@@ -5,6 +5,7 @@ import { deleteComment, editComment, getCommentByID, getRepliesByCommentID, getR
 import {push, ref, update } from "firebase/database";
 import { db } from "../../config/firebase-config";
 import Replies from "../Replies/Replies";
+import './SingleComment.css';
 
 const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked, setReload }) => {
 
@@ -114,7 +115,8 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
               name="edit-comment"
               id="edit-comment"
             />
-            <button onClick={() => {commentContentEdit &&
+            <button id="edit-comment-btn"
+            onClick={() => {commentContentEdit &&
               editComment(comment.id, id, commentContentEdit).then((result) => {
                 const updatedCommentsArr = [...commentsArr];
                 const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
@@ -146,7 +148,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
                   createdOn: ""
                 })
               ).then(() => setReload((prev) => !prev))
-            }}>REPLY</button>
+            }}>Reply</button>
           </div>}
         {'replies' in comment && !showRepliesClicked.clicked && <button onClick={() => {
           getRepliesByCommentID(comment.id, id).then((repliesArr) => setRepliesToShow({

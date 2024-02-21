@@ -1,4 +1,34 @@
-.single-reply {
-    border: 2px solid red;
+@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script&family=Oswald:wght@200..700&family=Protest+Revolution&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap');
+
+.single-reply input {
+    font-size: 25px !important;
+    font-family: "Oswald", sans-serif;
+    background-color: transparent !important;
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px; 
+    
+    width: 30%; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+  .single-reply button {
+    border: 1px solid bisque;
+    padding: 3px;
     border-radius: 5px;
-}
+    padding-left: 23px;
+    padding-right: 23px;
+    font-size: 20px;
+    font-family: "Oswald", sans-serif;
+    color: bisque;
+    margin-left: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
+  
+  .single-reply button:hover {
+    opacity: 0.8;
+  }

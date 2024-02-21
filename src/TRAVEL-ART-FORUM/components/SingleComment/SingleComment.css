@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script&family=Oswald:wght@200..700&family=Protest+Revolution&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap');
+
+.comment-info {
+    font-size: 25px !important;
+    font-family: "Oswald", sans-serif;
+    background-color: transparent !important;
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px; 
+    width: 60%; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    float: center;
+    margin-left: 370px;
+  }
+  
+  .comment-info p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .comment-info p:last-child {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  .comment-info button {
+    font-size: 16px;
+    margin-right: 10px;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .comment-info button:hover {
+    opacity: 0.8;
+  }
+  
+  .add-reply input {
+    font-size: 25px !important;
+    font-family: "Oswald", sans-serif;
+    background-color: transparent !important;
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px; 
+    width: 30%; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+  
+
+
+  .add-reply button {
+    border: 1px solid bisque;
+  padding: 3px;
+  border-radius: 5px;
+  padding-left: 23px;
+  padding-right: 23px;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  color: bisque;
+  margin-left: 8px;
+  margin-top: 10px;
+  }
+  
+  .add-reply button:hover {
+    opacity: 0.8;
+  }
+  
+  .comment-info button[data-replies]:not([data-show-replies])::after,
+  .comment-info button[data-replies][data-show-replies]::after {
+    content: unset;
+  }
+  
+  .comment-info button[data-replies]:not([data-show-replies]):before {
+    content: 'View ' attr(data-replies) ' Replies';
+  }
+  
+  .comment-info button[data-replies][data-show-replies]:before {
+    content: 'Hide Replies';
+  }
+  
+  .replies-container {
+    margin-top: 10px;
+    padding-left: 15px;
+    border-left: 1px solid #ccc;
+  }
+  #edit-comment {
+    font-size: 25px !important;
+    font-family: "Oswald", sans-serif;
+    background-color: transparent !important;
+    box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px; 
+    width: 30%; 
+    margin-bottom: 10px;
+    box-sizing: border-box;
+  }
+
+  #edit-comment-btn{
+    border: 1px solid bisque;
+    padding: 3px;
+    border-radius: 5px;
+    padding-left: 23px;
+    padding-right: 23px;
+    font-size: 20px;
+    font-family: "Oswald", sans-serif;
+    color: bisque;
+    margin-left: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+  }
