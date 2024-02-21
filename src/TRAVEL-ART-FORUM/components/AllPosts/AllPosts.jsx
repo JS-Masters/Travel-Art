@@ -93,6 +93,7 @@ export default function AllPosts() {
           <Link to={`/single-post/${post.id}`}>{post.title}</Link>
         </h2>
         <span><Authenticated><DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} /></Authenticated></span>
+        {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
         {post.tags && <p>{showHashtagOnTags(post.tags)}</p>}
         <span id="post-author"><img src={post.userAvatarUrl}
           alt="user-avatar"
@@ -102,7 +103,6 @@ export default function AllPosts() {
           <span id="comments-number">{post?.comments ? `${Object.keys(post.comments).length} Comments` : '0 Comments'}</span>
           <span id="likes-number">{post.likes} Likes</span>
         </div>
-        {user && userData.handle === post.authorHandle && !userData.isAdmin && <DeletePostButton postID={post.id} rerenderAfterClick={rerenderAfterClick} />}
       </div>
     );
   };

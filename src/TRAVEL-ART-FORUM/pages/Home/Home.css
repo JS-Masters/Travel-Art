@@ -20,3 +20,9 @@
   width: fit-content;
   padding: 15px;
 }
+
+.general-info span {
+  font-size: 25px;
+  margin-left: 20px;
+  color: rgb(49, 176, 43);
+}
