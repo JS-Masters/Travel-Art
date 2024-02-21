@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Aladin&family=Dancing+Script&family=Oswald:wght@200..700&family=Protest+Revolution&display=swap');
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap');
-
+@import url("https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap");
 
 .comments {
   list-style: none;
@@ -210,6 +210,9 @@
 }
 
 .single-tag-span {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   margin-left: 7px;
   font-size: 20px;
   color: bisque;

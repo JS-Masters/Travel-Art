@@ -24,6 +24,8 @@
 }
 
 .navbar a {
+    font-family: "Aguafina Script", cursive;
+    font-weight: 400;
     text-decoration: none;
     color: #fff;
     font-size: 1.5rem;

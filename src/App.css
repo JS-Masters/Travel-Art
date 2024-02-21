@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Protest+Revolution&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
 
 .App {
   flex-direction: column;
@@ -8,7 +9,9 @@
   width: 100%;
   height: 100%;
   background: url('../images/Background-Final.jpg') !important;
-  font-family: "Dancing Script", cursive;
+  font-family: "Oswald", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
   font-weight: bold
 }
 

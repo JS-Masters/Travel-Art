@@ -26,6 +26,7 @@ const PostTags = ({
   const menu = () => {
     const foundTags = Object.keys(allTags)
       .filter((key) => key.includes(searchField) && !selectedTags.includes(key))
+      .sort((a, b) => allTags[b] - allTags[a])
       .slice(0, 5);
 
     return (
@@ -49,7 +50,7 @@ const PostTags = ({
                     margin: "2px",
                   }}
                 >
-                  {tag}{" "}
+                  {tag}
                   <CloseIcon style={{ width: "9px", marginLeft: "3px" }} />
                 </Tag>
               ))
@@ -77,7 +78,13 @@ const PostTags = ({
       <div className="select-kit-header-wrapper">
         <span className="formatted-selection">{formattedSelection}</span>
         <IconButton
-        style={{backgroundColor: "transparent", color: "bisque", marginRight: '5px', borderRadius: "5px", padding: "5px"}}
+          style={{
+            backgroundColor: "transparent",
+            color: "bisque",
+            marginRight: "5px",
+            borderRadius: "5px",
+            padding: "5px",
+          }}
           aria-label="Add tag"
           icon={<PlusSquareIcon />}
           onClick={() => setShowMenu(!showMenu)}

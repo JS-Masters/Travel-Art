@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Protest+Revolution&display=swap");
+
 .post-box {
   border-left: 2px solid rgba(255, 255, 255, 0.3);
   border-top: 2px solid rgba(255, 255, 255, 0.3);
@@ -17,13 +19,34 @@
   }
 }
 
+#new-post {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
 #post-author {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
   position: absolute;
   left: 0;
   bottom: 0;
   color: bisque;
   margin-left: 10px;
   font-size: 25px;
+}
+
+.post-box > p {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.create-post-button {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 #comments-and-likes {
@@ -77,7 +100,6 @@
   width: 10px;
   height: 10px;
   transform: scale(2);
-
 }
 
 .all-posts-box {
