@@ -1,6 +1,3 @@
-// Uncomment here when you already have the Google Maps API key:
-
-
 
 // import { useEffect, useState } from "react";
 // import { useContext } from "react";
