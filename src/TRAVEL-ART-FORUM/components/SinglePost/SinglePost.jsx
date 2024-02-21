@@ -19,7 +19,8 @@ import {
   updateAllTags,
 } from "../../services/tag.service";
 import { EditIcon } from "@chakra-ui/icons";
-import PostByTag from "../../pages/PostsByTag/PostsByTag";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faThumbsDown, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
 
 const SinglePost = ({ setReload }) => {
   const { userData } = useContext(AppContext);
@@ -60,7 +61,7 @@ const SinglePost = ({ setReload }) => {
       .then((snapshot) => {
         setAllTags(snapshot.val());
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
 
   const getCurrentPostComments = async (id, searchTerm) => {
@@ -177,16 +178,16 @@ const SinglePost = ({ setReload }) => {
       <>
         {editingTags && (
           <div className="edit-tags-menu">
-            <button
+            <button id="save-tags-button"
               onClick={() => {
                 editTags()
                   .then(() => setEditingTags(false))
-                  .catch((err) => {});
+                  .catch((err) => { });
               }}
             >
               Save Tags
             </button>
-            <button onClick={() => setEditingTags(false)}>Close</button>
+            <button id="close-tags-button" onClick={() => setEditingTags(false)}>Close</button>
             <PostTags
               allTags={allTags}
               selectedTags={post.tags.split(" ")}
@@ -278,35 +279,38 @@ const SinglePost = ({ setReload }) => {
       {post && (
         <div className="single-post-view">
           <div className="post-info">
-            <h1>{post.title}</h1>
-            <br />
+            <div>
+              <h1 id="single-post-title">{post.title}</h1>
+              {(userData.handle === post.authorHandle ||
+                userData.isAdmin === true) && (
+                  <button
+                    className="delete-post-button"
+                    onClick={() => {
+                      deletePost(post.id).then(() => navigate("/all-posts"));
+                    }}
+                  >
+                    DELETE POST
+                  </button>
+                )}
+            </div>
+
             <span>
               {post.tags.length > 0
                 ? post.tags.split(" ").map((tag, index) => (
-                    <span key={index} className="single-tag-span">
-                      <Link to={`/posts-by-tag/:${tag}`}>
-                        {showHashtagOnTags(tag)}
-                      </Link>{" "}
-                    </span>
-                  ))
+                  <span key={index} className="single-tag-span">
+                    <Link to={`/posts-by-tag/:${tag}`}>
+                      {showHashtagOnTags(tag)}
+                    </Link>{" "}
+                  </span>
+                ))
                 : "No tags yet"}{" "}
               <EditIcon
                 className="edit-tags-icon"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", fontSize: "23px", marginLeft: "8px" }}
                 onClick={() => setEditingTags(true)}
               />
             </span>
-            {(userData.handle === post.authorHandle ||
-              userData.isAdmin === true) && (
-              <button
-                className="delete-post-button"
-                onClick={() => {
-                  deletePost(post.id).then(() => navigate("/all-posts"));
-                }}
-              >
-                DELETE POST
-              </button>
-            )}
+
             {editTagsMenu()}
             {renderPost()}
             <p id="post-content">{post.content}</p>
@@ -318,50 +322,34 @@ const SinglePost = ({ setReload }) => {
               />{" "}
               {post.authorHandle}{" "}
               <span id="creted-on">
-                Created on: {new Date(post.createdOn).toLocaleDateString()}
+                <span>Created on: </span>
+                {new Date(post.createdOn).toLocaleDateString()}
               </span>
             </span>
+            <span id="liked-by">
+              <span>Liked by:</span>{" "}
+              <br />
+              {isPostLikedBy()
+                ? post.likedBy.filter((u) => u !== 1).join(", ")
+                : "No likes yet"}
+            </span>
             <div className="likes-info">
-              <button onClick={togglePostLike}>
-                {likedByCurrentUser ? "Dislike" : "Like"}
+              <button className="like-button" onClick={togglePostLike}>
+                <FontAwesomeIcon icon={likedByCurrentUser ? faThumbsDown : faThumbsUp} />
+                <span>{likedByCurrentUser ? " Dislike" : " Like"}</span>
               </button>
+
+
               <p>{post.likes} Likes</p>
-              <p>
-                Liked by:{" "}
-                {isPostLikedBy()
-                  ? post.likedBy.filter((u) => u !== 1).join(", ")
-                  : "No likes yet"}
-              </p>
             </div>
           </div>
 
-          <div></div>
-          <h2>Comments:</h2>
-          <label htmlFor="search-comments">Search in comments: </label>
-          <input
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            type="text"
-            name="search-comments"
-            id="search-comments"
-          />
-          <br />
-          <span>Sort by Most Liked </span>
-          <input
-            type="checkbox"
-            checked={isCheckedSortByLikes}
-            onChange={() => setIsCheckedSortByLikes((prevState) => !prevState)}
-          />
-          <br />
-          {isCheckedSortByLikes
-            ? sortCommentsByLikes(commentsArr).map(renderComments)
-            : commentsArr.map(renderComments)}
           {userData && !userData.isBanned ? (
             <div className="create-comment-form">
-              <br />
-              <label htmlFor="input-title">Write Comment:</label>
               <input
                 value={currentComment.content}
+                placeholder="Write your comment here..."
+                className="comment-input"
                 onChange={(e) =>
                   setCurrentComment({
                     ...currentComment,
@@ -373,8 +361,7 @@ const SinglePost = ({ setReload }) => {
                 name="input-title"
                 id="input-title"
               />
-              <br />
-              <button
+              <button className="add-comment-button"
                 onClick={() => {
                   addComment(currentComment, id).then((newComment) =>
                     setCommentsArr([...commentsArr, newComment])
@@ -385,13 +372,37 @@ const SinglePost = ({ setReload }) => {
                     createdOn: "",
                   });
                 }}
-              >
-                Add Comment
-              </button>
+              >Add Comment</button>
             </div>
           ) : (
-            <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
+            <h1 className="ban-message">BANNED USERS CANNOT ADD COMMENTS!</h1>
           )}
+          <div className="search-comments-div">
+            <span id="search-comments-input">
+              <span  className="search-comments">Search in comments: </span>
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                type="text"
+                name="search-comments"
+              className="search-comments-input-box"
+              />
+            </span>
+    
+            <span>
+              <span className="sort-comments">Sort by Most Liked</span>
+              <input
+                className="sort-comments-checkbox"
+                type="checkbox"
+                checked={isCheckedSortByLikes}
+                onChange={() => setIsCheckedSortByLikes((prevState) => !prevState)}
+              />
+            </span>
+          </div>
+
+          {isCheckedSortByLikes
+            ? sortCommentsByLikes(commentsArr).map(renderComments)
+            : commentsArr.map(renderComments)}
         </div>
       )}
     </div>

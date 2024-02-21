@@ -52,7 +52,16 @@ font-size: 23px;
 .ban-buttons:hover {
   opacity: 0.7;
 }
-
+#unban-button {
+  color: rgb(150, 28, 28);
+  font-weight: bold;
+  float: right;
+padding: 10px;
+font-family: "Oswald", sans-serif;
+font-size: 23px;
+margin-right: 15px;
+margin-bottom: 15px;
+}
 .user-avatar {
   margin-right: 10px;
 }

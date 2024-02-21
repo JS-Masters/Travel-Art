@@ -139,7 +139,7 @@ const CreatePost = () => {
           </button>
         </div>
       ) : (
-        userData && <h1>BANNED USERS DO NOT HAVE ACCESS TO THIS!</h1>
+        userData && <h1 className="ban-message">BANNED USERS CANNOT CREATE POSTS!</h1>
       )}
     </div>
   );

@@ -56,7 +56,7 @@ const ManageUsers = () => {
                       {u.isAdmin ? (
                         <p>ADMIN</p>
                       ) : (
-                        <UnbanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-unban-button`} />
+                        <UnbanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-unban-button`} id={'unban-button'} />
                       )}
                     </>
                   ) : (
