@@ -12,7 +12,7 @@ const MostCommented = ({ totalPosts = [] }) => {
     const sortedPosts = totalPosts.sort(
       (a, b) => b.comments?.length - a.comments?.length
     );
-    setMostCommented(sortedPosts.slice(0, 10));
+    setMostCommented(sortedPosts.slice(0, 5));
   }, [totalPosts]);
 
   return (

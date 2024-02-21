@@ -1,5 +1,7 @@
 .general-info {
   display: inline-block !important;
+  margin-top: 100px;
+
 }
 
 .globe-results {
@@ -25,4 +27,12 @@
   font-size: 25px;
   margin-left: 20px;
   color: rgb(49, 176, 43);
+}
+
+.number-home {
+  font-size: 50px !important;
+}
+
+.home-page {
+  margin-bottom: 0 !important;
 }

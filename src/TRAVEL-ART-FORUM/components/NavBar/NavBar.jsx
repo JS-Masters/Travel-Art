@@ -13,25 +13,23 @@ const NavBar = () => {
 
   return (
 
-      <nav className="navbar">
-
-        <NavLink to="/about">Our Community</NavLink>
-        <NavLink className='home-page-logo' to="/"><span>Travel</span><span>Art</span></NavLink>
-        <NavLink to={ userData ? "/all-posts" : "/sign-in"}>FORUM</NavLink>
-
-        {userData ? (
-          <DropdownMenu
-            username={userData.handle}
-            avatarUrl={userData.avatarUrl}
-            setContext={setContext}
-          />
-        ) : (
-          <span>
-            <Button handleClick={() => navigate("/sign-in")}> Sign in</Button>
-            <Button handleClick={() => navigate("/sign-up")}> Sign up</Button>
-          </span>
-        )}
-      </nav>   
+    <nav className="navbar">
+      <NavLink id="forum-button" className='nav-buttons' to={userData ? "/all-posts" : "/sign-in"}>FORUM</NavLink>
+      <NavLink className='home-page-logo' to="/"><span>Travel</span><span>Art</span></NavLink>
+      <NavLink id="our-community" className='nav-buttons' to="/about">Our Community</NavLink>
+      {userData ? (
+        <DropdownMenu
+          username={userData.handle}
+          avatarUrl={userData.avatarUrl}
+          setContext={setContext}
+        />
+      ) : (
+        <span>
+          <Button handleClick={() => navigate("/sign-in")}> Sign in</Button>
+          <Button handleClick={() => navigate("/sign-up")}> Sign up</Button>
+        </span>
+      )}
+    </nav>
   );
 };
 

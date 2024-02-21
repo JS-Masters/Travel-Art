@@ -10,7 +10,7 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
 
   useEffect(() => {
     const sortedPosts = totalPosts.sort((a, b) => b.createdOn - a.createdOn);
-    setRecentlyCreated(sortedPosts.slice(0, 10));
+    setRecentlyCreated(sortedPosts.slice(0, 5));
   }, [totalPosts]);
 
   return (

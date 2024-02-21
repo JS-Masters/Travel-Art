@@ -35,8 +35,8 @@ const Home = (props) => {
       <MostCommented totalPosts={totalPosts} />
       <RecentlyCreated totalPosts={totalPosts} />
       <div className="general-info" style={{ marginBottom: "20px" }}>
-        <h2>Total posts created: <span>{totalPosts.length}</span></h2>
-        <h2>Our Travelers: <span>{users}</span></h2>
+        <h2>Total posts created: <span className="number-home" >{totalPosts.length}</span></h2>
+        <h2>Our Travelers: <span className="number-home" >{users}</span></h2>
       </div>
       {user && (
         <div className="globe-results">

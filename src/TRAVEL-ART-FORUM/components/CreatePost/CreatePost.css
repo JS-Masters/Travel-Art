@@ -16,9 +16,16 @@
 }
 
 .create-post-button {
-    font-size: 35px;
+    font-size: 45px;
 }
 
+.create-post-button:hover {
+    opacity: 0.8;
+}
+
+.create-post-button:active {
+    opacity: 0.3;
+}
 #input-title {
     border-radius: 15px;
     width: 450px;
