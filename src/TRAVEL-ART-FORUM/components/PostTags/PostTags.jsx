@@ -50,7 +50,7 @@ const PostTags = ({
                     margin: "2px",
                   }}
                 >
-                  {tag}
+                  {tag}{" "}
                   <CloseIcon style={{ width: "9px", marginLeft: "3px" }} />
                 </Tag>
               ))
