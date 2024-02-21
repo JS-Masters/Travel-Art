@@ -14,7 +14,7 @@ export const getAllUsers = async () => {
   }
 }
 
-const usersDocument = (snapshot) => {
+export const usersDocument = (snapshot) => {
   const usersDocument = snapshot.val();
 
   const users = Object.keys(usersDocument).map(key => {
@@ -23,6 +23,7 @@ const usersDocument = (snapshot) => {
       ...user
     };
   })
+  console.log(users)
   return users;
 }
 
