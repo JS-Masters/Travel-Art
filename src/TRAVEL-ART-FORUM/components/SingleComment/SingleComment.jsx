@@ -10,10 +10,7 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
 
   const { userData } = useContext(AppContext);
   const { id } = useParams();
-
-
   const [currentComment, setCurrentComment] = useState(null);
-
   const [commentContentEdit, setCommentContentEdit] = useState('');
   const [currentReply, setCurrentReply] = useState({
     content: "",
@@ -31,7 +28,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
 
   useEffect(() => {
     setCurrentComment(comment);
-
   }, []);
 
   const replyToComment = async (commentID) => {
@@ -66,8 +62,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
     }
   };
 
-
-
   return (
     <>
       {currentComment && <div key={comment.id} className="comment-info">
@@ -81,7 +75,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
             updatedCommentsArr.splice(index, 1, result);
-      
             setCommentsArr(updatedCommentsArr);
           })
         }}>Like</button>}
@@ -90,7 +83,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
             updatedCommentsArr.splice(index, 1, result);
-      
             setCommentsArr(updatedCommentsArr);
           })
         }}>Like</button>}
@@ -99,7 +91,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
             const updatedCommentsArr = [...commentsArr];
             const index = updatedCommentsArr.findIndex((c) => c.id === comment.id);
             updatedCommentsArr.splice(index, 1, result);
-      
             setCommentsArr(updatedCommentsArr);
           })
         }}>Disike</button>}
@@ -147,7 +138,6 @@ const SingleComment = ({ comment, commentsArr, setCommentsArr, setIsCommentLiked
               name="input-reply"
               id="input-reply"
             />
-
             <button onClick={() => {
               replyToComment(comment.id).then(
                 setCurrentReply({

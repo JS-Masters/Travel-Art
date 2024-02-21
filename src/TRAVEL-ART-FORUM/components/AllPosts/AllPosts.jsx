@@ -132,7 +132,6 @@ export default function AllPosts() {
             checked={isCheckedSortByDate}
             onChange={handleDateCheckboxChange}
           /></span>
-
         </div>
         {posts && <SearchMenu oldPosts={oldPosts} setPosts={setPosts} />}
         <div className="all-posts-box">

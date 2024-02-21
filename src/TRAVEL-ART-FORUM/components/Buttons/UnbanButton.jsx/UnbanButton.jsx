@@ -13,7 +13,6 @@ const UnbanButton = ({ userHandle, rerenderAfterClick }) => {
     rerenderAfterClick();
   }
 
-
   return (
     <button key={`unban-user-${userHandle}`} id="unban-button" className="ban-buttons" onClick={handleUnbanClick}>Unban User</button>
   )

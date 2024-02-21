@@ -7,7 +7,6 @@ const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
-
   const handleCancel = () => navigate(-1);
 
   const handleResetPassword = async () => {
@@ -15,7 +14,6 @@ const ForgotPassword = () => {
       setMessage("Please enter valid email address!");
       return;
     }
-
     const auth = getAuth();
 
     try {

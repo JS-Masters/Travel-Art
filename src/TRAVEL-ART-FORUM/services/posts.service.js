@@ -53,7 +53,6 @@ export const getPostById = async (id) => {
     if (!post.exists()) {
       throw new Error(`Post with id ${id} does not exist!`);
     }
-
     return post.val();
 
   } catch (error) {
@@ -100,8 +99,6 @@ export const dislikePost = async (handle, postId) => {
     });
   }
 };
-
-
 
 export const addComment = async (comment, postID) => {
 
@@ -357,6 +354,5 @@ export const getCommentedPostsByUser = async (handle) => {
     throw new Error(`No posts found for user ${handle}`);
   }
 
-  console.log(commentedPosts)
   return commentedPosts;
 }

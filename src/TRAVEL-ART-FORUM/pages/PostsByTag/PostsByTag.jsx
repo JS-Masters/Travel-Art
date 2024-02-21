@@ -12,18 +12,15 @@ const PostByTag = () => {
   const { user, userData } = useContext(AppContext); 
   const [clickTrigger, setClickTrigger] = useState(false);
 
-
   useEffect(() => {
     getPostsByTag(tag).then((posts) => {
       setPostsByTag(posts);
     });
   }, [tag, clickTrigger]);
 
-
   const rerenderAfterClick = () => {
     setClickTrigger(prevState => !prevState);
   };
-
 
   return (
     <div>

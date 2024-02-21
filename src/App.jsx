@@ -27,8 +27,10 @@ import AboutView from "./TRAVEL-ART-FORUM/views/AboutView/AboutView";
 import MyProfile from "./TRAVEL-ART-FORUM/components/MyProfile/MyProfile";
 import PostByTag from "./TRAVEL-ART-FORUM/pages/PostsByTag/PostsByTag";
 
+// Uncomment here when you already have the Google Maps API key:
+// import ResultsByCity from "./TRAVEL-ART-FORUM/components/ResultsByCity/ResultsByCity";
+
 const App = (props) => {
-  /*  Life-cycles Methods */
 
   const { isMasterAppLoading } = props;
   const { colorMode } = useColorMode();
@@ -57,14 +59,6 @@ const App = (props) => {
   useEffect(() => {
     props.setIsMasterAppLoading(true);
   }, []);
-
-  /*  Public Interface Methods */
-
-  /*  Validation Methods  */
-
-  /*  UI Events Methods   */
-
-  /*  Custom-Component sub-render Methods */
 
   const renderLoader = () => {
     return (
@@ -143,6 +137,9 @@ const App = (props) => {
                   </Authenticated>
                 }
               />
+
+              {/* Uncomment here when you already have the Google Maps API key: */}
+
               {/* <Route
                 path="/hotels-by-city"
                 element={<ResultsByCity criteria={"Hotels"} />}
@@ -159,7 +156,6 @@ const App = (props) => {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/reset-password" element={<ForgotPassword />} />
               <Route path="/upload-form" element={<UploadForm />} />
-              {/* <Route path="/create-post" element={<CreatePost />} /> */}
               <Route path="/all-posts" element={<AllPosts />} />
               <Route
                 path="/single-post/:id"
@@ -169,7 +165,6 @@ const App = (props) => {
                   </Loaded>
                 }
               />
-
               <Route
                 path="/edit-profile"
                 element={

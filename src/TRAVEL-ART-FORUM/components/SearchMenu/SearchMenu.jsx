@@ -1,5 +1,4 @@
 import PropTypes from "prop-types";
-
 import "./SearchMenu.css";
 import { ChevronRightIcon, SearchIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";

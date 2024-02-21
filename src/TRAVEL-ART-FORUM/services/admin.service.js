@@ -12,7 +12,6 @@ export const getAllUsers = async () => {
   } catch (error) {
     console.log(error.message)
   }
-
 }
 
 const usersDocument = (snapshot) => {
@@ -24,10 +23,9 @@ const usersDocument = (snapshot) => {
       ...user
     };
   })
-    // .filter(u => u.isAdmin !== true)
   return users;
 }
-// За сега не се използва, ама май работи !
+
 export const findUserByUID = async (handle) => {
   try {
     const snapshot = await get(ref(db, `users/${handle}`));
@@ -59,7 +57,7 @@ export const updateUserProperty = async (dbPath, value) => {
 
 export const renderUsersBySearch = (searchTerm, users) => {
   if (!searchTerm) {
-    return users; // No search term, return all users
+    return users;
   }
   return users.filter((u) => 
     u.handle.toLowerCase().includes(searchTerm.toLowerCase()) ||

@@ -338,8 +338,6 @@ const SinglePost = ({ setReload }) => {
                 <FontAwesomeIcon icon={likedByCurrentUser ? faThumbsDown : faThumbsUp} />
                 <span>{likedByCurrentUser ? " Dislike" : " Like"}</span>
               </button>
-
-
               <p>{post.likes} Likes</p>
             </div>
           </div>

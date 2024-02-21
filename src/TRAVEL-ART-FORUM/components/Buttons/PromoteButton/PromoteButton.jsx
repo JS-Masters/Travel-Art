@@ -11,8 +11,7 @@ const PromoteButton = ({ userHandle, rerenderAfterClick }) => {
     
         rerenderAfterClick();
       }
-
-
+      
     return (
         <button key={`promote-user-${userHandle}`} className="promote-buttons" onClick={handlePromoteClick}>Promote to Admin</button>
       )

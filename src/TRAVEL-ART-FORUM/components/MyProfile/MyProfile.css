@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+
 .posts-container {
     border-left: 2px solid rgba(255, 255, 255, 0.3);
     border-top: 2px solid rgba(255, 255, 255, 0.3);
@@ -27,8 +29,6 @@
     margin-right: 300px;
     text-align: center;
   }
-  
- 
   
   .commented-posts-container .commented-posts-box {
     margin-left: 0;
@@ -61,8 +61,7 @@
   
   .posts-and-comments {
     display: flex;
-    width: 100%;
-    
+    width: 100%; 
   }
   
   .posts-container,
@@ -103,13 +102,12 @@
   .comment-title {
     font-size:50px;
     margin-bottom: 10px;
+    font-family: "Oswald", sans-serif;
   }
   
   .post-content,
   .comment-content {
     font-size: 30px;
-
-
   }
   
   a {

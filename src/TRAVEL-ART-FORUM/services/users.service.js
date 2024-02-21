@@ -60,6 +60,5 @@ export const getUserAvatar = async (handle) => {
   }
 
   const userDocument = snapshot.val();
-//console.log(userDocument) - тук връща линк към снимката
   return userDocument;
 };

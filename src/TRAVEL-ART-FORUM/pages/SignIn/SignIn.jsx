@@ -11,9 +11,7 @@ const SignIn = () => {
     email: "",
     password: "",
   });
-
   const [message, setMessage] = useState("");
-
   const navigate = useNavigate();
   const location = useLocation();
 

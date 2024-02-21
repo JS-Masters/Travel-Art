@@ -16,7 +16,6 @@ const DeletePostButton = ({postID, rerenderAfterClick}) => {
       console.error('Error removing document: ', error);
     });
   }
-
 return (
   <button className="delete-post-button" onClick={() => handleDeleteClick(postID)}>DELETE</button>
 )

@@ -84,12 +84,13 @@
 .delete-post-button:active {
   opacity: 0.5;
 }
+
 #single-post-title {
   font-family: "Oswald", sans-serif;
 }
+
 #post-content {
   font-size: 23px;
-  /* border: 2px solid red; */
   height: 200px;
   width: 90%;
   margin-left: 90px;
@@ -109,6 +110,7 @@
   font-family: "Oswald", sans-serif;
   font-size: 23px;
 }
+
 .likes-info button {
   font-size: 30px;
   margin-right: 40px;
@@ -126,20 +128,19 @@
 }
 
 .like-button:hover {
-  background-color: #0056b3; /* Darker shade of blue on hover */
+  background-color: #0056b3;
 }
 
 .like-button span {
-  margin-left: 5px; /* Adjust the margin as needed */
+  margin-left: 5px;
 }
 
 #liked-by {
-
   font-size: 24px;
-  width: 480px; /* Set your desired width */
-  display: inline-block; /* Ensures that the span respects the width */
-  overflow: hidden; /* Hides any overflowing text */
-  white-space: nowrap; 
+  width: 480px;
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
   margin-left: 25px;
 }
@@ -151,7 +152,6 @@
 #creted-on span {
   font-family: "Oswald", sans-serif;
 }
-
 
 .input-wrapper {
   position: relative;
@@ -172,7 +172,6 @@
   padding: 15px;
   margin-top: 20px;
   background-color: transparent;
-
 }
 
 .cancel-edit-button,
@@ -187,17 +186,19 @@
   margin-top: 15px;
 }
 
-.edit-button, .cancel-edit-button{
-float: right;
-margin-top: 20px;
-margin-right: 30px;
-}
-
-.save-edit-button  {
+.edit-button,
+.cancel-edit-button {
   float: right;
   margin-top: 20px;
-margin-right: 50px;
+  margin-right: 30px;
 }
+
+.save-edit-button {
+  float: right;
+  margin-top: 20px;
+  margin-right: 50px;
+}
+
 .cancel-edit-button {
   margin-right: 40px;
 }
@@ -213,7 +214,6 @@ margin-right: 50px;
   font-size: 20px;
   color: bisque;
 }
-
 
 .edit-tags-menu {
   margin: auto;
@@ -240,17 +240,20 @@ margin-right: 50px;
   padding-right: 23px;
   font-size: 40px;
   font-family: "Oswald", sans-serif;
-  color:  bisque;
+  color: bisque;
   margin-left: 27px;
 }
+
 .add-comment-button:hover {
   opacity: 0.7;
 }
+
 .comment-input {
   font-size: 25px !important;
   font-family: "Oswald", sans-serif;
   background-color: transparent !important;
 }
+
 .comment-input::placeholder {
   color: #999;
   font-size: 25px;
@@ -267,34 +270,37 @@ margin-right: 50px;
 
 #search-comments-input {
   float: left;
-text-align: left !important;
+  text-align: left !important;
   font-size: 25px;
 }
+
 .search-comments {
   font-size: 25px;
   margin-left: 30px;
 }
+
 .sort-comments {
   float: left;
   font-size: 20px;
   margin-left: 30px;
 }
+
 .sort-comments-checkbox {
   float: left;
   margin-left: 10px;
   width: 23px;
   height: 23px;
 }
+
 .search-comments-input-box {
   border-radius: 10px;
   background-color: transparent;
   border-left: 2px solid rgba(255, 255, 255, 0.3);
   border-top: 2px solid rgba(255, 255, 255, 0.3);
-
   box-shadow: 4px 4px 60px rgba(255, 255, 255, 0.3);
   font-family: "Oswald", sans-serif;
-
 }
+
 .search-comments-div {
   display: flex;
   flex-direction: column;

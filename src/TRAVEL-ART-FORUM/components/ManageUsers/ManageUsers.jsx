@@ -14,8 +14,6 @@ const ManageUsers = () => {
     getAllUsers().then(setUsers);
   }, [clickTrigger]);
 
-
-
   const rerenderAfterClick = () => {
     setClickTrigger(prevState => !prevState);
   }
@@ -28,9 +26,7 @@ const ManageUsers = () => {
     getAllUsers()
       .then(users => renderUsersBySearch(searchTerm, users))
       .then(setUsers)
-  }, [searchTerm]); // Update users when search term changes or when users are fetched
-
-
+  }, [searchTerm]);
 
   return (
     <>
@@ -75,11 +71,8 @@ const ManageUsers = () => {
                   )}
                 </>
               }
-
-
             </div>
           )
-
         })}
       </div>
 
@@ -88,29 +81,3 @@ const ManageUsers = () => {
 }
 
 export default ManageUsers;
-
-
-// <div key={`${u.uid}-content`}>
-// <h1>Username: {u.handle}</h1>
-// <h2>Email: {u.email}</h2>
-// <h2>Name: {u.firstName} {u.lastName}</h2>
-// {u.isBanned ? (
-//   <>
-//     {u.isAdmin ? (
-//       <p>ADMIN</p>
-//     ) : (
-//       <UnbanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-unban-button`} />
-//     )}
-//   </>
-
-// ) : (
-//   <>
-//     {u.isAdmin ? (
-//       <p>ADMIN</p>
-//     ) : (
-//       <BanButton userHandle={u.handle} rerenderAfterClick={rerenderAfterClick} key={`${u.uid}-ban-button`} />
-//     )}
-//   </>
-
-// )}
-// </div>

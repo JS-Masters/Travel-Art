@@ -24,7 +24,6 @@ const MostCommented = ({ totalPosts = [] }) => {
             <NavLink to={userData ? `/single-post/${post.id}` : "/sign-in"}>
               <h2>{post.title}</h2>
             </NavLink>
-            {/* <p>{post?.tags}</p> */}
           </div>
         ))}
       </div>

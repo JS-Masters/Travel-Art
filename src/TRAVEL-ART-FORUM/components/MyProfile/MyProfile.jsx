@@ -2,9 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { getUserData } from '../../services/users.service';
 import { getPostByAuthor, getCommentedPostsByUser } from '../../services/posts.service';
 import { AppContext } from "../../providers/AppContext";
-import SinglePost from '../../components/SinglePost/SinglePost';
 import { Link } from 'react-router-dom'
-import { getAllAvatars, getUserAvatar } from '../../services/users.service';
+import { getUserAvatar } from '../../services/users.service';
 import './MyProfile.css';
 
 const MyProfile = () => {
@@ -93,14 +92,12 @@ const MyProfile = () => {
                 <div className='comment-container'>
                   <div className='comment-title'>
                     <Link to={`/single-post/${post.id}`}>{post.title}</Link>
-                  </div>
-                
-                  <div className='comment-content'>
-                    
+                  </div>  
+                  <div className='comment-content'> 
                     {Object.values(post.comments)
                       .filter(comment => comment.authorHandle === userData.handle)
                       .map((comment) => (
-                        <p key={comment.id}> Comment:{comment.content}</p>
+                        <p key={comment.id}> My Comment: {comment.content}</p>
                       ))}
                   </div>
                 </div>
