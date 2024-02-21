@@ -20,7 +20,7 @@ const RecentlyCreated = ({ totalPosts = [] }) => {
         {recentlyCreated.map((post) => (
           <div key={post.id} className="single-post">
             <NavLink to={userData ? `/single-post/${post.id}` : "/sign-in"}>
-              <h2>{post.title}</h2>
+              <h2 className="recently-created-title">{post.title}</h2>
             </NavLink>
           </div>
         ))}
