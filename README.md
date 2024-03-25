@@ -30,27 +30,15 @@ To get started with Travel Art, follow these steps:
 
 Feature Summary:
 
-- Designed and implemented app with features for creating posts, adding comments, adding replies and like/dislike content.
-- Validation for user and admin attributes.
-- Public and private sections accessible with and without authentication.
+- Intuitive and user-friendly interface for easy navigation.
+- Validation for user and admin attributes. Public and private sections accessible with and without authentication.
 - User profile management, including profile photo upload.
-- Creation, editing, and deletion of posts and comments.
-- Browsing, sorting, and filtering of posts and comments.
-- View details of a single post, including comments, replies and likes.
-- Admin section accessible with administrative privileges.
-- Admin actions include user search, user blocking/unblocking, promoting users to admin role and post, posts and comments deletion.
-- View a list of all posts with sorting and filtering options.
-- Implementation of tags for easier navigation.
-- Users can add, remove, and edit tags on their posts.
-- Admins can manage tags on all posts.
-- Implemented a search feature for tourist destinations and hotels.
-- Users can explore and find information about various travel spots.
-- Includes information about the location, country specifics, and time zone.
-- Users can interact with the application to discover new travel destinations and plan their stay.
-- Designed an intuitive and user-friendly interface for easy navigation.
+- Admin section accessible with administrative privileges that includes user search, blocking/unblocking users, promoting users to admin role, posts and comments deletion.
 
-    <img src="./public/README-Screenshots/1.png"/>
-	<br/>
+<img src="./public/README-Screenshots/1.png"/>
+<br/>
+
+- Users can interact with the application to discover new travel destinations and plan their stay. They can explore and find information about various travel spots, including information about the location, country specifics, and time zone. 
 
     <img src="./public/README-Screenshots/2.png"/>
 	<br/>
@@ -61,11 +49,19 @@ Feature Summary:
     <img src="./public/README-Screenshots/4.png"/>
 	<br/>
 
+
+- A view with a list of all posts with sorting and filtering options. Implementation of tags for easier navigation.
+- Creation, editing, and deletion of posts and comments, as well as, browsing, sorting, and filtering options.
+
     <img src="./public/README-Screenshots/5.png"/>
-	<br/>
+    <br/>
+
+- A single post view, including comments, replies and likes.
+- Users can add, remove, and edit tags on their posts.
 
     <img src="./public/README-Screenshots/6.png"/>
-	<br/>
+    <br/>
+
 
 ## Developed by:
 
