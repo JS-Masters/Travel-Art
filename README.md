@@ -49,9 +49,27 @@ Feature Summary:
 - Users can interact with the application to discover new travel destinations and plan their stay.
 - Designed an intuitive and user-friendly interface for easy navigation.
 
+    <img src="./public/README-Screenshots/1.png"/>
+	<br/>
+
+    <img src="./public/README-Screenshots/2.png"/>
+	<br/>
+
+    <img src="./public/README-Screenshots/3.png"/>
+	<br/>
+
+    <img src="./public/README-Screenshots/4.png"/>
+	<br/>
+
+    <img src="./public/README-Screenshots/5.png"/>
+	<br/>
+
+    <img src="./public/README-Screenshots/6.png"/>
+	<br/>
+
 ## Developed by:
 
-JS Masters: Martin Stefanov, Mehmed Yunuz, Tsvetomila Stoilkova
+Martin Stefanov, Mehmed Yunuz, Tsvetomila Stoilkova
 
 3D Globe: SamSol (open-source)
 
